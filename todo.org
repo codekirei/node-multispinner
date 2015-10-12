@@ -1,4 +1,5 @@
-- [ ] change all references to "actions" to spinners
+- [X] change all references to "actions" to spinners
+- [ ] refactor nested ternary into if statement
 - [ ] write tests
 - [ ] finish jsdoc
 - [ ] support configurable opts during initialization

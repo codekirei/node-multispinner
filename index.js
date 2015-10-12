@@ -12,6 +12,9 @@ const logUpdate = require('log-update')
 //----------------------------------------------------------
 module.exports = class Spinner {
 
+  //----------------------------------------------------------
+  // Constructor
+  //----------------------------------------------------------
   /**
    * @constructor
    * @desc Constructs Spinner class with spinners and options.
@@ -31,13 +34,13 @@ module.exports = class Spinner {
     this.i = 0
     this.frames = ['-', '\\', '|', '/']
     this.frameCount = this.frames.length
-    this.actions = {}
-    Object.keys(obj).map(action => {
-      this.actions[action] = {
+    this.spinners = {}
+    Object.keys(spinners).map(spinner => {
+      this.spinners[spinner] = {
         complete: false,
         error: false,
         current: null,
-        base: obj[action]
+        base: spinners[spinner]
       }
     })
   }
@@ -45,14 +48,13 @@ module.exports = class Spinner {
   //----------------------------------------------------------
   // Internal methods
   //----------------------------------------------------------
-
   /**
    * @method _loop
    * @desc Kicks off animation loop:
    *  - attach to this.state for access from other methods
-   *  - get current frame of spinner
+   *  - get current frame of spinner animation
    *  - check state of each spinner initialized in constructor
-   *      and set this.actions[action].current accordingly
+   *      and set this.spinners[spinner].current accordingly
    *      (which is what will be displayed in terminal)
    *  - call _update method to apply changes
    *  - if all spinners are complete, kill loop and exit
@@ -61,12 +63,12 @@ module.exports = class Spinner {
   _loop() {
     this.state = setInterval(() => {
       let spinner = this.frames[this.i = ++this.i % this.frameCount]
-      Object.keys(this.actions).map(action => {
-        this.actions[action].current = this.actions[action].complete
-          ? this.actions[action].error
-            ? chalk.red(`  x ${this.actions[action].base}`)
-            : chalk.green(`  ✓ ${this.actions[action].base}`)
-          : chalk.blue(`  ${spinner} ${this.actions[action].base}`)
+      Object.keys(this.spinners).map(spinner => {
+        this.spinners[spinner].current = this.spinners[spinner].complete
+          ? this.spinners[spinner].error
+            ? chalk.red(`  x ${this.spinners[spinner].base}`)
+            : chalk.green(`  ✓ ${this.spinners[spinner].base}`)
+          : chalk.blue(`  ${spinner} ${this.spinners[spinner].base}`)
       })
       this._update()
       if (this._allCompleted()) this._clearState()
@@ -80,8 +82,8 @@ module.exports = class Spinner {
    */
   _update() {
     logUpdate(
-      Object.keys(this.actions).map(action => {
-        return this.actions[action].current
+      Object.keys(this.spinners).map(spinner => {
+        return this.spinners[spinner].current
       }).join('\n')
     )
   }
@@ -92,8 +94,8 @@ module.exports = class Spinner {
    * @returns
    */
   _allCompleted() {
-    return Object.keys(this.actions).every(action => {
-      return this.actions[action].complete === true
+    return Object.keys(this.spinners).every(spinner => {
+      return this.spinners[spinner].complete === true
     })
   }
 
@@ -109,7 +111,6 @@ module.exports = class Spinner {
   //----------------------------------------------------------
   // External methods
   //----------------------------------------------------------
-
   /**
    * Convenience method to kick off animation loop.
    * @method
@@ -125,9 +126,9 @@ module.exports = class Spinner {
    * @param {} 
    * @returns {undefined}
    */
-  finish(action) {
+  finish(spinner) {
     this._clearState()
-    this.actions[action].complete = true
+    this.spinners[spinner].complete = true
     this._loop()
   }
 
@@ -137,10 +138,10 @@ module.exports = class Spinner {
    * @param {} 
    * @returns {undefined}
    */
-  error(action) {
+  error(spinner) {
     this._clearState()
-    this.actions[action].complete = true
-    this.actions[action].error = true
+    this.spinners[spinner].complete = true
+    this.spinners[spinner].error = true
     this._loop()
   }
 }
