@@ -1,0 +1,19 @@
+{
+  "name": "node-multispinner",
+  "version": "0.1.0",
+  "description": "Multiple simultaneous async CLI spinners",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "animation",
+    "stdout",
+    "terminal",
+    "cli",
+    "update",
+    "spinner"
+  ],
+  "author": "",
+  "license": "MIT"
+}
