@@ -1,0 +1,8 @@
+- [ ] change all references to "actions" to spinners
+- [ ] write tests
+- [ ] finish jsdoc
+- [ ] support configurable opts during initialization
+- [ ] write readme
+- [ ] push to GH
+- [ ] hook up ci
+- [ ] submit pr to awesome-nodejs
