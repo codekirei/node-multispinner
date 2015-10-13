@@ -14,7 +14,7 @@ const states = require('../states')
 // Tests
 //----------------------------------------------------------
 describe('Constructor', () => {
-  it('Throws if spinners param is not an object or array', () => {
+  it('Throw if spinners param is not an object or array', () => {
     assert.throw(() => new Multispinner())
     assert.throw(() => new Multispinner(undefined))
     assert.throw(() => new Multispinner(null))
@@ -24,7 +24,7 @@ describe('Constructor', () => {
     assert.throw(() => new Multispinner(function(){}))
   })
 
-  it('Constructs spinners from object', () => {
+  it('Construct spinners from object', () => {
     // fixtures
     const spinners = {
       spinner1: 'spinner1 text',
@@ -46,7 +46,9 @@ describe('Constructor', () => {
     assert.deepEqual(expected, multispinner.spinners)
   })
 
-  it('Constructs spinners from array')
+  it('Construct spinners from array')
 
-  it('Parses opts param')
+  it('Parse opts param')
+
+  it('Assign internal props')
 })

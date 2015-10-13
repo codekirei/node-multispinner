@@ -1,13 +1,17 @@
 - [X] change all references to "actions" to spinners
 - [X] refactor nested ternary into if statement
 - [ ] write tests
-- [ ] finish jsdoc
-- [ ] support configurable opts during initialization
+  - [ ] stubs
+  - [ ] actual tests
+- [ ] finish jsdoc strings
+- [-] support configurable opts during initialization
+  - [X] current opts
   - [ ] default text when initializing with array
   - [ ] clear all when done (logUpdate.clear())
 - [ ] write readme
+  - [ ] configurable options
+  - [ ] example gif
 - [ ] optimize by not checking spinner state anymore once complete (success or err)
-- [ ] publish to GH
 - [ ] hook up ci
 - [ ] publish to npm
 - [ ] submit pr to awesome-nodejs
