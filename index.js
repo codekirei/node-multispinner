@@ -5,6 +5,7 @@
 //----------------------------------------------------------
 // NPM
 const chalk = require('chalk')
+const figures = require('figures')
 const logUpdate = require('log-update')
 const mirror = require('constant-mirror')
 const os = require('os')
@@ -74,12 +75,12 @@ module.exports = class Spinner {
         switch (this.spinners[spinner].state) {
           case states.incomplete:
             this.spinners[spinner].current = chalk.red(
-              `  x ${this.spinners[spinner].base}`
+              `  ${figures.cross} ${this.spinners[spinner].base}`
             )
             break
           case states.success:
             this.spinners[spinner].current = chalk.green(
-              `  ✓ ${this.spinners[spinner].base}`
+              `  ${figures.tick} ${this.spinners[spinner].base}`
             )
             break
           case states.error:
