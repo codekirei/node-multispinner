@@ -15,5 +15,10 @@
     "spinner"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "constant-mirror": "^1.0.5",
+    "log-update": "^1.0.2"
+  }
 }

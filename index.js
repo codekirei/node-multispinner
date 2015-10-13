@@ -6,10 +6,18 @@
 // NPM
 const chalk = require('chalk')
 const logUpdate = require('log-update')
+const mirror = require('constant-mirror')
+const os = require('os')
 
 //----------------------------------------------------------
 // Logic
 //----------------------------------------------------------
+const states = mirror(
+  'incomplete',
+  'success',
+  'error'
+)
+
 module.exports = class Spinner {
 
   //----------------------------------------------------------
@@ -37,8 +45,7 @@ module.exports = class Spinner {
     this.spinners = {}
     Object.keys(spinners).map(spinner => {
       this.spinners[spinner] = {
-        complete: false,
-        error: false,
+        state: states.incomplete,
         current: null,
         base: spinners[spinner]
       }
@@ -54,7 +61,7 @@ module.exports = class Spinner {
    *  - attach to this.state for access from other methods
    *  - get current frame of spinner animation
    *  - check state of each spinner initialized in constructor
-   *      and set this.spinners[spinner].current accordingly
+   *      and update this.spinners[spinner].current accordingly
    *      (which is what will be displayed in terminal)
    *  - call _update method to apply changes
    *  - if all spinners are complete, kill loop and exit
@@ -62,13 +69,25 @@ module.exports = class Spinner {
    */
   _loop() {
     this.state = setInterval(() => {
-      let spinner = this.frames[this.i = ++this.i % this.frameCount]
+      let animation = this.frames[this.i = ++this.i % this.frameCount]
       Object.keys(this.spinners).map(spinner => {
-        this.spinners[spinner].current = this.spinners[spinner].complete
-          ? this.spinners[spinner].error
-            ? chalk.red(`  x ${this.spinners[spinner].base}`)
-            : chalk.green(`  ✓ ${this.spinners[spinner].base}`)
-          : chalk.blue(`  ${spinner} ${this.spinners[spinner].base}`)
+        switch (this.spinners[spinner].state) {
+          case states.incomplete:
+            this.spinners[spinner].current = chalk.red(
+              `  x ${this.spinners[spinner].base}`
+            )
+            break
+          case states.success:
+            this.spinners[spinner].current = chalk.green(
+              `  ✓ ${this.spinners[spinner].base}`
+            )
+            break
+          case states.error:
+            this.spinners[spinner].current = chalk.blue(
+              `  ${animation} ${this.spinners[spinner].base}`
+            )
+            break
+        }
       })
       this._update()
       if (this._allCompleted()) this._clearState()
@@ -84,8 +103,19 @@ module.exports = class Spinner {
     logUpdate(
       Object.keys(this.spinners).map(spinner => {
         return this.spinners[spinner].current
-      }).join('\n')
+      }).join(os.EOL)
     )
+  }
+
+  /**
+   * 
+   * @param {} 
+   * @param {} 
+   */
+  _complete(spinner, state) {
+    this._clearState()
+    this.spinners[spinner].state = state
+    this._loop()
   }
 
   /**
@@ -95,7 +125,7 @@ module.exports = class Spinner {
    */
   _allCompleted() {
     return Object.keys(this.spinners).every(spinner => {
-      return this.spinners[spinner].complete === true
+      return this.spinners[spinner].state !== states.incomplete
     })
   }
 
@@ -126,10 +156,8 @@ module.exports = class Spinner {
    * @param {} 
    * @returns {undefined}
    */
-  finish(spinner) {
-    this._clearState()
-    this.spinners[spinner].complete = true
-    this._loop()
+  success(spinner) {
+    this._complete(spinner, states.success)
   }
 
   /**
@@ -139,9 +167,6 @@ module.exports = class Spinner {
    * @returns {undefined}
    */
   error(spinner) {
-    this._clearState()
-    this.spinners[spinner].complete = true
-    this.spinners[spinner].error = true
-    this._loop()
+    this._complete(spinner, states.error)
   }
 }
