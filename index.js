@@ -4,22 +4,19 @@
 // Modules
 //----------------------------------------------------------
 // NPM
-const chalk = require('chalk')
-const figures = require('figures')
+const chalk     = require('chalk')
 const logUpdate = require('log-update')
-const mirror = require('constant-mirror')
-const os = require('os')
+const os        = require('os')
+const repeat    = require('lodash.repeat')
+
+// Local
+const states = require('./states')
+const parseOpts = require('./opts')
 
 //----------------------------------------------------------
 // Logic
 //----------------------------------------------------------
-const states = mirror(
-  'incomplete',
-  'success',
-  'error'
-)
-
-module.exports = class Spinner {
+module.exports = class Multispinner {
 
   //----------------------------------------------------------
   // Constructor
@@ -28,7 +25,7 @@ module.exports = class Spinner {
    * @constructor
    * @desc Constructs Spinner class with spinners and options.
    * @param {Object} spinners - Spinners to create
-   * @param {Object} opts - Initialization options
+   * @param {Object} opts - Configurable options
    * @example
    * let spinner = new Spinner({
    *   'spinner1': 'Doing thing',
@@ -38,12 +35,25 @@ module.exports = class Spinner {
    * })
    */
   constructor(spinners, opts) {
+    // throw if spinners param is not passed an array or object
+    if (typeof spinners !== 'object' || spinners === null) {
+      throw new Error(
+        'node-multispinner must be instantiated with ' +
+        'an object or array as its first parameter'
+      )
+    }
+
+    // parse opts param; bind opts to this[opt]
+    parseOpts.apply(this, [opts])
+
+    // internal (non-configurable) props
     this.state = null
-    this.delay = 80
     this.i = 0
-    this.frames = ['-', '\\', '|', '/']
     this.frameCount = this.frames.length
     this.spinners = {}
+    this.indentStr = repeat(' ', this.indent)
+
+    // parse spinners param
     Object.keys(spinners).map(spinner => {
       this.spinners[spinner] = {
         state: states.incomplete,
@@ -58,39 +68,41 @@ module.exports = class Spinner {
   //----------------------------------------------------------
   /**
    * @method _loop
-   * @desc Kicks off animation loop:
-   *  - attach to this.state for access from other methods
-   *  - get current frame of spinner animation
-   *  - check state of each spinner initialized in constructor
-   *      and update this.spinners[spinner].current accordingly
-   *      (which is what will be displayed in terminal)
-   *  - call _update method to apply changes
-   *  - if all spinners are complete, kill loop and exit
+   * @desc Bind animation loop to this.state
    * @returns {undefined}
    */
   _loop() {
     this.state = setInterval(() => {
+      // grab current frame of spinner animation
       let animation = this.frames[this.i = ++this.i % this.frameCount]
+
+      // iterate over spinners to check state and build current strings
       Object.keys(this.spinners).map(spinner => {
         switch (this.spinners[spinner].state) {
           case states.incomplete:
-            this.spinners[spinner].current = chalk.red(
-              `  ${figures.cross} ${this.spinners[spinner].base}`
+            this.spinners[spinner].current = chalk[this.incompleteColor](
+              `${this.indentStr}${animation} ${this.spinners[spinner].base}`
             )
             break
           case states.success:
-            this.spinners[spinner].current = chalk.green(
-              `  ${figures.tick} ${this.spinners[spinner].base}`
+            this.spinners[spinner].current = chalk[this.successColor](
+              `${this.indentStr}${this.successIndicator} ` +
+              `${this.spinners[spinner].base}`
             )
             break
           case states.error:
-            this.spinners[spinner].current = chalk.blue(
-              `  ${animation} ${this.spinners[spinner].base}`
+            this.spinners[spinner].current = chalk[this.errorColor](
+              `${this.indentStr}${this.errorIndicator} ` +
+              `${this.spinners[spinner].base}`
             )
             break
         }
       })
+
+      // call update method to apply current strings to terminal
       this._update()
+
+      // kill loop and exit if all spinners are finished
       if (this._allCompleted()) this._clearState()
     }, this.delay)
   }

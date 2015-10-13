@@ -3,7 +3,11 @@
 - [ ] write tests
 - [ ] finish jsdoc
 - [ ] support configurable opts during initialization
+  - [ ] default text when initializing with array
+  - [ ] clear all when done (logUpdate.clear())
 - [ ] write readme
-- [ ] push to GH
+- [ ] optimize by not checking spinner state anymore once complete (success or err)
+- [ ] publish to GH
 - [ ] hook up ci
+- [ ] publish to npm
 - [ ] submit pr to awesome-nodejs
