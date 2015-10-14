@@ -1,6 +1,7 @@
 describe('parse opts', () => {
   it('Bind defaults to this when no opts are passed')
   it('Override defaults with passed opts')
+  it('Handle partially-configured colors opt')
   it('Throw when opts is not an object')
 
   //----------------------------------------------------------
