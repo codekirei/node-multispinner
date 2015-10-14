@@ -1,9 +1,10 @@
 - [X] change all references to "actions" to spinners
 - [X] refactor nested ternary into if statement
-- [ ] write tests
-  - [ ] stubs
+- [-] write tests
+  - [X] stubs
   - [ ] actual tests
 - [ ] finish jsdoc strings
+- [ ] underscore all internal props
 - [-] support configurable opts during initialization
   - [X] current opts
   - [ ] default text when initializing with array
@@ -12,6 +13,7 @@
   - [ ] configurable options
   - [ ] example gif
 - [ ] optimize by not checking spinner state anymore once complete (success or err)
+- [ ] clean up / dry out main parseOpts loop logic
 - [ ] hook up ci
 - [ ] publish to npm
 - [ ] submit pr to awesome-nodejs

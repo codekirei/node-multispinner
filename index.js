@@ -78,24 +78,21 @@ module.exports = class Multispinner {
 
       // iterate over spinners to check state and build current strings
       Object.keys(this.spinners).map(spinner => {
-        let color
+        let state = this.spinners[spinner].state
         let symbol
-        switch (this.spinners[spinner].state) {
+        switch (state) {
           case states.incomplete:
-            color = this.incompleteColor
             symbol = animation
             break
           case states.success:
-            color = this.successColor
             symbol = this.successIndicator
             break
           case states.error:
-            color = this.errorColor
             symbol = this.errorIndicator
             break
         }
-        this.spinners[spinner].current = this._spinnerStrBuilder(
-          color, symbol, spinner
+        this.spinners[spinner].current = chalk[this.colors[state]](
+          `${this.indentStr}${symbol} ${this.spinners[spinner].base}`
         )
       })
 
@@ -105,17 +102,6 @@ module.exports = class Multispinner {
       // kill loop and exit if all spinners are finished
       if (this._allCompleted()) this._clearState()
     }, this.delay)
-  }
-
-  /**
-   * @method _spinnerStrBuilder
-   * @desc Helper method to build spinner strings for _loop.
-   * @param {}
-   */
-  _spinnerStrBuilder(color, symbol, spinner) {
-    return chalk[color](
-      `${this.indentStr}${symbol} ${this.spinners[spinner].base}`
-    )
   }
 
   /**
@@ -132,9 +118,9 @@ module.exports = class Multispinner {
   }
 
   /**
-   * 
-   * @param {} 
-   * @param {} 
+   *
+   * @param {}
+   * @param {}
    */
   _complete(spinner, state) {
     this._clearState()
@@ -143,7 +129,7 @@ module.exports = class Multispinner {
   }
 
   /**
-   * 
+   *
    * @method
    * @returns
    */
@@ -154,7 +140,7 @@ module.exports = class Multispinner {
   }
 
   /**
-   * 
+   *
    * @method
    * @returns {undefined}
    */
@@ -175,9 +161,9 @@ module.exports = class Multispinner {
   }
 
   /**
-   * 
+   *
    * @method
-   * @param {} 
+   * @param {}
    * @returns {undefined}
    */
   success(spinner) {
@@ -185,9 +171,9 @@ module.exports = class Multispinner {
   }
 
   /**
-   * 
+   *
    * @method
-   * @param {} 
+   * @param {}
    * @returns {undefined}
    */
   error(spinner) {

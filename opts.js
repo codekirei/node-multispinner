@@ -3,25 +3,39 @@
 //----------------------------------------------------------
 // Modules
 //----------------------------------------------------------
+// NPM
 const figures = require('figures')
+
+// Local
+const states = require('./states')
 
 //----------------------------------------------------------
 // Logic
 //----------------------------------------------------------
+// assign defaults
 const defaults = {
+  colors: {},
   delay: 80,
-  errorColor: 'red',
   errorIndicator: figures.cross,
   frames: ['-', '\\', '|', '/'],
-  incompleteColor: 'blue',
   indent: 2,
-  successColor: 'green',
   successIndicator: figures.tick
+}
+defaults.colors[states.incomplete] = 'blue'
+defaults.colors[states.success] = 'green'
+defaults.colors[states.error] = 'red'
+
+/**
+ *
+ * @param {}
+ */
+function typeCheckErr(opt, typeText) {
+  return `node-multispinner: ${opt} option must be ${typeText}`
 }
 
 /**
- * 
- * @param {} 
+ *
+ * @param {}
  */
 function typeCheck(opt, val) {
   switch (opt) {
@@ -30,37 +44,33 @@ function typeCheck(opt, val) {
     case 'delay':
     case 'indent':
       if (typeof val !== 'number') {
-        throw new Error(
-          `node-multispinner: ${opt} option requires a number value`
-        )
+        throw new Error(typeCheckErr(opt, 'a number'))
       }
       break
 
     // strings
-    case 'errorColor':
     case 'errorIndicator':
-    case 'incompleteColor':
-    case 'successColor':
     case 'successIndicator':
       if (typeof val !== 'string') {
-        throw new Error(
-          `node-multispinner: ${opt} option requires a string value`
-        )
+        throw new Error(typeCheckErr(opt, 'a string'))
+      }
+      break
+
+    // object
+    case 'colors':
+      if (!val instanceof Object) {
+        throw new Error(typeCheckErr(opt, 'an object'))
       }
       break
 
     // array of strings
     case 'frames':
       if (!val instanceof Array) {
-        throw new Error(
-          `node-multispinner: ${opt} option requires an array value`
-        )
+        throw new Error(typeCheckErr(opt, 'an array'))
       }
       opt.map(entity => {
         if (typeof entity !== 'string') {
-          throw new Error(
-            `node-multispinner: ${opt} option requires an array of strings`
-          )
+          throw new Error(typeCheckErr(opt, 'an array of strings'))
         }
       })
       break
@@ -68,13 +78,22 @@ function typeCheck(opt, val) {
 }
 
 /**
- * 
+ *
  * @param {} opts
  */
 module.exports = function(opts) {
   // iterate over configurable opts; bind to this[opt]
   Object.keys(defaults).map(opt => {
-    this[opt] = opts && opts[opt] ? opts[opt] : defaults[opt]
+    if (opt === 'colors') {
+      this.colors = {}
+      Object.keys(defaults[opt]).map(state => {
+        this.colors[state] = opts && opts.colors[state]
+          ? opts.colors[state]
+          : defaults.colors[state]
+      })
+    } else {
+      this[opt] = opts && opts[opt] ? opts[opt] : defaults[opt]
+    }
   })
 
   // check for errs
