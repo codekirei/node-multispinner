@@ -78,25 +78,25 @@ module.exports = class Multispinner {
 
       // iterate over spinners to check state and build current strings
       Object.keys(this.spinners).map(spinner => {
+        let color
+        let symbol
         switch (this.spinners[spinner].state) {
           case states.incomplete:
-            this.spinners[spinner].current = chalk[this.incompleteColor](
-              `${this.indentStr}${animation} ${this.spinners[spinner].base}`
-            )
+            color = this.incompleteColor
+            symbol = animation
             break
           case states.success:
-            this.spinners[spinner].current = chalk[this.successColor](
-              `${this.indentStr}${this.successIndicator} ` +
-              `${this.spinners[spinner].base}`
-            )
+            color = this.successColor
+            symbol = this.successIndicator
             break
           case states.error:
-            this.spinners[spinner].current = chalk[this.errorColor](
-              `${this.indentStr}${this.errorIndicator} ` +
-              `${this.spinners[spinner].base}`
-            )
+            color = this.errorColor
+            symbol = this.errorIndicator
             break
         }
+        this.spinners[spinner].current = this._spinnerStrBuilder(
+          color, symbol, spinner
+        )
       })
 
       // call update method to apply current strings to terminal
@@ -105,6 +105,17 @@ module.exports = class Multispinner {
       // kill loop and exit if all spinners are finished
       if (this._allCompleted()) this._clearState()
     }, this.delay)
+  }
+
+  /**
+   * @method _spinnerStrBuilder
+   * @desc Helper method to build spinner strings for _loop.
+   * @param {}
+   */
+  _spinnerStrBuilder(color, symbol, spinner) {
+    return chalk[color](
+      `${this.indentStr}${symbol} ${this.spinners[spinner].base}`
+    )
   }
 
   /**

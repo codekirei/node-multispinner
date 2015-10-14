@@ -79,6 +79,11 @@ module.exports = function(opts) {
 
   // check for errs
   if (opts) {
+    if (!opts instanceof Object) {
+      throw new Error(
+        'node-multispinner: opts parameter must be a valid JS object'
+      )
+    }
     Object.keys(opts).map(opt => {
       // ensure each opt passed is a configurable opt
       if (!defaults.hasOwnProperty(opt)) {
