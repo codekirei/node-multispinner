@@ -78,8 +78,8 @@ function typeCheck(opt, val) {
 }
 
 /**
- * 
- * @param {} 
+ *
+ * @param {}
  */
 function validateOpts(opts) {
   if (!opts instanceof Object) {
@@ -96,7 +96,7 @@ function validateOpts(opts) {
     }
     if (opt === 'colors') {
       Object.keys(opts.colors).map(state => {
-        if(!defaults.colors.hasOwnProperty(state)) {
+        if (!defaults.colors.hasOwnProperty(state)) {
           throw new Error(
             `node-multispinner: ${state} is not a configurable color state`
           )
