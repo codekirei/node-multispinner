@@ -78,6 +78,38 @@ function typeCheck(opt, val) {
 }
 
 /**
+ * 
+ * @param {} 
+ */
+function validateOpts(opts) {
+  if (!opts instanceof Object) {
+    throw new Error(
+      'node-multispinner: opts parameter must be a valid JS object'
+    )
+  }
+  Object.keys(opts).map(opt => {
+    // ensure each opt passed is a configurable opt
+    if (!defaults.hasOwnProperty(opt)) {
+      throw new Error(
+        `node-multispinner: ${opt} is not a configurable option`
+      )
+    }
+    if (opt === 'colors') {
+      Object.keys(opts.colors).map(state => {
+        if(!defaults.colors.hasOwnProperty(state)) {
+          throw new Error(
+            `node-multispinner: ${state} is not a configurable color state`
+          )
+        }
+      })
+    }
+
+    // ensure each opt passed is correct type
+    typeCheck(opt, opts[opt])
+  })
+}
+
+/**
  *
  * @param {} opts
  */
@@ -96,23 +128,8 @@ module.exports = function(opts) {
     }
   })
 
-  // check for errs
+  // check opts for errs
   if (opts) {
-    if (!opts instanceof Object) {
-      throw new Error(
-        'node-multispinner: opts parameter must be a valid JS object'
-      )
-    }
-    Object.keys(opts).map(opt => {
-      // ensure each opt passed is a configurable opt
-      if (!defaults.hasOwnProperty(opt)) {
-        throw new Error(
-          `node-multispinner: ${opt} is not a configurable option`
-        )
-      }
-
-      // ensure each opt passed is correct type
-      typeCheck(opt, opts[opt])
-    })
+    validateOpts(opts)
   }
 }
