@@ -85,10 +85,10 @@ module.exports = class Multispinner {
             symbol = animation
             break
           case states.success:
-            symbol = this.successIndicator
+            symbol = this.successSymbol
             break
           case states.error:
-            symbol = this.errorIndicator
+            symbol = this.errorSymbol
             break
         }
         this.spinners[spinner].current = chalk[this.colors[state]](

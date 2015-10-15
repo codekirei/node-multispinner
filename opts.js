@@ -16,10 +16,10 @@ const states = require('./states')
 const defaults = {
   colors: {},
   delay: 80,
-  errorIndicator: figures.cross,
+  errorSymbol: figures.cross,
   frames: ['-', '\\', '|', '/'],
   indent: 2,
-  successIndicator: figures.tick
+  successSymbol: figures.tick
 }
 defaults.colors[states.incomplete] = 'blue'
 defaults.colors[states.success] = 'green'
@@ -49,8 +49,8 @@ function typeCheck(opt, val) {
       break
 
     // strings
-    case 'errorIndicator':
-    case 'successIndicator':
+    case 'errorSymbol':
+    case 'successSymbol':
       if (typeof val !== 'string') {
         throw new Error(typeCheckErr(opt, 'a string'))
       }

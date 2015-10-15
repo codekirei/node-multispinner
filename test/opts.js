@@ -13,8 +13,8 @@ describe('parse opts', () => {
   //----------------------------------------------------------
   // Typecheck opts -- strings
   //----------------------------------------------------------
-  it('Throw when errorIndicator option is not a string')
-  it('Throw when succesIndicator option is not a string')
+  it('Throw when errorSymbol option is not a string')
+  it('Throw when succesSymbol option is not a string')
 
   //----------------------------------------------------------
   // Typecheck opts -- colors
