@@ -8,7 +8,7 @@ const assert = require('chai').assert
 
 // Local
 const Multispinner = require('../')
-const states = require('../states')
+const states = require('lib/states')
 
 //----------------------------------------------------------
 // Tests

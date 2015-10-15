@@ -4,14 +4,14 @@
 // Modules
 //----------------------------------------------------------
 // NPM
-const chalk     = require('chalk')
 const logUpdate = require('log-update')
 const os        = require('os')
 const repeat    = require('lodash.repeat')
 
 // Local
-const states = require('./states')
-const parseOpts = require('./opts')
+const loop      = require('lib/loop')
+const parseOpts = require('lib/opts')
+const states    = require('lib/states')
 
 //----------------------------------------------------------
 // Logic
@@ -43,10 +43,10 @@ module.exports = class Multispinner {
       )
     }
 
-    // parse opts param; bind opts to this[opt]
+    // parse opts param; bind each opt to this[opt]
     parseOpts.apply(this, [opts])
 
-    // internal (non-configurable) props
+    // declare internal (non-configurable) props
     this.state = null
     this.i = 0
     this.frameCount = this.frames.length
@@ -68,40 +68,11 @@ module.exports = class Multispinner {
   //----------------------------------------------------------
   /**
    * @method loop
-   * @desc Bind animation loop to this.state
+   * @desc Bind animation loop to this.state through loop function.
    * @returns {undefined}
    */
   loop() {
-    this.state = setInterval(() => {
-      // grab current frame of spinner animation
-      let animation = this.frames[this.i = ++this.i % this.frameCount]
-
-      // iterate over spinners to check state and build current strings
-      Object.keys(this.spinners).map(spinner => {
-        let state = this.spinners[spinner].state
-        let symbol
-        switch (state) {
-          case states.incomplete:
-            symbol = animation
-            break
-          case states.success:
-            symbol = this.successSymbol
-            break
-          case states.error:
-            symbol = this.errorSymbol
-            break
-        }
-        this.spinners[spinner].current = chalk[this.colors[state]](
-          `${this.indentStr}${symbol} ${this.spinners[spinner].base}`
-        )
-      })
-
-      // call update method to apply current strings to terminal
-      this.update()
-
-      // kill loop and exit if all spinners are finished
-      if (this.allCompleted()) this.clearState()
-    }, this.delay)
+    loop.apply(this)
   }
 
   /**

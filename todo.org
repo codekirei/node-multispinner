@@ -4,9 +4,9 @@
   - [X] stubs
   - [ ] actual tests
 - [ ] finish jsdoc strings
-- [ ] break out loop method into separate file
+- [X] break out loop method into separate file
 - [X] get rid of underscores
-- [ ] indicator -> symbol
+- [X] indicator -> symbol
 - [-] support configurable opts during initialization
   - [X] current opts
   - [ ] default text when initializing with array
