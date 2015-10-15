@@ -67,11 +67,11 @@ module.exports = class Multispinner {
   // Internal methods
   //----------------------------------------------------------
   /**
-   * @method _loop
+   * @method loop
    * @desc Bind animation loop to this.state
    * @returns {undefined}
    */
-  _loop() {
+  loop() {
     this.state = setInterval(() => {
       // grab current frame of spinner animation
       let animation = this.frames[this.i = ++this.i % this.frameCount]
@@ -97,19 +97,19 @@ module.exports = class Multispinner {
       })
 
       // call update method to apply current strings to terminal
-      this._update()
+      this.update()
 
       // kill loop and exit if all spinners are finished
-      if (this._allCompleted()) this._clearState()
+      if (this.allCompleted()) this.clearState()
     }, this.delay)
   }
 
   /**
-   * @method _update
-   * @desc Call to log-update made by _loop. Iterates over spinners.
+   * @method update
+   * @desc Call to log-update made by loop. Iterates over spinners.
    * @returns {undefined}
    */
-  _update() {
+  update() {
     logUpdate(
       Object.keys(this.spinners).map(spinner => {
         return this.spinners[spinner].current
@@ -122,10 +122,10 @@ module.exports = class Multispinner {
    * @param {}
    * @param {}
    */
-  _complete(spinner, state) {
-    this._clearState()
+  complete(spinner, state) {
+    this.clearState()
     this.spinners[spinner].state = state
-    this._loop()
+    this.loop()
   }
 
   /**
@@ -133,7 +133,7 @@ module.exports = class Multispinner {
    * @method
    * @returns
    */
-  _allCompleted() {
+  allCompleted() {
     return Object.keys(this.spinners).every(spinner => {
       return this.spinners[spinner].state !== states.incomplete
     })
@@ -144,7 +144,7 @@ module.exports = class Multispinner {
    * @method
    * @returns {undefined}
    */
-  _clearState() {
+  clearState() {
     clearInterval(this.state)
   }
 
@@ -157,7 +157,7 @@ module.exports = class Multispinner {
    * @returns {undefined}
    */
   start() {
-    this._loop()
+    this.loop()
   }
 
   /**
@@ -167,7 +167,7 @@ module.exports = class Multispinner {
    * @returns {undefined}
    */
   success(spinner) {
-    this._complete(spinner, states.success)
+    this.complete(spinner, states.success)
   }
 
   /**
@@ -177,6 +177,6 @@ module.exports = class Multispinner {
    * @returns {undefined}
    */
   error(spinner) {
-    this._complete(spinner, states.error)
+    this.complete(spinner, states.error)
   }
 }

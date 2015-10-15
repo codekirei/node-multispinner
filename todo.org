@@ -4,7 +4,9 @@
   - [X] stubs
   - [ ] actual tests
 - [ ] finish jsdoc strings
-- [ ] underscore all internal props
+- [ ] break out loop method into separate file
+- [X] get rid of underscores
+- [ ] indicator -> symbol
 - [-] support configurable opts during initialization
   - [X] current opts
   - [ ] default text when initializing with array

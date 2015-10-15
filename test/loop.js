@@ -1,4 +1,4 @@
-describe('_loop method', () => {
+describe('loop method', () => {
   it('Step through spinner animation frames')
   it('Update spinner string with success state')
   it('Update spinner string with error state')

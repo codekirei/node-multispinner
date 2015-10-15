@@ -1,3 +1,3 @@
 describe('start method', () => {
-  it('Call _loop method')
+  it('Call loop method')
 })
