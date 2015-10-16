@@ -1,4 +1,3 @@
-/* eslint no-undefined:0 */
 'use strict'
 
 //----------------------------------------------------------
@@ -10,22 +9,16 @@ const assert = require('chai').assert
 // Local
 const Multispinner = require('../')
 const states = require('lib/states')
+const types = require('./utils/types')
 
 //----------------------------------------------------------
 // Tests
 //----------------------------------------------------------
 describe('Constructor', () => {
-  let types = {
-    undefined,
-    null: null,
-    'a string': '',
-    'a bool': true,
-    'an int': 0,
-    'a function': () => {}
-  }
-  Object.keys(types).map(type => {
-    it(`Throw when spinners param is ${type}`, () => {
-      assert.throw(() => new Multispinner(types[type]))
+  let relTypes = types.except(['object', 'array'])
+  Object.keys(relTypes).map(type => {
+    it(`Throw when spinners param is type ${type}`, () => {
+      assert.throw(() => new Multispinner(relTypes[type]))
     })
   })
 
