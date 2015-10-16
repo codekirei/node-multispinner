@@ -5,6 +5,11 @@ describe('parse opts', () => {
   it('Throw when opts is not an object')
 
   //----------------------------------------------------------
+  // Typcheck opts -- booleans
+  //----------------------------------------------------------
+  it('Throw when clear option is not a bool')
+
+  //----------------------------------------------------------
   // Typecheck opts -- numbers
   //----------------------------------------------------------
   it('Throw when delay option is not a number')

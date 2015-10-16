@@ -7,10 +7,11 @@
 - [X] break out loop method into separate file
 - [X] get rid of underscores
 - [X] indicator -> symbol
+- [ ] init with array of spinners
 - [-] support configurable opts during initialization
   - [X] current opts
   - [ ] default text when initializing with array
-  - [ ] clear all when done (logUpdate.clear())
+  - [X] clear all when done (logUpdate.clear())
 - [ ] write readme
   - [ ] configurable options
   - [ ] example gif
@@ -18,4 +19,5 @@
 - [ ] clean up / dry out main parseOpts loop logic
 - [ ] hook up ci
 - [ ] publish to npm
+- [ ] add ci, npm, coverage buttons
 - [ ] submit pr to awesome-nodejs

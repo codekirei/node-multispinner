@@ -113,10 +113,12 @@ module.exports = class Multispinner {
   /**
    *
    * @method
+   * @param {} removeOutput
    * @returns {undefined}
    */
-  clearState() {
+  clearState(removeOutput) {
     clearInterval(this.state)
+    if (removeOutput) logUpdate.clear()
   }
 
   //----------------------------------------------------------
