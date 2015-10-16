@@ -7,10 +7,10 @@
 - [X] break out loop method into separate file
 - [X] get rid of underscores
 - [X] indicator -> symbol
-- [ ] init with array of spinners
-- [-] support configurable opts during initialization
+- [X] init with array of spinners
+- [X] support configurable opts during initialization
   - [X] current opts
-  - [ ] default text when initializing with array
+  - [X] default text when initializing with array
   - [X] clear all when done (logUpdate.clear())
 - [ ] write readme
   - [ ] configurable options

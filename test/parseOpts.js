@@ -20,6 +20,8 @@ describe('parse opts', () => {
   //----------------------------------------------------------
   it('Throw when errorSymbol option is not a string')
   it('Throw when succesSymbol option is not a string')
+  it('Throw when preText option is not a string')
+  it('Throw when postText option is not a string')
 
   //----------------------------------------------------------
   // Typecheck opts -- colors

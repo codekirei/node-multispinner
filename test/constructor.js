@@ -1,3 +1,4 @@
+/* eslint no-undefined:0 */
 'use strict'
 
 //----------------------------------------------------------
@@ -14,14 +15,18 @@ const states = require('lib/states')
 // Tests
 //----------------------------------------------------------
 describe('Constructor', () => {
-  it('Throw if spinners param is not an object or array', () => {
-    assert.throw(() => new Multispinner())
-    assert.throw(() => new Multispinner(undefined))
-    assert.throw(() => new Multispinner(null))
-    assert.throw(() => new Multispinner('string'))
-    assert.throw(() => new Multispinner(true))
-    assert.throw(() => new Multispinner(0))
-    assert.throw(() => new Multispinner(function(){}))
+  let types = {
+    undefined,
+    null: null,
+    'a string': '',
+    'a bool': true,
+    'an int': 0,
+    'a function': () => {}
+  }
+  Object.keys(types).map(type => {
+    it(`Throw when spinners param is ${type}`, () => {
+      assert.throw(() => new Multispinner(types[type]))
+    })
   })
 
   it('Construct spinners from object', () => {
@@ -34,12 +39,12 @@ describe('Constructor', () => {
       spinner1: {
         state: states.incomplete,
         current: null,
-        base: spinners.spinner1
+        text: spinners.spinner1
       },
       spinner2: {
         state: states.incomplete,
         current: null,
-        base: spinners.spinner2
+        text: spinners.spinner2
       }
     }
     let multispinner = new Multispinner(spinners)

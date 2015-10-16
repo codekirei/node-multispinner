@@ -23,13 +23,13 @@ function fiftyfifty() {
 }
 
 // Spinners to create
-const spinners = mirror(
+const spinners = [
   'spinnerA',
   'spinnerB',
   'spinnerC',
   'spinnerD',
   'spinnerE'
-)
+]
 
 // Instantiate with spinners
 let multispinner = new Multispinner(spinners)
@@ -38,7 +38,8 @@ let multispinner = new Multispinner(spinners)
 multispinner.start()
 
 // Programmatically create timeout funcs
-Object.keys(spinners).map(spinner => {
+// Object.keys(spinners).map(spinner => {
+spinners.map(spinner => {
   if (fiftyfifty()) {
     // half the time end with success
     setTimeout(() => {

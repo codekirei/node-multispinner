@@ -9,9 +9,10 @@ const os        = require('os')
 const repeat    = require('lodash.repeat')
 
 // Local
-const loop      = require('lib/loop')
-const parseOpts = require('lib/opts')
-const states    = require('lib/states')
+const createSpinner = require('lib/createSpinner')
+const loop          = require('lib/loop')
+const parseOpts     = require('lib/parseOpts')
+const states        = require('lib/states')
 
 //----------------------------------------------------------
 // Logic
@@ -36,7 +37,11 @@ module.exports = class Multispinner {
    */
   constructor(spinners, opts) {
     // throw if spinners param is not passed an array or object
-    if (typeof spinners !== 'object' || spinners === null) {
+    if (
+      spinners instanceof Array === false &&
+      typeof spinners !== 'object' ||
+      spinners === null
+    ) {
       throw new Error(
         'node-multispinner must be instantiated with ' +
         'an object or array as its first parameter'
@@ -54,13 +59,11 @@ module.exports = class Multispinner {
     this.indentStr = repeat(' ', this.indent)
 
     // parse spinners param
-    Object.keys(spinners).map(spinner => {
-      this.spinners[spinner] = {
-        state: states.incomplete,
-        current: null,
-        base: spinners[spinner]
-      }
-    })
+    spinners instanceof Array
+      ? spinners.map(spinner => createSpinner.apply(this, [spinner]))
+      : Object.keys(spinners).map(spinner => {
+        createSpinner.apply(this, [spinner, spinners[spinner]])
+      })
   }
 
   //----------------------------------------------------------
