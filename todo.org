@@ -2,7 +2,18 @@
 - [X] refactor nested ternary into if statement
 - [-] write tests
   - [X] stubs
-  - [ ] actual tests
+  - [-] actual tests
+    - [ ] allCompleted
+    - [ ] clearState
+    - [ ] complete
+    - [X] constructor
+    - [ ] createSpinner
+    - [ ] error
+    - [ ] loop
+    - [ ] parseOpts
+    - [ ] start
+    - [ ] success
+    - [ ] update
 - [ ] finish jsdoc strings
 - [X] break out loop method into separate file
 - [X] get rid of underscores
@@ -16,6 +27,7 @@
   - [ ] configurable options
   - [ ] example gif
 - [ ] optimize by not checking spinner state anymore once complete (success or err)
+- [ ] split out typeTest util into its own repo
 - [ ] clean up / dry out main parseOpts loop logic
 - [ ] hook up ci
 - [ ] publish to npm

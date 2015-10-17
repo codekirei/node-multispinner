@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "chai": "^3.3.0",
+    "faker": "^3.0.1",
     "istanbul": "^0.3.22",
     "mocha": "^2.3.3"
   }

@@ -5,6 +5,7 @@
 //----------------------------------------------------------
 // NPM
 const assert = require('chai').assert
+const faker  = require('faker')
 
 // Local
 const Multispinner = require('../')
@@ -15,6 +16,8 @@ const types = require('./utils/types')
 // Tests
 //----------------------------------------------------------
 describe('Constructor', () => {
+
+  // generate tests for spinner param types other than object or array
   let relTypes = types.except(['object', 'array'])
   Object.keys(relTypes).map(type => {
     it(`Throw when spinners param is type ${type}`, () => {
@@ -22,31 +25,11 @@ describe('Constructor', () => {
     })
   })
 
-  it('Construct spinners from object', () => {
-    // fixtures
-    const spinners = {
-      spinner1: 'spinner1 text',
-      spinner2: 'spinner2 text'
-    }
-    const expected = {
-      spinner1: {
-        state: states.incomplete,
-        current: null,
-        text: spinners.spinner1
-      },
-      spinner2: {
-        state: states.incomplete,
-        current: null,
-        text: spinners.spinner2
-      }
-    }
-    let multispinner = new Multispinner(spinners)
-    assert.deepEqual(expected, multispinner.spinners)
+  it('Assign internal props according to defaults', () => {
+    let multispinner = new Multispinner([faker.fake('{{name.firstName}}')])
+    assert.equal(null, multispinner.state)
+    assert.equal(0, multispinner.i)
+    assert.equal(4, multispinner.frameCount)
+    assert.equal('  ', multispinner.indentStr)
   })
-
-  it('Construct spinners from array')
-
-  it('Parse opts param')
-
-  it('Assign internal props')
 })
