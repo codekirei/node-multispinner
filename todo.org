@@ -3,7 +3,7 @@
 - [-] write tests
   - [X] stubs
   - [-] actual tests
-    - [ ] allCompleted
+    - [X] allCompleted
     - [ ] clearState
     - [ ] complete
     - [X] constructor
