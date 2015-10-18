@@ -97,6 +97,11 @@ module.exports = class Multispinner {
    * @param {}
    */
   complete(spinner, state) {
+    if (!states.hasOwnProperty(state)) {
+      throw new Error(
+        'node-multispinner: complete method must pass valid state param'
+      )
+    }
     this.clearState()
     this.spinners[spinner].state = state
     this.loop()
