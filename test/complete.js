@@ -51,4 +51,22 @@ describe('complete method', () => {
     multispinner.complete(spinner, states.error)
     assert(spy.calledOnce)
   })
+
+  describe('success method', () => {
+    it('Complete spinner and change state to success', () => {
+      spinners.map(spinner => {
+        multispinner.success(spinner)
+        assert.equal(states.success, multispinner.spinners[spinner].state)
+      })
+    })
+  })
+
+  describe('error method', () => {
+    it('Complete spinner and change state to error', () => {
+      spinners.map(spinner => {
+        multispinner.error(spinner)
+        assert.equal(states.error, multispinner.spinners[spinner].state)
+      })
+    })
+  })
 })
