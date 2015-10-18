@@ -33,7 +33,7 @@ function objectOfSpinners(count) {
   let obj = {}
   let i = 0
   while (i < count) {
-    object[faker.fake('{{name.firstName}}')] = faker.fake('{{lorem.sentence}}')
+    obj[faker.fake('{{name.firstName}}')] = faker.fake('{{lorem.sentence}}')
     i++
   }
   return obj

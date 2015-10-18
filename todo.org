@@ -5,9 +5,9 @@
   - [-] actual tests
     - [X] allCompleted
     - [X] clearState
-    - [ ] complete
+    - [X] complete
     - [X] constructor
-    - [ ] createSpinner
+    - [X] createSpinner
     - [ ] error
     - [ ] loop
     - [ ] parseOpts

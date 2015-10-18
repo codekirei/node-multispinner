@@ -11,6 +11,7 @@ const faker  = require('faker')
 const Multispinner = require('../')
 const states = require('lib/states')
 const types = require('./utils/types')
+const genSpinners = require('./utils/genSpinners')
 
 //----------------------------------------------------------
 // Tests
@@ -26,7 +27,8 @@ describe('Constructor', () => {
   })
 
   it('Assign internal props according to defaults', () => {
-    let multispinner = new Multispinner([faker.fake('{{name.firstName}}')])
+    const spinners = genSpinners.arr(3)
+    let multispinner = new Multispinner(spinners)
     assert.equal(null, multispinner.state)
     assert.equal(0, multispinner.i)
     assert.equal(4, multispinner.frameCount)
