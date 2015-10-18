@@ -18,10 +18,9 @@ const genSpinners = require('./utils/genSpinners')
 //----------------------------------------------------------
 describe('Constructor', () => {
 
-  // generate tests for spinner param types other than object or array
-  let relTypes = types.except(['object', 'array'])
-  Object.keys(relTypes).map(type => {
-    it(`Throw when spinners param is type ${type}`, () => {
+  it('Throw when spinners param is not an object or array', () => {
+    const relTypes = types.except(['object', 'array'])
+    Object.keys(relTypes).map(type => {
       assert.throw(() => new Multispinner(relTypes[type]))
     })
   })

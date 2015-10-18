@@ -8,11 +8,11 @@
     - [X] complete
     - [X] constructor
     - [X] createSpinner
-    - [ ] error
+    - [X] error
     - [ ] loop
     - [ ] parseOpts
     - [ ] start
-    - [ ] success
+    - [X] success
     - [ ] update
 - [ ] finish jsdoc strings
 - [X] break out loop method into separate file
@@ -23,12 +23,13 @@
   - [X] current opts
   - [X] default text when initializing with array
   - [X] clear all when done (logUpdate.clear())
-- [ ] write readme
-  - [ ] configurable options
-  - [ ] example gif
+- [ ] break out defaults into their own file, update constructor test
 - [ ] optimize by not checking spinner state anymore once complete (success or err)
 - [ ] split out typeTest util into its own repo
 - [ ] clean up / dry out main parseOpts loop logic
+- [ ] write readme
+  - [ ] configurable options
+  - [ ] example gif
 - [ ] hook up ci
 - [ ] publish to npm
 - [ ] add ci, npm, coverage buttons
