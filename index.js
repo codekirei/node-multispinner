@@ -5,7 +5,6 @@
 //----------------------------------------------------------
 // NPM
 const logUpdate = require('log-update')
-const os        = require('os')
 const repeat    = require('lodash.repeat')
 
 // Local
@@ -32,7 +31,7 @@ module.exports = class Multispinner {
    *   'spinner1': 'Doing thing',
    *   'spinner2': 'Doing other thing'
    * }, {
-   *   'delay': 100
+   *   'interval': 100
    * })
    */
   constructor(spinners, opts) {
@@ -76,19 +75,6 @@ module.exports = class Multispinner {
    */
   loop() {
     loop.apply(this)
-  }
-
-  /**
-   * @method update
-   * @desc Call to log-update made by loop. Iterates over spinners.
-   * @returns {undefined}
-   */
-  update() {
-    logUpdate(
-      Object.keys(this.spinners).map(spinner => {
-        return this.spinners[spinner].current
-      }).join(os.EOL)
-    )
   }
 
   /**

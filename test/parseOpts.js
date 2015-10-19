@@ -12,7 +12,7 @@ describe('parse opts', () => {
   //----------------------------------------------------------
   // Typecheck opts -- numbers
   //----------------------------------------------------------
-  it('Throw when delay option is not a number')
+  it('Throw when interval option is not a number')
   it('Throw when indent option is not a number')
 
   //----------------------------------------------------------
