@@ -12,7 +12,6 @@ const sinon = require('sinon')
 const Multispinner = require('../')
 const genSpinners = require('./utils/genSpinners')
 const states = require('lib/states')
-const loop = require('lib/loop')
 
 //----------------------------------------------------------
 // Tests
@@ -26,27 +25,70 @@ describe('loop method', () => {
     multispinner = new Multispinner(spinners)
   })
 
-  it('Call loop function', () => {
-    const spy = sinon.spy(loop)
+  it('Step through spinner animation frames', () => {
+    // setup
+    const clock = sinon.useFakeTimers()
+    let i = 0
+
+    // start loop
     multispinner.loop()
-    setTimeout(() => {
-      assert(spy.calledOnce)
-      multispinner.clearState()
-    }, multispinner.interval)
+
+    // time leap in intervals to each animation frame and test
+    while (i < multispinner.frameCount) {
+      assert.equal(multispinner.currentFrame, multispinner.frames[i])
+      clock.tick(multispinner.interval)
+      i++
+    }
+
+    // cleanup
+    multispinner.clearState(true)
+    clock.restore()
   })
 
-  it('Step through spinner animation frames')
+  it('Call logUpdate to apply current spinner strings')
+  // it('Call logUpdate to apply current spinner strings', () => {
+  //   // setup
+  //   const spy = sinon.spy(logUpdate)
+  //   const clock = sinon.useFakeTimers()
 
-  it('Call logUpdate to apply current spinner strings', () => {
-    const spy = sinon.spy(logUpdate)
+  //   // start loop
+  //   multispinner.loop()
+
+  //   // time leap and test
+  //   clock.tick(multispinner.interval)
+  //   assert(spy.called)
+
+  //   // clean up
+  //   multispinner.clearState(true)
+  //   clock.restore()
+
+  //   // setTimeout(() => {
+  //   //   assert(spy.called)
+  //   // }, multispinner.interval)
+  //   // multispinner.clearState(true)
+  // })
+
+  it('Call clearState method if allCompleted is true', () => {
+    // setup
+    const spy = sinon.spy(multispinner, 'clearState')
+    const stub = sinon
+      .stub(multispinner, 'allCompleted')
+      .returns(true)
+    const clock = sinon.useFakeTimers()
+
+    // start loop
     multispinner.loop()
-    setTimeout(() => {
-      assert(spy.calledOnce)
-      multispinner.clearState()
-    }, multispinner.interval)
-  })
 
-  it('Call clearState method if allCompleted is true')
+    // time leap and test
+    clock.tick(multispinner.interval)
+    assert(spy.called)
+
+    // clean up
+    multispinner.clearState.restore()
+    clock.restore()
+    stub.restore()
+    multispinner.clearState(true)
+  })
 
   describe('spinner string', () => {
     it('Set symbol to animation when state is incomplete')
