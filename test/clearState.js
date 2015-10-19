@@ -31,6 +31,6 @@ describe('clearState method', () => {
     let spy = sinon.spy(logUpdate, 'clear')
     multispinner.start()
     multispinner.clearState(multispinner.clear)
-    assert(spy.calledOnce)
+    assert(spy.calledOnce, 'log-update clear method called')
   })
 })

@@ -37,7 +37,7 @@ describe('complete method', () => {
   it('Call clearState method', () => {
     let spy = sinon.spy(multispinner, 'clearState')
     multispinner.complete(spinner, states.success)
-    assert(spy.calledOnce)
+    assert(spy.calledOnce, 'clearState method called')
   })
 
   it('Update spinner with state', () => {
@@ -49,7 +49,7 @@ describe('complete method', () => {
   it('Call loop method', () => {
     let spy = sinon.spy(multispinner, 'loop')
     multispinner.complete(spinner, states.error)
-    assert(spy.calledOnce)
+    assert(spy.calledOnce, 'loop method called')
   })
 
   describe('success method', () => {

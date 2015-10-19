@@ -8,6 +8,7 @@ const chalk     = require('chalk')
 const logUpdate = require('log-update')
 const os        = require('os')
 const repeat    = require('lodash.repeat')
+const Writable  = require('stream').Writable
 
 // Local
 const createSpinner = require('lib/createSpinner')
@@ -66,6 +67,18 @@ module.exports = class Multispinner {
       : Object.keys(spinners).map(spinner => {
         createSpinner.apply(this, [spinner, spinners[spinner]])
       })
+
+    // assign this.update based on debug param
+    if (this.debug) {
+      // eat the logupdate output instead of logging to stdout
+      // so it doesn't leak into test reports
+      const stream = new Writable()
+      stream._write = (chunk, enc, next) => { next() }
+      const logUpdateDebug = logUpdate.create(stream)
+      this.update = logUpdateDebug
+    } else {
+      this.update = logUpdate
+    }
   }
 
   //----------------------------------------------------------
@@ -101,8 +114,8 @@ module.exports = class Multispinner {
         )
       })
 
-      // call logUpdate to apply current strings to terminal
-      logUpdate(
+      // call update to apply current strings
+      this.update(
         Object.keys(this.spinners).map(spinner => {
           return this.spinners[spinner].current
         }).join(os.EOL)
@@ -148,7 +161,7 @@ module.exports = class Multispinner {
    */
   clearState(removeOutput) {
     clearInterval(this.state)
-    if (removeOutput) logUpdate.clear()
+    if (removeOutput && !this.debug) logUpdate.clear()
   }
 
   //----------------------------------------------------------

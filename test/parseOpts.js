@@ -8,6 +8,7 @@ describe('parse opts', () => {
   // Typcheck opts -- booleans
   //----------------------------------------------------------
   it('Throw when clear option is not a bool')
+  it('Throw when debug option is not a bool')
 
   //----------------------------------------------------------
   // Typecheck opts -- numbers

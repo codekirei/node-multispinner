@@ -6,12 +6,11 @@
     - [X] allCompleted
     - [X] clearState
     - [X] complete
-    - [X] constructor
+    - [ ] constructor
     - [X] createSpinner
     - [X] error
     - [ ] loop
     - [ ] parseOpts
-    - [ ] start
     - [X] success
     - [ ] update
 - [ ] finish jsdoc strings
@@ -23,10 +22,10 @@
   - [X] current opts
   - [X] default text when initializing with array
   - [X] clear all when done (logUpdate.clear())
-- [ ] break out defaults into their own file, update constructor test
+- [ ] break out defaults into their own file; update constructor test
 - [ ] rename clearState method to something more descriptive
-- [ ] add debug param to logUpdate to a named stream instead of stdout for testing
-- [ ] optimize by not checking spinner state anymore once complete (success or err)
+- [X] add debug param to log to a named stream instead of stdout for testing
+- [ ] optimize by not checking spinner state anymore once complete
 - [ ] split out typeTest util into its own repo
 - [ ] clean up / dry out main parseOpts loop logic
 - [ ] write readme

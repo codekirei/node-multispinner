@@ -19,9 +19,9 @@ const genSpinners = require('./utils/genSpinners')
 describe('Constructor', () => {
 
   it('Throw when spinners param is not an object or array', () => {
-    const relTypes = types.except(['object', 'array'])
-    Object.keys(relTypes).map(type => {
-      assert.throw(() => new Multispinner(relTypes[type]))
+    const relevantTypes = types.except(['object', 'array'])
+    Object.keys(relevantTypes).map(type => {
+      assert.throw(() => new Multispinner(relevantTypes[type]))
     })
   })
 
@@ -32,5 +32,10 @@ describe('Constructor', () => {
     assert.equal(0, multispinner.i)
     assert.equal(4, multispinner.frameCount)
     assert.equal('  ', multispinner.indentStr)
+  })
+
+  describe('update prop', () => {
+    it('Assign writable stream when debug is true')
+    it('Assign log-update when debug is false')
   })
 })

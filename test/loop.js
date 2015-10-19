@@ -22,7 +22,7 @@ describe('loop method', () => {
   const spinner = spinners[0]
   let multispinner
   beforeEach(() => {
-    multispinner = new Multispinner(spinners)
+    multispinner = new Multispinner(spinners, {debug: true})
   })
 
   it('Step through spinner animation frames', () => {
@@ -81,7 +81,7 @@ describe('loop method', () => {
 
     // time leap and test
     clock.tick(multispinner.interval)
-    assert(spy.called)
+    assert(spy.called, 'clearState method called')
 
     // clean up
     multispinner.clearState.restore()
@@ -101,7 +101,7 @@ describe('loop method', () => {
     it('Call loop method', () => {
       const spy = sinon.spy(multispinner, 'loop')
       multispinner.start()
-      assert(spy.calledOnce)
+      assert(spy.calledOnce, 'loop method called')
       multispinner.clearState()
     })
   })
