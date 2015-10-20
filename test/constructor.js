@@ -28,7 +28,6 @@ describe('Constructor', () => {
     const spinners = genSpinners.arr(3)
     const spy = sinon.spy(validateOpts)
     const multispinner = new Multispinner(spinners, {debug: true})
-    console.log(multispinner)
     setTimeout(() => {
       assert(spy.calledOnce, 'validateOpts function called')
       cb()

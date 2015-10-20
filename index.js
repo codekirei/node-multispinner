@@ -48,6 +48,7 @@ module.exports = class Multispinner {
     })
 
     // validate opts and overwrite default props
+    // FIXME: change to if(validOpts(opts)) (return bool)
     if (opts) {
       validateOpts(opts)
       Object.keys(opts).map(prop => {
@@ -120,7 +121,7 @@ module.exports = class Multispinner {
       )
 
       // kill loop and exit if all spinners are finished
-      if (this.allCompleted()) this.clearState(this.clear)
+      if (this.allCompleted()) this.cleanUp()
     }, this.interval)
   }
 
@@ -135,9 +136,9 @@ module.exports = class Multispinner {
         'node-multispinner: complete method must pass valid state param'
       )
     }
-    this.clearState()
+    this.stop()
     this.spinners[spinner].state = state
-    this.loop()
+    this.start()
   }
 
   /**
@@ -154,12 +155,31 @@ module.exports = class Multispinner {
   /**
    *
    * @method
-   * @param {} removeOutput
    * @returns {undefined}
    */
-  clearState(removeOutput) {
+  stop() {
     clearInterval(this.state)
-    if (removeOutput) logUpdate.clear()
+  }
+
+  /**
+   *
+   * @method
+   * @param {}
+   */
+  cleanUp() {
+    // clear interval
+    // FIXME: should this be a conditional call?
+    this.stop()
+
+    // maybe delete logged output
+    if (this.clear) logUpdate.clear()
+
+    // delete props assigned in constructor
+    Object.keys(defaultProps).map(prop => {
+      delete this[prop]
+    })
+    delete this.spinners
+    delete this.update
   }
 
   //----------------------------------------------------------

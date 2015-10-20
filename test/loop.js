@@ -16,7 +16,7 @@ const states = require('lib/states')
 //----------------------------------------------------------
 // Tests
 //----------------------------------------------------------
-describe.skip('loop method', () => {
+describe('loop method', () => {
   // setup
   const spinners = genSpinners.arr(3)
   const spinner = spinners[0]
