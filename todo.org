@@ -1,5 +1,4 @@
 - [ ] refactor tests to account for changed parseopts logic
-  - [ ] fix beforeEach leaking between files
 - [-] write tests
   - [X] stubs
   - [-] actual tests
