@@ -1,5 +1,5 @@
-- [X] change all references to "actions" to spinners
-- [X] refactor nested ternary into if statement
+- [ ] refactor tests to account for changed parseopts logic
+  - [ ] fix beforeEach leaking between files
 - [-] write tests
   - [X] stubs
   - [-] actual tests
@@ -14,23 +14,10 @@
     - [X] success
     - [ ] update
 - [ ] finish jsdoc strings
-- [X] break out loop method into separate file
-- [X] get rid of underscores
-- [X] indicator -> symbol
-- [X] init with array of spinners
-- [X] support configurable opts during initialization
-  - [X] current opts
-  - [X] default text when initializing with array
-  - [X] clear all when done (logUpdate.clear())
-- [ ] break out defaults into their own file; update constructor test
-- [ ] refactor tests to account for changed parseopts logic
-  - [ ] fix beforeEach leaking between files
 - [ ] rename clearState method to something more descriptive
-- [X] add debug param to log to a named stream instead of stdout for testing
 - [ ] optimize by not checking spinner state anymore once complete
 - [ ] consolidate all error reporting into one lib file
 - [ ] split out typeTest util into its own repo
-- [X] clean up / dry out main parseOpts loop logic
 - [ ] write readme
   - [ ] configurable options
   - [ ] example gif
