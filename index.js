@@ -7,13 +7,13 @@
 const chalk     = require('chalk')
 const logUpdate = require('log-update')
 const os        = require('os')
-const repeat    = require('lodash.repeat')
 const Writable  = require('stream').Writable
 
 // Local
 const createSpinner = require('lib/createSpinner')
-const parseOpts     = require('lib/parseOpts')
+const validateOpts  = require('lib/validateOpts')
 const states        = require('lib/states')
+const defaultProps  = require('lib/defaultProps')
 
 //----------------------------------------------------------
 // Logic
@@ -28,13 +28,6 @@ module.exports = class Multispinner {
    * @desc Constructs Spinner class with spinners and options.
    * @param {Object} spinners - Spinners to create
    * @param {Object} opts - Configurable options
-   * @example
-   * let spinner = new Spinner({
-   *   'spinner1': 'Doing thing',
-   *   'spinner2': 'Doing other thing'
-   * }, {
-   *   'interval': 100
-   * })
    */
   constructor(spinners, opts) {
     // throw if spinners param is not passed an array or object
@@ -49,17 +42,18 @@ module.exports = class Multispinner {
       )
     }
 
-    // parse opts param; bind each opt to this[opt]
-    parseOpts.apply(this, [opts])
+    // assign default props
+    Object.keys(defaultProps).map(prop => {
+      this[prop] = defaultProps[prop]
+    })
 
-    // declare internal (non-configurable) props
-    this.state = null
-    this.i = 0
-    // FIXME write test for this prop
-    this.currentFrame = this.frames[this.i]
-    this.frameCount = this.frames.length
-    this.spinners = {}
-    this.indentStr = repeat(' ', this.indent)
+    // validate opts and overwrite default props
+    if (opts) {
+      validateOpts(opts)
+      Object.keys(opts).map(prop => {
+        this[prop] = opts[prop]
+      })
+    }
 
     // parse spinners param
     spinners instanceof Array
@@ -97,19 +91,23 @@ module.exports = class Multispinner {
       // iterate over spinners to check state and build current strings
       Object.keys(this.spinners).map(spinner => {
         let state = this.spinners[spinner].state
+        let color
         let symbol
         switch (state) {
           case states.incomplete:
+            color = this.incompleteColor
             symbol = this.currentFrame
             break
           case states.success:
+            color = this.successColor
             symbol = this.successSymbol
             break
           case states.error:
+            color = this.errorColor
             symbol = this.errorSymbol
             break
         }
-        this.spinners[spinner].current = chalk[this.colors[state]](
+        this.spinners[spinner].current = chalk[color](
           `${this.indentStr}${symbol} ${this.spinners[spinner].text}`
         )
       })
@@ -161,7 +159,7 @@ module.exports = class Multispinner {
    */
   clearState(removeOutput) {
     clearInterval(this.state)
-    if (removeOutput && !this.debug) logUpdate.clear()
+    if (removeOutput) logUpdate.clear()
   }
 
   //----------------------------------------------------------

@@ -16,7 +16,7 @@ const states = require('lib/states')
 //----------------------------------------------------------
 // Tests
 //----------------------------------------------------------
-describe('loop method', () => {
+describe.skip('loop method', () => {
   // setup
   const spinners = genSpinners.arr(3)
   const spinner = spinners[0]
@@ -45,8 +45,8 @@ describe('loop method', () => {
     clock.restore()
   })
 
-  it('Call logUpdate to apply current spinner strings')
-  // it('Call logUpdate to apply current spinner strings', () => {
+  // it('Call logUpdate to apply current spinner strings')
+  // it('Call update to apply current spinner strings', () => {
   //   // setup
   //   const spy = sinon.spy(logUpdate)
   //   const clock = sinon.useFakeTimers()

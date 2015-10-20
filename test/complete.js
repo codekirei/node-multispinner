@@ -16,17 +16,16 @@ const states = require('lib/states')
 // Tests
 //----------------------------------------------------------
 describe('complete method', () => {
-
   // setup
   const spinners = genSpinners.arr(3)
   const spinner = spinners[0]
   let multispinner
   beforeEach(() => {
-    multispinner = new Multispinner(spinners)
+    multispinner = new Multispinner(spinners, {debug: true})
     multispinner.start()
   })
   afterEach(() => {
-    multispinner.clearState()
+    multispinner.clearState(true)
   })
 
   it('Throw if incorrect state passed', () => {
@@ -37,7 +36,7 @@ describe('complete method', () => {
   it('Call clearState method', () => {
     let spy = sinon.spy(multispinner, 'clearState')
     multispinner.complete(spinner, states.success)
-    assert(spy.calledOnce, 'clearState method called')
+    assert(spy.calledOnce, 'call clearState method')
   })
 
   it('Update spinner with state', () => {
@@ -49,7 +48,7 @@ describe('complete method', () => {
   it('Call loop method', () => {
     let spy = sinon.spy(multispinner, 'loop')
     multispinner.complete(spinner, states.error)
-    assert(spy.calledOnce, 'loop method called')
+    assert(spy.calledOnce, 'call loop method')
   })
 
   describe('success method', () => {

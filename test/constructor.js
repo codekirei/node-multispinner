@@ -5,11 +5,11 @@
 //----------------------------------------------------------
 // NPM
 const assert = require('chai').assert
-const faker  = require('faker')
+const sinon = require('sinon')
 
 // Local
 const Multispinner = require('../')
-const states = require('lib/states')
+const validateOpts = require('lib/validateOpts')
 const types = require('./utils/types')
 const genSpinners = require('./utils/genSpinners')
 
@@ -17,7 +17,6 @@ const genSpinners = require('./utils/genSpinners')
 // Tests
 //----------------------------------------------------------
 describe('Constructor', () => {
-
   it('Throw when spinners param is not an object or array', () => {
     const relevantTypes = types.except(['object', 'array'])
     Object.keys(relevantTypes).map(type => {
@@ -25,14 +24,28 @@ describe('Constructor', () => {
     })
   })
 
-  it('Assign internal props according to defaults', () => {
+  it('Validate options with validateOpts function', (cb) => {
     const spinners = genSpinners.arr(3)
-    let multispinner = new Multispinner(spinners)
-    assert.equal(null, multispinner.state)
-    assert.equal(0, multispinner.i)
-    assert.equal(4, multispinner.frameCount)
-    assert.equal('  ', multispinner.indentStr)
+    const spy = sinon.spy(validateOpts)
+    const multispinner = new Multispinner(spinners, {debug: true})
+    console.log(multispinner)
+    setTimeout(() => {
+      assert(spy.calledOnce, 'validateOpts function called')
+      cb()
+    }, multispinner.interval)
+    // console.log('TEST2')
+    // assert(spy.calledOnce, 'validateOpts function called')
   })
+
+  it('Assign internal props according to defaults')
+  // it('Assign internal props according to defaults', () => {
+  //   const spinners = genSpinners.arr(3)
+  //   let multispinner = new Multispinner(spinners)
+  //   assert.equal(null, multispinner.state)
+  //   assert.equal(0, multispinner.i)
+  //   assert.equal(4, multispinner.frameCount)
+  //   assert.equal('  ', multispinner.indentStr)
+  // })
 
   describe('update prop', () => {
     it('Assign writable stream when debug is true')
