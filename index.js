@@ -11,6 +11,7 @@ const Writable  = require('stream').Writable
 const kindOf    = require('kind-of')
 
 // Local
+const errs = require('lib/errs').index
 const createSpinner = require('lib/createSpinner')
 const validOpts     = require('lib/validOpts')
 const states        = require('lib/states')
@@ -31,20 +32,15 @@ module.exports = class Multispinner {
    * @param {Object} opts - Configurable options
    */
   constructor(spinners, opts) {
-    // throw if spinners param is not passed an array or object
-    if (
-      spinners instanceof Array === false &&
-      typeof spinners !== 'object' ||
-      spinners === null
-    ) {
-      throw new Error(
-        'node-multispinner must be instantiated with ' +
-        'an object or array as its first parameter'
-      )
+    // throw if spinners param is not an array or object
+    const spinnersType = kindOf(spinners)
+    if (spinnersType !== 'object' && spinnersType !== 'array') {
+      errs.spinnersType()
     }
 
-    // throw if opts param is not passed an object
-    if ()
+    // throw if opts param is not an object
+    const optsType = kindOf(opts)
+    if (optsType !== 'object') errs.optsType()
 
     // assign default props
     Object.keys(defaultProps).map(prop => {
