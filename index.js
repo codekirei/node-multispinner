@@ -8,10 +8,11 @@ const chalk     = require('chalk')
 const logUpdate = require('log-update')
 const os        = require('os')
 const Writable  = require('stream').Writable
+const kindOf    = require('kind-of')
 
 // Local
 const createSpinner = require('lib/createSpinner')
-const validateOpts  = require('lib/validateOpts')
+const validOpts     = require('lib/validOpts')
 const states        = require('lib/states')
 const defaultProps  = require('lib/defaultProps')
 
@@ -42,15 +43,16 @@ module.exports = class Multispinner {
       )
     }
 
+    // throw if opts param is not passed an object
+    if ()
+
     // assign default props
     Object.keys(defaultProps).map(prop => {
       this[prop] = defaultProps[prop]
     })
 
     // validate opts and overwrite default props
-    // FIXME: change to if(validOpts(opts)) (return bool)
-    if (opts) {
-      validateOpts(opts)
+    if (validOpts(opts)) {
       Object.keys(opts).map(prop => {
         this[prop] = opts[prop]
       })

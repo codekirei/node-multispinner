@@ -15,33 +15,23 @@ const genSpinners = require('./utils/genSpinners')
 //----------------------------------------------------------
 // Tests
 //----------------------------------------------------------
-describe('clearState method', () => {
-  // fixtures
+describe('stop method', () => {
+  // setup
   const spinners = genSpinners.arr(3)
+  let m
+  beforeEach(() => {
+    m = new Multispinner(spinners, {debug: true})
+    m.start()
+  })
+  afterEach(() => {
+    m.cleanUp()
+  })
 
   it('Clear interval bound to this.state', () => {
     // setup
-    const m = new Multispinner(spinners, {debug: true})
-    m.start()
-    m.clearState()
+    m.stop()
 
     // assertions
     assert.equal(-1, m.state._idleTimeout)
-  })
-
-  it('Call log-update.clear() when this.clear is true', () => {
-    // setup
-    const spy = sinon.spy(logUpdate, 'clear')
-    const m = new Multispinner(spinners, {
-      debug: true,
-      clear: true
-    })
-    m.start()
-    m.clearState(m.clear)
-
-    // assertions
-    assert(spy.calledOnce, 'log-update clear method called')
-
-    // cleanup
   })
 })
