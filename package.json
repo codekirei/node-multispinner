@@ -22,6 +22,7 @@
     "constant-mirror": "^1.0.5",
     "figures": "^1.4.0",
     "kind-of": "^2.0.1",
+    "lodash.clonedeep": "^3.0.2",
     "lodash.repeat": "^3.0.1",
     "log-update": "^1.0.2"
   },

@@ -4,18 +4,19 @@
 // Modules
 //----------------------------------------------------------
 // NPM
+const Writable  = require('stream').Writable
 const chalk     = require('chalk')
+const clone     = require('lodash.clonedeep')
+const kindOf    = require('kind-of')
 const logUpdate = require('log-update')
 const os        = require('os')
-const Writable  = require('stream').Writable
-const kindOf    = require('kind-of')
 
 // Local
-const errs = require('lib/errs').index
 const createSpinner = require('lib/createSpinner')
-const validOpts     = require('lib/validOpts')
-const states        = require('lib/states')
 const defaultProps  = require('lib/defaultProps')
+const errs          = require('lib/errs').index
+const states        = require('lib/states')
+const validOpts     = require('lib/validOpts')
 
 //----------------------------------------------------------
 // Logic
@@ -42,9 +43,9 @@ module.exports = class Multispinner {
     const optsType = kindOf(opts)
     if (opts && optsType !== 'object') errs.optsType()
 
-    // assign default props
+    // clone default props
     Object.keys(defaultProps).map(prop => {
-      this[prop] = defaultProps[prop]
+      this[prop] = clone(defaultProps[prop])
     })
 
     // validate opts and overwrite default props
