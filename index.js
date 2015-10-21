@@ -40,7 +40,7 @@ module.exports = class Multispinner {
 
     // throw if opts param is not an object
     const optsType = kindOf(opts)
-    if (optsType !== 'object') errs.optsType()
+    if (opts && optsType !== 'object') errs.optsType()
 
     // assign default props
     Object.keys(defaultProps).map(prop => {
