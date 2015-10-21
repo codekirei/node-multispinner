@@ -45,6 +45,8 @@ describe('Constructor', () => {
 
     it('Create spinners with createSpinner function')
 
+    it('Multiple instances do not share properties')
+
     describe('update prop', () => {
       it('Assign writable stream when debug is true')
       it('Assign log-update when debug is false')

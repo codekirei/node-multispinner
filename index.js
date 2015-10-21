@@ -120,7 +120,10 @@ module.exports = class Multispinner {
       )
 
       // kill loop and exit if all spinners are finished
-      if (this.allCompleted()) this.cleanUp()
+      if (this.allCompleted()) {
+        this.stop()
+        if (this.clear) logUpdate.clear()
+      }
     }, this.interval)
   }
 
@@ -158,27 +161,6 @@ module.exports = class Multispinner {
    */
   stop() {
     clearInterval(this.state)
-  }
-
-  /**
-   *
-   * @method
-   * @param {}
-   */
-  cleanUp() {
-    // clear interval
-    // FIXME: should this be a conditional call?
-    this.stop()
-
-    // maybe delete logged output
-    if (this.clear) logUpdate.clear()
-
-    // delete props assigned in constructor
-    Object.keys(defaultProps).map(prop => {
-      delete this[prop]
-    })
-    delete this.spinners
-    delete this.update
   }
 
   //----------------------------------------------------------

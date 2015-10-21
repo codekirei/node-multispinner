@@ -20,9 +20,6 @@ describe('allCompleted method', () => {
   beforeEach(() => {
     m = new Multispinner(spinners, {debug: true})
   })
-  afterEach(() => {
-    m.cleanUp()
-  })
 
   it('Return false if not all spinners are complete', () => {
     let i = 0
