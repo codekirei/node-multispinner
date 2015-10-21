@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "gulp"
+    "dev": "mocha -w -R min"
   },
   "keywords": [
     "animation",
@@ -28,8 +28,6 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "faker": "^3.0.1",
-    "gulp": "^3.9.0",
-    "gulp-mocha": "^2.1.3",
     "istanbul": "^0.3.22",
     "mocha": "^2.3.3",
     "sinon": "^1.17.1"

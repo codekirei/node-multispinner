@@ -16,15 +16,24 @@ const genSpinners = require('./utils/genSpinners')
 describe('allCompleted method', () => {
   // setup
   const spinners = genSpinners.arr(3)
+  let m
+  beforeEach(() => {
+    m = new Multispinner(spinners, {debug: true})
+  })
+  afterEach(() => {
+    m.cleanUp()
+  })
 
   it('Return false if not all spinners are complete', () => {
-    const m = new Multispinner(spinners, {debug: true})
-    m.success(spinners[0])
-    assert.isFalse(m.allCompleted())
+    let i = 0
+    const lastSpinner = spinners.length - 1
+    for (i; i < lastSpinner; i++) {
+      m.success(spinners[i])
+      assert.isFalse(m.allCompleted())
+    }
   })
 
   it('Return true if all spinners are complete', () => {
-    const m = new Multispinner(spinners, {debug: true})
     spinners.map(spinner => {
       m.error(spinner)
     })
