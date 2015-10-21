@@ -14,6 +14,7 @@
     - [ ] update
 - [ ] finish jsdoc strings
 - [X] rename clearState method to something more descriptive
+- [ ] rename debug param to testing
 - [ ] optimize by not checking spinner state anymore once complete
 - [ ] consolidate all error reporting into one lib file
 - [ ] split out typeTest util into its own repo

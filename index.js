@@ -55,7 +55,7 @@ module.exports = class Multispinner {
     }
 
     // parse spinners param
-    spinners instanceof Array
+    spinnersType === 'array'
       ? spinners.map(spinner => createSpinner.apply(this, [spinner]))
       : Object.keys(spinners).map(spinner => {
         createSpinner.apply(this, [spinner, spinners[spinner]])
