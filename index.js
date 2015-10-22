@@ -11,8 +11,8 @@ const os    = require('os')
 
 // Local
 const Spinners     = require('lib/spinners')
-const defaultProps = require('lib/defaultProps')
-const states       = require('lib/states')
+const defaultProps = require('lib/constants').defaultProps
+const states       = require('lib/constants').states
 const validOpts    = require('lib/validOpts')
 const voidOut      = require('lib/voidOut')
 const errs         = require('lib/errs').complete
