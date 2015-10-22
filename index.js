@@ -7,7 +7,6 @@
 const Writable  = require('stream').Writable
 const chalk     = require('chalk')
 const clone     = require('lodash.clonedeep')
-const kindOf    = require('kind-of')
 const logUpdate = require('log-update')
 const merge     = require('lodash.merge')
 const os        = require('os')
@@ -33,9 +32,13 @@ module.exports = class Multispinner {
    * @param {Object} opts - Configurable options
    */
   constructor(spinners, opts) {
-    // bind props from defaults and opts
+    // clone defaults
     let props = clone(defaultProps)
+
+    // merge in opts
     if (validOpts(opts)) merge(props, opts)
+
+    // bind props to this
     Object.keys(props).map(prop => {
       this[prop] = props[prop]
     })
@@ -71,7 +74,7 @@ module.exports = class Multispinner {
         this.i = ++this.i % this.frameCount
       ]
 
-      // iterate over spinners to check state and build current strings
+      // iterate over spinners + update current strings based on state
       Object.keys(this.spinners).map(spinner => {
         let state = this.spinners[spinner].state
         this.spinners[spinner].current = chalk[this.color[state]]([
@@ -82,14 +85,14 @@ module.exports = class Multispinner {
         ].join(''))
       })
 
-      // call update on newline-joined current strings
+      // call update to print newline-joined current strings
       this.update(
         Object.keys(this.spinners).map(spinner => {
           return this.spinners[spinner].current
         }).join(os.EOL)
       )
 
-      // kill loop and exit if all spinners are finished
+      // stop loop and maybe clear if done
       if (this.allCompleted()) {
         this.stop()
         if (this.clear) logUpdate.clear()
@@ -137,7 +140,7 @@ module.exports = class Multispinner {
   // External methods
   //----------------------------------------------------------
   /**
-   * Convenience method to kick off animation loop.
+   * Convenience method to start animation loop.
    * @method
    * @returns {undefined}
    */
