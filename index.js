@@ -12,11 +12,10 @@ const logUpdate = require('log-update')
 const os        = require('os')
 
 // Local
-const createSpinner = require('lib/createSpinner')
-const defaultProps  = require('lib/defaultProps')
-const errs          = require('lib/errs').index
-const states        = require('lib/states')
-const validOpts     = require('lib/validOpts')
+const Spinners       = require('lib/spinners')
+const defaultProps   = require('lib/defaultProps')
+const states         = require('lib/states')
+const validOpts      = require('lib/validOpts')
 
 //----------------------------------------------------------
 // Logic
@@ -33,16 +32,6 @@ module.exports = class Multispinner {
    * @param {Object} opts - Configurable options
    */
   constructor(spinners, opts) {
-    // throw if spinners param is not an array or object
-    const spinnersType = kindOf(spinners)
-    if (spinnersType !== 'object' && spinnersType !== 'array') {
-      errs.spinnersType()
-    }
-
-    // throw if opts param is not an object
-    const optsType = kindOf(opts)
-    if (opts && optsType !== 'object') errs.optsType()
-
     // clone default props
     Object.keys(defaultProps).map(prop => {
       this[prop] = clone(defaultProps[prop])
@@ -55,12 +44,8 @@ module.exports = class Multispinner {
       })
     }
 
-    // parse spinners param
-    spinnersType === 'array'
-      ? spinners.map(spinner => createSpinner.apply(this, [spinner]))
-      : Object.keys(spinners).map(spinner => {
-        createSpinner.apply(this, [spinner, spinners[spinner]])
-      })
+    // instantiate spinners
+    this.spinners = new Spinners(spinners, this.preText, this.postText)
 
     // assign this.update based on debug param
     if (this.debug) {

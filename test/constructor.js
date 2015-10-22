@@ -29,23 +29,11 @@ describe('Constructor', () => {
   })
 
   describe('props', () => {
-    it('Assign default props')
-
-    it('Validate options with validOpts function', (cb) => {
-      const spinners = genSpinners.arr(3)
-      const spy = sinon.spy(validOpts)
-      const m = new Multispinner(spinners, {debug: true})
-      setTimeout(() => {
-        assert(spy.called, 'validOpts function called')
-        cb()
-      }, m.interval)
-    })
+    it('Clone default props')
 
     it('Overwrite default props with opts')
 
-    it('Create spinners with createSpinner function')
-
-    it('Multiple instances do not share properties')
+    it('Multiple instances have unique properties')
 
     describe('update prop', () => {
       it('Assign writable stream when debug is true')

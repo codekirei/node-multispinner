@@ -24,9 +24,6 @@ describe('complete method', () => {
     m = new Multispinner(spinners, {debug: true})
     m.start()
   })
-  afterEach(() => {
-    m.stop()
-  })
 
   it('Throw if incorrect state passed', () => {
     assert.throws(() => m.complete(spinner))
@@ -36,7 +33,7 @@ describe('complete method', () => {
   it('Call stop method', () => {
     let spy = sinon.spy(m, 'stop')
     m.complete(spinner, states.success)
-    assert(spy.calledOnce, 'call clearState method')
+    assert(spy.calledOnce, 'call stop method')
     m.stop.restore()
   })
 

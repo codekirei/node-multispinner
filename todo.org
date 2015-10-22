@@ -1,3 +1,4 @@
+- [ ] change opts parsing to deep merge + simplify loop logic
 - [ ] refactor tests to account for changed parseopts logic
 - [-] write tests
   - [X] stubs

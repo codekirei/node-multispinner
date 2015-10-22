@@ -16,41 +16,39 @@ const genSpinners = require('./utils/genSpinners')
 // Tests
 //----------------------------------------------------------
 describe('createSpinner function', () => {
-  it('Create spinners from object')
-  // it('Create spinners from object', () => {
-  //   // build spinners and expected
-  //   const spinners = genSpinners.obj(5)
-  //   const expected = {}
-  //   Object.keys(spinners).map(spinner => {
-  //     expected[spinner] = {
-  //       state: states.incomplete,
-  //       current: null,
-  //       text: spinners[spinner]
-  //     }
-  //   })
+  it('Create spinners from object', () => {
+    // build spinners and expected
+    const spinners = genSpinners.obj(5)
+    const expected = {}
+    Object.keys(spinners).map(spinner => {
+      expected[spinner] = {
+        state: states.incomplete,
+        current: null,
+        text: spinners[spinner]
+      }
+    })
 
-  //   // instantiate and test
-  //   const multispinner = new Multispinner(spinners)
-  //   assert.deepEqual(expected, multispinner.spinners)
-  // })
+    // instantiate and test
+    const multispinner = new Multispinner(spinners)
+    assert.deepEqual(expected, multispinner.spinners)
+  })
 
-  it('Create spinners from array')
-  // it('Create spinners from array', () => {
-  //   // build spinners and expected
-  //   const spinners = genSpinners.arr(5)
-  //   const expected = {}
-  //   spinners.map(spinner => {
-  //     expected[spinner] = {
-  //       state: states.incomplete,
-  //       current: null,
-  //       text: spinner
-  //     }
-  //   })
+  it('Create spinners from array', () => {
+    // build spinners and expected
+    const spinners = genSpinners.arr(5)
+    const expected = {}
+    spinners.map(spinner => {
+      expected[spinner] = {
+        state: states.incomplete,
+        current: null,
+        text: spinner
+      }
+    })
 
-  //   // instantiate and test
-  //   const multispinner = new Multispinner(spinners)
-  //   assert.deepEqual(expected, multispinner.spinners)
-  // })
+    // instantiate and test
+    const multispinner = new Multispinner(spinners)
+    assert.deepEqual(expected, multispinner.spinners)
+  })
 
   describe('preText and postText', () => {
     const spinners = genSpinners.arr(3)
