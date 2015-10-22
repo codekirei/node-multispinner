@@ -4,18 +4,17 @@
 // Modules
 //----------------------------------------------------------
 // NPM
-const Writable  = require('stream').Writable
-const chalk     = require('chalk')
-const clone     = require('lodash.clonedeep')
-const logUpdate = require('log-update')
-const merge     = require('lodash.merge')
-const os        = require('os')
+const chalk = require('chalk')
+const clone = require('lodash.clonedeep')
+const merge = require('lodash.merge')
+const os    = require('os')
 
 // Local
-const Spinners       = require('lib/spinners')
-const defaultProps   = require('lib/defaultProps')
-const states         = require('lib/states')
-const validOpts      = require('lib/validOpts')
+const Spinners     = require('lib/spinners')
+const defaultProps = require('lib/defaultProps')
+const states       = require('lib/states')
+const validOpts    = require('lib/validOpts')
+const voidOut      = require('lib/voidOut')
 
 //----------------------------------------------------------
 // Logic
@@ -46,17 +45,8 @@ module.exports = class Multispinner {
     // instantiate spinners
     this.spinners = new Spinners(spinners, this.preText, this.postText)
 
-    // assign this.update based on debug param
-    if (this.debug) {
-      // eat the logupdate output instead of logging to stdout
-      // so it doesn't leak into test reports
-      const stream = new Writable()
-      stream._write = (chunk, enc, next) => { next() }
-      const logUpdateDebug = logUpdate.create(stream)
-      this.update = logUpdateDebug
-    } else {
-      this.update = logUpdate
-    }
+    // void output if testing
+    if (this.testing) this.update = voidOut()
   }
 
   //----------------------------------------------------------
@@ -95,7 +85,7 @@ module.exports = class Multispinner {
       // stop loop and maybe clear if done
       if (this.allCompleted()) {
         this.stop()
-        if (this.clear) logUpdate.clear()
+        if (this.clear) this.update.clear()
       }
     }, this.interval)
   }
