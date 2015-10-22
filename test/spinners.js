@@ -9,7 +9,7 @@ const faker = require('faker')
 
 // Local
 const Multispinner = require('../')
-const states = require('lib/states')
+const states = require('lib/constants').states
 const genSpinners = require('./utils/genSpinners')
 
 //----------------------------------------------------------
