@@ -67,33 +67,22 @@ module.exports = class Multispinner {
   loop() {
     this.state = setInterval(() => {
       // update current frame of spinner animation
-      this.currentFrame = this.frames[this.i = ++this.i % this.frameCount]
+      this.symbol[states.incomplete] = this.frames[
+        this.i = ++this.i % this.frameCount
+      ]
 
       // iterate over spinners to check state and build current strings
       Object.keys(this.spinners).map(spinner => {
         let state = this.spinners[spinner].state
-        let color
-        let symbol
-        switch (state) {
-          case states.incomplete:
-            color = this.incompleteColor
-            symbol = this.currentFrame
-            break
-          case states.success:
-            color = this.successColor
-            symbol = this.successSymbol
-            break
-          case states.error:
-            color = this.errorColor
-            symbol = this.errorSymbol
-            break
-        }
-        this.spinners[spinner].current = chalk[color](
-          `${this.indentStr}${symbol} ${this.spinners[spinner].text}`
-        )
+        this.spinners[spinner].current = chalk[this.color[state]]([
+          this.indentStr,
+          this.symbol[state],
+          ' ',
+          this.spinners[spinner].text
+        ].join(''))
       })
 
-      // call update to apply current strings
+      // call update on newline-joined current strings
       this.update(
         Object.keys(this.spinners).map(spinner => {
           return this.spinners[spinner].current
