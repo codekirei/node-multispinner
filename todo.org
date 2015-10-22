@@ -1,5 +1,6 @@
 - [ ] change opts parsing to deep merge + simplify loop logic
 - [ ] refactor tests to account for changed parseopts logic
+- [ ] FIXMEs
 - [-] write tests
   - [X] stubs
   - [-] actual tests

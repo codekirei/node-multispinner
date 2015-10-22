@@ -9,6 +9,7 @@ const chalk     = require('chalk')
 const clone     = require('lodash.clonedeep')
 const kindOf    = require('kind-of')
 const logUpdate = require('log-update')
+const merge     = require('lodash.merge')
 const os        = require('os')
 
 // Local
@@ -32,17 +33,12 @@ module.exports = class Multispinner {
    * @param {Object} opts - Configurable options
    */
   constructor(spinners, opts) {
-    // clone default props
-    Object.keys(defaultProps).map(prop => {
-      this[prop] = clone(defaultProps[prop])
+    // bind props from defaults and opts
+    let props = clone(defaultProps)
+    if (validOpts(opts)) merge(props, opts)
+    Object.keys(props).map(prop => {
+      this[prop] = props[prop]
     })
-
-    // validate opts and overwrite default props
-    if (validOpts(opts)) {
-      Object.keys(opts).map(prop => {
-        this[prop] = opts[prop]
-      })
-    }
 
     // instantiate spinners
     this.spinners = new Spinners(spinners, this.preText, this.postText)
