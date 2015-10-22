@@ -107,7 +107,7 @@ describe('Methods', () => {
   //----------------------------------------------------------
   // loop
   //----------------------------------------------------------
-  describe('loop method', () => {
+  describe('loop', () => {
     // setup
     const spinners = genSpinners.arr(3)
     const spinner = spinners[0]
@@ -192,7 +192,7 @@ describe('Methods', () => {
   //----------------------------------------------------------
   // complete
   //----------------------------------------------------------
-  describe('complete method', () => {
+  describe('complete', () => {
     // setup
     const spinners = genSpinners.arr(3)
     const spinner = spinners[0]
@@ -231,7 +231,7 @@ describe('Methods', () => {
   //----------------------------------------------------------
   // success
   //----------------------------------------------------------
-  describe('success method', () => {
+  describe('success', () => {
     it('Call complete method with spinner in success state', () => {
       spinners.map(spinner => {
         m.success(spinner)
@@ -243,7 +243,7 @@ describe('Methods', () => {
   //----------------------------------------------------------
   // error
   //----------------------------------------------------------
-  describe('error method', () => {
+  describe('error', () => {
     it('Call complete method with spinner in error state', () => {
       spinners.map(spinner => {
         m.error(spinner)
@@ -255,7 +255,7 @@ describe('Methods', () => {
   //----------------------------------------------------------
   // allCompleted
   //----------------------------------------------------------
-  describe('allCompleted method', () => {
+  describe('allCompleted', () => {
     // setup
     const spinners = genSpinners.arr(3)
     let m
@@ -283,7 +283,7 @@ describe('Methods', () => {
   //----------------------------------------------------------
   // start
   //----------------------------------------------------------
-  describe('start method', () => {
+  describe('start', () => {
     it('Call loop method', () => {
       const spy = sinon.spy(multispinner, 'loop')
       multispinner.start()
@@ -295,7 +295,7 @@ describe('Methods', () => {
   //----------------------------------------------------------
   // stop
   //----------------------------------------------------------
-  describe('stop method', () => {
+  describe('stop', () => {
     // setup
     const spinners = genSpinners.arr(3)
     let m
