@@ -1,23 +1,31 @@
-- [X] change opts parsing to deep merge + simplify loop logic
-- [ ] refactor tests
-- [-] write tests
-  - [X] stubs
-  - [-] actual tests
-    - [X] allCompleted
-    - [X] clearState
-    - [X] complete
-    - [ ] constructor
-    - [X] createSpinner
-    - [X] error
-    - [ ] loop
-    - [ ] validateOpts
-    - [X] success
-    - [ ] update
-- [ ] finish jsdoc strings
-- [X] rename clearState method to something more descriptive
-- [X] rename debug param to testing
-- [ ] optimize by not checking spinner state anymore once complete
 - [ ] consolidate all error reporting into one lib file
+- [ ] move defaultProps and states into a constants files in lib
+- [ ] test stubs
+  - [ ] spinners
+  - [ ] errs
+  - [ ] validOpts
+  - [ ] voidOut
+- [ ] tests
+  - [ ] methods
+    - [ ] constructor
+    - [ ] loop
+    - [ ] complete
+    - [ ] success
+    - [ ] error
+    - [ ] allCompleted
+    - [ ] start
+    - [ ] stop
+  - [ ] spinners
+    - [ ] constructor
+    - [ ] fromArr
+    - [ ] fromObj
+    - [ ] spinnerText
+    - [ ] spinnerObj
+  - [ ] errs
+  - [ ] validOpts
+  - [ ] voidOut
+- [ ] jsdoc strings
+- [ ] optimize by not checking spinner state anymore once complete
 - [ ] split out typeTest util into its own repo
 - [ ] write more examples
 - [ ] write readme
