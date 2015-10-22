@@ -15,6 +15,7 @@ const defaultProps = require('lib/defaultProps')
 const states       = require('lib/states')
 const validOpts    = require('lib/validOpts')
 const voidOut      = require('lib/voidOut')
+const errs         = require('lib/errs').complete
 
 //----------------------------------------------------------
 // Logic
@@ -96,11 +97,9 @@ module.exports = class Multispinner {
    * @param {}
    */
   complete(spinner, state) {
-    if (!states.hasOwnProperty(state)) {
-      throw new Error(
-        'node-multispinner: complete method must pass valid state param'
-      )
-    }
+    // throw if state is invalid
+    if (!states.hasOwnProperty(state)) errs.invalidState(state)
+
     this.stop()
     this.spinners[spinner].state = state
     this.start()

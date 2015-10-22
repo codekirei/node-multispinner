@@ -82,7 +82,7 @@ describe('Spinners methods', () => {
     //       assert.equal(expected, multispinner.spinners[spinner].text)
     //     })
     //   })
-    })
+    // })
   })
 
   //----------------------------------------------------------

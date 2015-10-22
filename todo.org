@@ -1,5 +1,5 @@
-- [ ] consolidate all error reporting into one lib file
-- [ ] move defaultProps and states into a constants files in lib
+- [X] consolidate all error reporting into one lib file
+- [ ] move defaultProps and states into a constants file in lib
 - [ ] test stubs
   - [ ] spinners
   - [ ] errs
