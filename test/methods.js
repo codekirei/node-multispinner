@@ -32,23 +32,12 @@ describe('Methods', () => {
     'complete',
     'success',
     'error',
-    'allCompleted'
+    'allCompleted',
+    'start'
   ]
   methods.map(method => {
     require(`./${path.join('methods', method)}`)
   })
-  //----------------------------------------------------------
-  // start
-  //----------------------------------------------------------
-  describe('start', () => {
-    it('Call loop method', () => {
-      const spy = sinon.spy(multispinner, 'loop')
-      multispinner.start()
-      assert(spy.calledOnce, 'loop method called')
-      multispinner.clearState()
-    })
-  })
-
   //----------------------------------------------------------
   // stop
   //----------------------------------------------------------
