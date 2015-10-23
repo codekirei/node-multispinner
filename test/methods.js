@@ -29,75 +29,12 @@ describe('Methods', () => {
   const methods = [
     'constructor',
     'loop',
-    'complete'
+    'complete',
+    'success',
+    'error'
   ]
   methods.map(method => {
     require(`./${path.join('methods', method)}`)
-  })
-
-  //----------------------------------------------------------
-  // complete
-  //----------------------------------------------------------
-  describe('complete', () => {
-    // setup
-    const spinners = genSpinners.arr(3)
-    const spinner = spinners[0]
-    let m
-    beforeEach(() => {
-      m = new Multispinner(spinners, {testing: true})
-      m.start()
-    })
-
-    it('Throw if called with undefined or invalid state param', () => {
-      assert.throws(() => m.complete(spinner))
-      assert.throws(() => m.complete(spinner, 'notValidState'))
-    })
-
-    it('Call stop method', () => {
-      let spy = sinon.spy(m, 'stop')
-      m.complete(spinner, states.success)
-      assert(spy.calledOnce, 'call stop method')
-      m.stop.restore()
-    })
-
-    it('Update spinner prop with state param', () => {
-      assert.equal(m.spinners[spinner].state, states.incomplete)
-      m.complete(spinner, states.success)
-      assert.equal(m.spinners[spinner].state, states.success)
-      m.complete(spinner, states.error)
-      assert.equal(m.spinners[spinner].state, states.error)
-    })
-
-    it('Call start method', () => {
-      let spy = sinon.spy(m, 'start')
-      m.complete(spinner, states.error)
-      assert(spy.calledOnce, 'call start method')
-      m.start.restore()
-    })
-  })
-
-  //----------------------------------------------------------
-  // success
-  //----------------------------------------------------------
-  describe('success', () => {
-    it('Call complete method with spinner in success state', () => {
-      spinners.map(spinner => {
-        m.success(spinner)
-        assert.equal(states.success, m.spinners[spinner].state)
-      })
-    })
-  })
-
-  //----------------------------------------------------------
-  // error
-  //----------------------------------------------------------
-  describe('error', () => {
-    it('Call complete method with spinner in error state', () => {
-      spinners.map(spinner => {
-        m.error(spinner)
-        assert.equal(states.error, m.spinners[spinner].state)
-      })
-    })
   })
 
   //----------------------------------------------------------
