@@ -28,7 +28,8 @@ const genSpinners = require('./utils/genSpinners')
 describe('Methods', () => {
   const methods = [
     'constructor',
-    'loop'
+    'loop',
+    'complete'
   ]
   methods.map(method => {
     require(`./${path.join('methods', method)}`)
@@ -43,11 +44,11 @@ describe('Methods', () => {
     const spinner = spinners[0]
     let m
     beforeEach(() => {
-      m = new Multispinner(spinners, {debug: true})
+      m = new Multispinner(spinners, {testing: true})
       m.start()
     })
 
-    it('Throw if undefined or invalid state param passed', () => {
+    it('Throw if called with undefined or invalid state param', () => {
       assert.throws(() => m.complete(spinner))
       assert.throws(() => m.complete(spinner, 'notValidState'))
     })
@@ -63,6 +64,8 @@ describe('Methods', () => {
       assert.equal(m.spinners[spinner].state, states.incomplete)
       m.complete(spinner, states.success)
       assert.equal(m.spinners[spinner].state, states.success)
+      m.complete(spinner, states.error)
+      assert.equal(m.spinners[spinner].state, states.error)
     })
 
     it('Call start method', () => {
