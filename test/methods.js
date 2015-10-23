@@ -31,40 +31,12 @@ describe('Methods', () => {
     'loop',
     'complete',
     'success',
-    'error'
+    'error',
+    'allCompleted'
   ]
   methods.map(method => {
     require(`./${path.join('methods', method)}`)
   })
-
-  //----------------------------------------------------------
-  // allCompleted
-  //----------------------------------------------------------
-  describe('allCompleted', () => {
-    // setup
-    const spinners = genSpinners.arr(3)
-    let m
-    beforeEach(() => {
-      m = new Multispinner(spinners, {debug: true})
-    })
-
-    it('Return false if not all spinners are complete', () => {
-      let i = 0
-      const lastSpinner = spinners.length - 1
-      for (i; i < lastSpinner; i++) {
-        m.success(spinners[i])
-        assert.isFalse(m.allCompleted())
-      }
-    })
-
-    it('Return true if all spinners are complete', () => {
-      spinners.map(spinner => {
-        m.error(spinner)
-      })
-      assert.isTrue(m.allCompleted())
-    })
-  })
-
   //----------------------------------------------------------
   // start
   //----------------------------------------------------------
