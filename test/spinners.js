@@ -19,7 +19,13 @@ describe('Spinners methods', () => {
   //----------------------------------------------------------
   // Constructor
   //----------------------------------------------------------
-  describe('Constructor', () => {
+  describe('constructor', () => {
+    it('call fromArr method if spinners is an arr')
+    it('call fromObj method if spinners is an obj')
+    describe('bind text props', () => {
+      it('preText and preSpace')
+      it('postText and postSpace')
+    })
     // it('Create spinners from object', () => {
     //   // build spinners and expected
     //   const spinners = genSpinners.obj(5)
@@ -89,27 +95,27 @@ describe('Spinners methods', () => {
   // fromArr
   //----------------------------------------------------------
   describe('fromArr method', () => {
-    
+    it('build spinners from array')
   })
 
   //----------------------------------------------------------
   // fromObj
   //----------------------------------------------------------
   describe('fromObj method', () => {
-    
+    it('build spinners from object')
   })
 
   //----------------------------------------------------------
   // spinnerText
   //----------------------------------------------------------
   describe('spinnerText method', () => {
-    
+    it('build text from props and param')
   })
 
   //----------------------------------------------------------
   // spinnerObj
   //----------------------------------------------------------
   describe('spinnerObj method', () => {
-    
+    it('build object from param')
   })
 })

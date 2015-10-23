@@ -1,20 +1,25 @@
 - [X] consolidate all error reporting into one lib file
 - [X] move defaultProps and states into a constants file in lib
-- [ ] test stubs
-  - [ ] spinners
+- [-] test stubs
+  - [X] spinners
+    - [X] constructor
+    - [X] fromArr
+    - [X] fromObj
+    - [X] spinnerText
+    - [X] spinnerObj
   - [ ] errs
   - [ ] validOpts
   - [ ] voidOut
-- [ ] tests
-  - [ ] methods
-    - [ ] constructor
-    - [ ] loop
-    - [ ] complete
-    - [ ] success
-    - [ ] error
-    - [ ] allCompleted
-    - [ ] start
-    - [ ] stop
+- [-] tests
+  - [X] methods
+    - [X] constructor
+    - [X] loop
+    - [X] complete
+    - [X] success
+    - [X] error
+    - [X] allCompleted
+    - [X] start
+    - [X] stop
   - [ ] spinners
     - [ ] constructor
     - [ ] fromArr
