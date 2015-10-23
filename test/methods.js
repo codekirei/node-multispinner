@@ -27,95 +27,11 @@ const genSpinners = require('./utils/genSpinners')
 //----------------------------------------------------------
 describe('Methods', () => {
   const methods = [
-    'constructor'
+    'constructor',
+    'loop'
   ]
   methods.map(method => {
     require(`./${path.join('methods', method)}`)
-  })
-
-  //----------------------------------------------------------
-  // loop
-  //----------------------------------------------------------
-  describe('loop', () => {
-    // setup
-    const spinners = genSpinners.arr(3)
-    const spinner = spinners[0]
-    let multispinner
-    beforeEach(() => {
-      multispinner = new Multispinner(spinners, {debug: true})
-    })
-
-    it('Step through spinner animation frames and update prop', () => {
-      // setup
-      const clock = sinon.useFakeTimers()
-      let i = 0
-
-      // start loop
-      multispinner.loop()
-
-      // time leap in intervals to each animation frame and test
-      while (i < multispinner.frameCount) {
-        assert.equal(multispinner.currentFrame, multispinner.frames[i])
-        clock.tick(multispinner.interval)
-        i++
-      }
-
-      // cleanup
-      multispinner.clearState(true)
-      clock.restore()
-    })
-
-    it('Update current strings in spinners prop based on spinner states')
-
-    it('Call update method with newline-joined current strings')
-
-    it('Do not print output if this.testing is true')
-    // it('Call logUpdate to apply current spinner strings')
-    // it('Call update to apply current spinner strings', () => {
-    //   // setup
-    //   const spy = sinon.spy(logUpdate)
-    //   const clock = sinon.useFakeTimers()
-
-    //   // start loop
-    //   multispinner.loop()
-
-    //   // time leap and test
-    //   clock.tick(multispinner.interval)
-    //   assert(spy.called)
-
-    //   // clean up
-    //   multispinner.clearState(true)
-    //   clock.restore()
-
-    //   // setTimeout(() => {
-    //   //   assert(spy.called)
-    //   // }, multispinner.interval)
-    //   // multispinner.clearState(true)
-    // })
-
-    it('Call stop method if allCompleted is true', () => {
-      // setup
-      const spy = sinon.spy(multispinner, 'clearState')
-      const stub = sinon
-        .stub(multispinner, 'allCompleted')
-        .returns(true)
-      const clock = sinon.useFakeTimers()
-
-      // start loop
-      multispinner.loop()
-
-      // time leap and test
-      clock.tick(multispinner.interval)
-      assert(spy.called, 'clearState method called')
-
-      // clean up
-      multispinner.clearState.restore()
-      clock.restore()
-      stub.restore()
-      multispinner.clearState(true)
-    })
-
-    it('Call clear method of update method if clear prop is true')
   })
 
   //----------------------------------------------------------
