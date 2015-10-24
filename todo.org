@@ -1,8 +1,8 @@
 - [-] test stubs
-  - [ ] errs
+  - [X] errs
   - [ ] validOpts
   - [ ] voidOut
-- [-] tests
+- [ ] tests
   - [ ] errs
   - [ ] validOpts
   - [ ] voidOut

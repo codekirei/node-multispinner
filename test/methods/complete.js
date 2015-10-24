@@ -27,11 +27,6 @@ module.exports = describe('complete', () => {
     m.start()
   })
 
-  it('Throw if called with undefined or invalid state param', () => {
-    assert.throws(() => m.complete(spinner))
-    assert.throws(() => m.complete(spinner, 'notValidState'))
-  })
-
   it('Call stop method', () => {
     let spy = sinon.spy(m, 'stop')
     m.complete(spinner, states.success)
