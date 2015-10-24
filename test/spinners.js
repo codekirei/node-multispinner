@@ -5,117 +5,134 @@
 //----------------------------------------------------------
 // NPM
 const assert = require('chai').assert
+const sinon = require('sinon')
 const faker = require('faker')
 
 // Local
 const Multispinner = require('../')
+const Spinners = require('lib/spinners')
 const states = require('lib/constants').states
+
+// Test Utils
 const genSpinners = require('./utils/genSpinners')
 
 //----------------------------------------------------------
 // Tests
 //----------------------------------------------------------
 describe('Spinners methods', () => {
+  // setup
+  const arr = genSpinners.arr(3)
+  const preText = faker.fake('{{lorem.words}}')
+  const postText = faker.fake('{{lorem.words}}')
+  const cases = {
+    preText: ['', preText, '', preText],
+    preSpace: ['', ' ', '', ' '],
+    postText: ['', '', postText, postText],
+    postSpace: ['', '', ' ', ' ']
+  }
+
   //----------------------------------------------------------
   // Constructor
   //----------------------------------------------------------
   describe('constructor', () => {
-    it('call fromArr method if spinners is an arr')
-    it('call fromObj method if spinners is an obj')
-    describe('bind text props', () => {
-      it('preText and preSpace')
-      it('postText and postSpace')
+    it('bind props', () => {
+      for (let i = 0; i < cases.preText.length; i++) {
+        const s = new Spinners(arr, cases.preText[i], cases.postText[i])
+        assert.deepEqual(arr, s.rawSpinners)
+        Object.keys(cases).map(prop => {
+          assert.equal(cases[prop][i], s[prop])
+        })
+      }
     })
-    // it('Create spinners from object', () => {
-    //   // build spinners and expected
-    //   const spinners = genSpinners.obj(5)
-    //   const expected = {}
-    //   Object.keys(spinners).map(spinner => {
-    //     expected[spinner] = {
-    //       state: states.incomplete,
-    //       current: null,
-    //       text: spinners[spinner]
-    //     }
-    //   })
-
-    //   // instantiate and test
-    //   const multispinner = new Multispinner(spinners)
-    //   assert.deepEqual(expected, multispinner.spinners)
-    // })
-
-    // it('Create spinners from array', () => {
-    //   // build spinners and expected
-    //   const spinners = genSpinners.arr(5)
-    //   const expected = {}
-    //   spinners.map(spinner => {
-    //     expected[spinner] = {
-    //       state: states.incomplete,
-    //       current: null,
-    //       text: spinner
-    //     }
-    //   })
-
-    //   // instantiate and test
-    //   const multispinner = new Multispinner(spinners)
-    //   assert.deepEqual(expected, multispinner.spinners)
-    // })
-
-    // describe('preText and postText', () => {
-    //   const spinners = genSpinners.arr(3)
-    //   const preText = faker.fake('{{lorem.words}}')
-    //   const postText = faker.fake('{{lorem.words}}')
-
-    //   it('Build spinner text with preText', () => {
-    //     const multispinner = new Multispinner(spinners, {preText})
-    //     spinners.map(spinner => {
-    //       const expected = `${preText} ${spinner}`
-    //       assert.equal(expected, multispinner.spinners[spinner].text)
-    //     })
-    //   })
-
-    //   it('Build spinner text with postText', () => {
-    //     const multispinner = new Multispinner(spinners, {postText})
-    //     spinners.map(spinner => {
-    //       const expected = `${spinner} ${postText}`
-    //       assert.equal(expected, multispinner.spinners[spinner].text)
-    //     })
-    //   })
-
-    //   it('Build spinner text with pre and post text', () => {
-    //     const multispinner = new Multispinner(spinners, {preText, postText})
-    //     spinners.map(spinner => {
-    //       const expected = `${preText} ${spinner} ${postText}`
-    //       assert.equal(expected, multispinner.spinners[spinner].text)
-    //     })
-    //   })
-    // })
+  })
+  describe('spinners', () => {
+    it('call fromArr method if spinners is an arr', () => {
+      const s = new Spinners(arr, '', '')
+      const spy = sinon.spy(s, 'fromArr')
+      s.spinners()
+      assert(spy.called, 'call fromArr method')
+      s.fromArr.restore()
+    })
+    it('call fromObj method if spinners is an obj', () => {
+      const obj = genSpinners.obj(3)
+      const s = new Spinners(obj, '', '')
+      const spy = sinon.spy(s, 'fromObj')
+      s.spinners()
+      assert(spy.called, 'call fromObj method')
+      s.fromObj.restore()
+    })
   })
 
   //----------------------------------------------------------
   // fromArr
   //----------------------------------------------------------
   describe('fromArr method', () => {
-    it('build spinners from array')
+    it('build spinners from array', () => {
+      const s = new Spinners(arr, '', '')
+      const expected = arr.reduce((accum, spinner) => {
+        accum[spinner] = {
+          state: states.incomplete,
+          current: null,
+          text: spinner
+        }
+        return accum
+      }, {})
+      assert.deepEqual(expected, s.fromArr(arr))
+    })
   })
 
   //----------------------------------------------------------
   // fromObj
   //----------------------------------------------------------
   describe('fromObj method', () => {
-    it('build spinners from object')
+    it('build spinners from object', () => {
+      const obj = genSpinners.obj(3)
+      const s = new Spinners(obj, '', '')
+      const expected = Object.keys(obj).reduce((accum, spinner) => {
+        accum[spinner] = {
+          state: states.incomplete,
+          current: null,
+          text: obj[spinner]
+        }
+        return accum
+      }, {})
+      assert.deepEqual(expected, s.fromObj(obj))
+    })
   })
 
   //----------------------------------------------------------
   // spinnerText
   //----------------------------------------------------------
   describe('spinnerText method', () => {
-    it('build text from props and param')
+    it('build text from props and param', () => {
+      for (let i = 0; i < cases.preText.length; i++) {
+        const s = new Spinners(arr, cases.preText[i], cases.postText[i])
+        const spinners = s.spinners()
+        const expected = [
+          cases.preText[i],
+          cases.preSpace[i],
+          arr[0],
+          cases.postSpace[i],
+          cases.postText[i]
+        ].join('')
+        assert.equal(expected, spinners[arr[0]].text, `i = ${i}`)
+      }
+    })
   })
 
   //----------------------------------------------------------
   // spinnerObj
   //----------------------------------------------------------
   describe('spinnerObj method', () => {
-    it('build object from param')
+    it('build object from params', () => {
+      const text = arr[0]
+      const s = new Spinners(arr, '', '')
+      const expected = {
+        state: states.incomplete,
+        current: null,
+        text
+      }
+      assert.deepEqual(expected, s.spinners()[text])
+    })
   })
 })

@@ -44,7 +44,11 @@ module.exports = class Multispinner {
     })
 
     // instantiate spinners
-    this.spinners = new Spinners(spinners, this.preText, this.postText)
+    this.spinners = new Spinners(
+      spinners,
+      this.preText,
+      this.postText
+    ).spinners()
 
     // void output if testing
     if (this.testing) this.update = voidOut()

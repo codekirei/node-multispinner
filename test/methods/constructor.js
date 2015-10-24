@@ -81,7 +81,7 @@ module.exports = describe('constructor', () => {
 
   it('Instantiate spinners', () => {
     const m = new Multispinner(spinners, {testing: true})
-    const s = new Spinners(spinners, m.preText, m.postText)
+    const s = new Spinners(spinners, m.preText, m.postText).spinners()
     assert.deepEqual(m.spinners, s)
   })
 
