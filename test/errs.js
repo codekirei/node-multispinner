@@ -12,9 +12,11 @@ const faker = require('faker')
 const Multispinner = require('../')
 const Spinners = require('lib/spinners')
 const states = require('lib/constants').states
+const validOpts = require('lib/validOpts')
 
 // Test Utils
 const genSpinners = require('./utils/genSpinners')
+const types = require('./utils/types')
 
 //----------------------------------------------------------
 // Tests
@@ -25,7 +27,12 @@ describe('errs', () => {
   describe('validOpts', () => {
     it('throw when opt is not a configurable property')
     it('throw when opt is incorrect type')
-    it('throw when opts param is not an object')
+    it('throw when opts param is defined and not an object', () => {
+      const testTypes = types.except(['null', 'undefined', 'object',])
+      Object.keys(testTypes).map(type => {
+        assert.throws(() => validOpts(testTypes[type]))
+      })
+    })
   })
   describe('spinners', () => {
     it('throw when spinners param is not an object or array')

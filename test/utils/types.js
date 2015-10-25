@@ -4,10 +4,10 @@
 let types = {
   undefined,
   null: null,
-  string: '',
+  string: 'abc',
   boolean: true,
-  number: 0,
-  function: () => {},
+  number: 1,
+  function: function() {},
   array: [],
   object: {}
 }
@@ -19,21 +19,21 @@ let types = {
  * @returns {Object} - types with exceptions excluded
  */
 function except(exceptions) {
-  // clone types
-  let typesClone = {}
+  // copy types
+  let typesCopy = {}
   Object.keys(types).map(key => {
-    typesClone[key] = types[key]
+    typesCopy[key] = types[key]
   })
 
   // remove exceptions
   exceptions instanceof Array
     ? exceptions.map(exception => {
-      delete typesClone[exception]
+      delete typesCopy[exception]
     })
-    : delete typesClone[exceptions]
+    : delete typesCopy[exceptions]
 
   // return modified clone
-  return typesClone
+  return typesCopy
 }
 
 module.exports = {
