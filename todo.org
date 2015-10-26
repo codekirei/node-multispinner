@@ -1,9 +1,9 @@
 - [-] test stubs
   - [X] errs
-  - [ ] validOpts
+  - [X] validOpts
   - [ ] voidOut
-- [ ] tests
-  - [ ] errs
+- [-] tests
+  - [X] errs
   - [ ] validOpts
   - [ ] voidOut
 - [ ] jsdoc strings

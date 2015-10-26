@@ -5,8 +5,6 @@
 //----------------------------------------------------------
 // NPM
 const assert = require('chai').assert
-const sinon = require('sinon')
-const faker = require('faker')
 const clone = require('lodash.clonedeep')
 const kindOf = require('kind-of')
 
@@ -14,7 +12,6 @@ const kindOf = require('kind-of')
 const Multispinner = require('../')
 const Spinners = require('lib/spinners')
 const defaultProps = require('lib/constants').defaultProps
-const states = require('lib/constants').states
 const validOpts = require('lib/validOpts')
 
 // Test Utils
@@ -25,8 +22,6 @@ const types = require('./utils/types')
 // Tests
 //----------------------------------------------------------
 describe('errs', () => {
-  const spinners = genSpinners.arr(3)
-  const spinner = spinners[0]
   //----------------------------------------------------------
   // validOpts errs
   //----------------------------------------------------------
@@ -76,7 +71,7 @@ describe('errs', () => {
 
       /**
        * @function testOpts
-       * @param {object} opts - opts to test 
+       * @param {object} opts - opts to test
        * @returns {undefined}
        */
       function testOpts(opts) {
@@ -95,6 +90,7 @@ describe('errs', () => {
       })
     })
   })
+
   //----------------------------------------------------------
   // spinners errs
   //----------------------------------------------------------
@@ -118,6 +114,8 @@ describe('errs', () => {
   //----------------------------------------------------------
   describe('complete', () => {
     it('throw when state is not a valid spinner state', () => {
+      const spinners = genSpinners.arr(3)
+      const spinner = spinners[0]
       const m = new Multispinner(spinners, {testing: true})
       assert.throws(() => m.complete(spinner))
       assert.throws(() => m.complete(spinner, 'notValidState'))
