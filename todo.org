@@ -1,6 +1,3 @@
-- [-] jsdoc strings
-  - [X] errs
-  - [ ] spinners
 - [ ] fix bug with clear clearing too fast, not letting last spinner finish
 - [ ] write more examples
 - [ ] write readme
