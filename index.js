@@ -90,7 +90,7 @@ module.exports = class Multispinner {
       // stop loop and maybe clear if done
       if (this.allCompleted()) {
         this.stop()
-        if (this.clear) this.update.clear()
+        if (this.clear) setTimeout(() => {this.update.clear()}, this.interval)
       }
     }, this.interval)
   }

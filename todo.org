@@ -1,4 +1,4 @@
-- [ ] fix bug with clear clearing too fast, not letting last spinner finish
+- [X] fix bug with clear clearing too fast, not letting last spinner finish
 - [ ] write more examples
 - [ ] write readme
   - [ ] configurable options

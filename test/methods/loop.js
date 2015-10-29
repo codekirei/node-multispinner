@@ -111,7 +111,7 @@ module.exports = describe('loop', () => {
     it('Call clear method of update method if clear prop is true', () => {
       m.clear = true
       const spy = sinon.spy(m.update, 'clear')
-      clock.tick(m.interval)
+      clock.tick(m.interval * 2)
       assert(spy.calledOnce, 'call clear method')
       m.update.clear.restore()
     })
