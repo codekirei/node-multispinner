@@ -1,3 +1,4 @@
+- [ ] integrate type-iterator
 - [-] test stubs
   - [X] errs
   - [X] validOpts
@@ -8,7 +9,6 @@
   - [ ] voidOut
 - [ ] jsdoc strings
 - [ ] optimize by not checking spinner state anymore once complete
-- [X] split out typeTest util into its own repo
 - [ ] fix bug with clear clearing too fast, not letting last spinner finish
 - [ ] write more examples
 - [ ] write readme

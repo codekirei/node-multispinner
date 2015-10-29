@@ -11,9 +11,6 @@ const clone = require('lodash.clonedeep')
 const validOpts = require('lib/validOpts')
 const defaultProps = require('lib/constants').defaultProps
 
-// Test Utils
-const types = require('./utils/types')
-
 //----------------------------------------------------------
 // Tests
 //----------------------------------------------------------
