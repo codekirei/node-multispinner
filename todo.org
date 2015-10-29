@@ -1,5 +1,6 @@
-- [ ] jsdoc strings
-- [ ] optimize by not checking spinner state anymore once complete
+- [-] jsdoc strings
+  - [X] errs
+  - [ ] spinners
 - [ ] fix bug with clear clearing too fast, not letting last spinner finish
 - [ ] write more examples
 - [ ] write readme

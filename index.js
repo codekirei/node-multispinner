@@ -27,7 +27,7 @@ module.exports = class Multispinner {
   //----------------------------------------------------------
   /**
    * @constructor
-   * @desc Constructs Spinner class with spinners and options.
+   * @desc Construct Spinner class with spinners and options.
    * @param {Object} spinners - Spinners to create
    * @param {Object} opts - Configurable options
    */
@@ -96,9 +96,11 @@ module.exports = class Multispinner {
   }
 
   /**
-   *
-   * @param {}
-   * @param {}
+   * @method complete
+   * @desc Complete a spinner by changing its state.
+   * @param {string} spinner - spinner to complete
+   * @param {string} state - state to set spinner to
+   * @returns {undefined}
    */
   complete(spinner, state) {
     // throw if state is invalid
@@ -110,9 +112,9 @@ module.exports = class Multispinner {
   }
 
   /**
-   *
-   * @method
-   * @returns
+   * @method allCompleted
+   * @desc Check if all spinners have been completed.
+   * @returns {bool} - true if all spinners are complete, else false
    */
   allCompleted() {
     return Object.keys(this.spinners).every(spinner => {
@@ -121,8 +123,8 @@ module.exports = class Multispinner {
   }
 
   /**
-   *
-   * @method
+   * @method stop
+   * @desc Clear interval bound to this.state by loop method.
    * @returns {undefined}
    */
   stop() {
@@ -133,8 +135,8 @@ module.exports = class Multispinner {
   // External methods
   //----------------------------------------------------------
   /**
-   * Convenience method to start animation loop.
-   * @method
+   * @method start
+   * @desc Convenience method to start animation loop.
    * @returns {undefined}
    */
   start() {
@@ -142,9 +144,9 @@ module.exports = class Multispinner {
   }
 
   /**
-   *
-   * @method
-   * @param {}
+   * @method success
+   * @desc Complete spinner by changing its state to success.
+   * @param {string} spinner - spinner to complete
    * @returns {undefined}
    */
   success(spinner) {
@@ -152,9 +154,9 @@ module.exports = class Multispinner {
   }
 
   /**
-   *
-   * @method
-   * @param {}
+   * @method error
+   * @desc Complete spinner by changing its state to error.
+   * @param {string} spinner - spinner to complete
    * @returns {undefined}
    */
   error(spinner) {

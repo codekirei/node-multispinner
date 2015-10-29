@@ -5,7 +5,6 @@
 //----------------------------------------------------------
 // NPM
 const assert = require('chai').assert
-const sinon = require('sinon')
 
 // Local
 const Multispinner = require('../../')
