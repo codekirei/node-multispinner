@@ -7,15 +7,14 @@ let types = {
   string: 'abc',
   boolean: true,
   number: 1,
-  function: function() {},
+  function: () => {},
   array: [],
   object: {}
 }
 
 /**
  * @function except
- * @desc Allows use of modified types object with specific types excluded
- * @param {string|undefined|null|[]} exceptions - types or type to exclude
+ * @param {*} exceptions - types or type to exclude
  * @returns {Object} - types with exceptions excluded
  */
 function except(exceptions) {
@@ -36,7 +35,26 @@ function except(exceptions) {
   return typesCopy
 }
 
+/**
+ * @function only
+ * @param {*} specified - types or type to include
+ * @returns {Object} - types or type included
+ */
+function only(specified) {
+  if (specified instanceof Array) {
+    return specified.reduce((accum, type) => {
+      accum[type] = types[type]
+      return accum
+    }, {})
+  }
+  const type = {}
+  type[specified] = types[specified]
+  return type
+}
+
+// exports
 module.exports = {
   all: types,
-  except
+  except,
+  only
 }
