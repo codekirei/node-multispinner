@@ -1,7 +1,3 @@
-- [-] test stubs
-  - [ ] voidOut
-- [-] tests
-  - [ ] voidOut
 - [ ] jsdoc strings
 - [ ] optimize by not checking spinner state anymore once complete
 - [ ] fix bug with clear clearing too fast, not letting last spinner finish
