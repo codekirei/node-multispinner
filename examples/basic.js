@@ -14,9 +14,7 @@ setTimeout(() => m.error('bar'), 1500)
 setTimeout(() => m.success('baz'), 2000)
 setTimeout(() => m.error('qux'), 2500)
 
-// do something on completion event (success/error)
+// do something on success/error events
 m.on('success', () => {
-  console.log('all done!')
-}).on('error', () => {
-  console.log('done, with errors')
-})
+  console.log('done without errors!')
+}).on('err', console.log)

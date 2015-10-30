@@ -35,7 +35,7 @@ function fiftyfifty() {
  * @desc Main loop
  * @returns {undefined}
  */
-function main() {
+function loop() {
   // Generate random count of random spinners
   const spinners = genSpinners.obj(randCount())
 
@@ -54,11 +54,11 @@ function main() {
     }, randTimeout())
   })
 
-  // after this loop finishes, start another!
+  // after this loop finishes, start another
   m.on('done', () => {
-    setTimeout(() => main(), 1000)
+    setTimeout(() => loop(), 1000)
   })
 }
 
 // start loop
-main()
+loop()

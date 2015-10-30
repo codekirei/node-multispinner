@@ -99,7 +99,7 @@ module.exports = class Multispinner extends Emitter {
       this.emit('done')
       this.allSuccess()
         ? this.emit('success')
-        : this.emit('error')
+        : this.allError().map(spinner => this.emit('err', `${spinner} failed`))
     } else {
       // loop again
       setTimeout(() => this.loop(), this.interval)
@@ -141,6 +141,19 @@ module.exports = class Multispinner extends Emitter {
     return Object.keys(this.spinners).every(spinner => {
       return this.spinners[spinner].state === states.success
     })
+  }
+
+  /**
+   * @method allError
+   * @returns {string[]} - an array of all the spinner names that had errors
+   */
+  allError() {
+    return Object.keys(this.spinners).reduce((accum, spinner) => {
+      if (this.spinners[spinner].state === states.error) {
+        accum.push(spinner)
+      }
+      return accum
+    }, [])
   }
 
   //----------------------------------------------------------

@@ -31,9 +31,11 @@ m.start()
 // staggered completion
 let i = 0
 let t = 1500
-let done = t * spinners.length + m.interval
-const loop = setInterval(() => {
-  m.success(spinners[i])
-  i++
-}, t)
-setTimeout(() => clearInterval(loop), done)
+function loop() {
+  setTimeout(() => {
+    m.success(spinners[i])
+    i++
+    if (i < spinners.length) loop()
+  }, t)
+}
+loop()
