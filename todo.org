@@ -1,5 +1,4 @@
 - [ ] tests
-  - [ ] event emitter
   - [ ] error
 - [ ] finish promise example
 - [ ] write readme

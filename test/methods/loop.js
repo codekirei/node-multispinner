@@ -62,6 +62,7 @@ module.exports = describe('loop', () => {
 
   describe('build spinners[spinner].current', () => {
     // have to use beforeEach because its used in upper scope
+    // and this code isn't inside an "it(...)"
     beforeEach(() => {
       m.loop()
     })
@@ -116,14 +117,67 @@ module.exports = describe('loop', () => {
       m.update.clear.restore()
     })
 
-    it('emit "done"')
-    it('emit "success" if allSuccess is true')
-    it('emit "err" if allSuccess is false')
-    it('emit multiple "errs" if anyErrors().length > 1')
+    it('emit "done"', () => {
+      let eventEmitted = false
+      m.on('done', () => eventEmitted = true)
+      m.loop()
+      assert.isTrue(eventEmitted)
+    })
+
+    it('emit "success" if allSuccess is true', () => {
+      const allSuccessStub = sinon
+        .stub(m, 'allSuccess')
+        .returns(true)
+      let eventEmitted = false
+      m.on('success', () => eventEmitted = true)
+      m.loop()
+      assert.isTrue(eventEmitted)
+      allSuccessStub.restore()
+    })
+
+    it('emit "err" if allSuccess is false', () => {
+      let eventEmitted = false
+      m.on('err', () => eventEmitted = true)
+      m.error(spinner)
+      m.loop()
+      assert.isTrue(eventEmitted)
+    })
+    it('emit multiple "errs" if anyErrors().length > 1', () => {
+      let eventCount = 0
+      m.on('err', () => eventCount++)
+      m.error(spinners[0])
+      m.error(spinners[1])
+      m.loop()
+      assert.equal(2, eventCount)
+    })
   })
 
   describe('if allCompleted is false', () => {
-    it('increment this.i')
-    it('loop again')
+    let clock
+    beforeEach(() => {
+      // freeze time
+      clock = sinon.useFakeTimers()
+    })
+    afterEach(() => {
+      // unfreeze time
+      clock.restore()
+    })
+
+    it('increment this.i', () => {
+      assert.equal(0, m.i)
+      m.loop()
+      assert.equal(1, m.i)
+      clock.tick(m.interval)
+      assert.equal(2, m.i)
+    })
+
+    it('loop again', () => {
+      const spy = sinon.spy(m, 'loop')
+      m.loop()
+      assert(spy.calledOnce, 'call loop once')
+      clock.tick(m.interval)
+      assert(spy.calledTwice, 'call loop again')
+      m.loop.restore()
+    })
   })
 })
