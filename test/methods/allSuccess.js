@@ -23,14 +23,14 @@ module.exports = describe('allSuccess', () => {
     m = new Multispinner(spinners, {testing: true})
   })
 
-  it('Return false if any spinners are not in success state', () => {
+  it('return false if any spinners are not in success state', () => {
     spinners.map((spinner, i) => {
       m.success(spinner)
       if (i < spinners.length - 1) assert.isFalse(m.allSuccess())
     })
   })
 
-  it('Return true if all spinners are in success state', () => {
+  it('return true if all spinners are in success state', () => {
     spinners.map((spinner) => m.success(spinner))
     assert.isTrue(m.allSuccess())
   })

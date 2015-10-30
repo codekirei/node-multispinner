@@ -10,8 +10,9 @@ const path = require('path')
 //----------------------------------------------------------
 // Tests
 //----------------------------------------------------------
-describe('Methods', () => {
-  fs.readdir('test/methods', (err, methods) => {
+// dynamically include all methods in methods dir
+fs.readdir('test/methods', (err, methods) => {
+  describe('Methods', () => {
     methods.map(method => {
       require(`./${path.join('methods', method)}`)
     })

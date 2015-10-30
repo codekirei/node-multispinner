@@ -1,5 +1,7 @@
 - [ ] fixmes
 - [ ] tests
+  - [ ] constructor
+  - [ ] error
 - [X] add emitted err from loop to errs module
 - [ ] finish promise example
 - [ ] write readme
