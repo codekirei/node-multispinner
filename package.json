@@ -7,7 +7,7 @@
     "test": "mocha",
     "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha &> /dev/null && istanbul report text && rm -r ./coverage",
-    "dev": "find test/ lib/ index.js | entr -r mocha -R min"
+    "dev": "mocha -w -R min"
   },
   "keywords": [
     "animation",

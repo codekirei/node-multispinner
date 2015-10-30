@@ -147,7 +147,7 @@ module.exports = class Multispinner extends Emitter {
 
   /**
    * @method anyErrors
-   * @returns {string[]} - an array of all the spinner names that had errors
+   * @returns {string[]} - array of all spinner names in error state
    */
   anyErrors() {
     return Object.keys(this.spinners).reduce((accum, spinner) => {
