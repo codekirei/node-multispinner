@@ -1,5 +1,3 @@
-- [ ] tests
-  - [ ] error
 - [ ] finish promise example
 - [ ] write readme
   - [ ] configurable options api
