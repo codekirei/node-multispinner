@@ -73,9 +73,9 @@ describe('errs', () => {
   })
 
   //----------------------------------------------------------
-  // complete errs
+  // index errs
   //----------------------------------------------------------
-  describe('complete', () => {
+  describe('index', () => {
     it('throw when state is not a valid spinner state', () => {
       const spinners = genSpinners.arr(3)
       const spinner = spinners[0]
@@ -83,5 +83,6 @@ describe('errs', () => {
       assert.throws(() => m.complete(spinner))
       assert.throws(() => m.complete(spinner, 'notValidState'))
     })
+    it('build error string for spinner in error state')
   })
 })

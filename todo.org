@@ -1,8 +1,6 @@
-- [ ] fixmes
 - [ ] tests
-  - [ ] constructor
+  - [ ] event emitter
   - [ ] error
-- [X] add emitted err from loop to errs module
 - [ ] finish promise example
 - [ ] write readme
   - [ ] configurable options api

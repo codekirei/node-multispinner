@@ -69,12 +69,9 @@ module.exports = class Multispinner extends Emitter {
    * @desc Bind animation loop to this.state.
    * @returns {undefined}
    */
-  // FIXME - tests for event emitter
   loop() {
     // update current frame of spinner animation
-    this.symbol[states.incomplete] = this.frames[
-      this.i = ++this.i % this.frameCount
-    ]
+    this.symbol[states.incomplete] = this.frames[this.i % this.frameCount]
 
     // iterate over spinners + update current strings based on state
     Object.keys(this.spinners).map(spinner => {
@@ -104,6 +101,7 @@ module.exports = class Multispinner extends Emitter {
         : this.anyErrors().map(s => {this.emit('err', errs.completed(s))})
     } else {
       // loop again
+      this.i++
       setTimeout(() => this.loop(), this.interval)
     }
   }

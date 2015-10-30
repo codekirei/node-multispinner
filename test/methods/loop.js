@@ -23,23 +23,16 @@ module.exports = describe('loop', () => {
   const spinners = genSpinners.arr(3)
   const spinner = spinners[0]
   let m
-  let clock
 
   beforeEach(() => {
-    clock = sinon.useFakeTimers()
     m = new Multispinner(spinners, {testing: true})
-    m.loop()
-  })
-
-  afterEach(() => {
-    clock.restore()
-  })
-
-  it('Bind interval to state prop', () => {
-    assert.isNotNull(m.state)
   })
 
   it('Step through spinner animation frames and update prop', () => {
+    // freeze time
+    const clock = sinon.useFakeTimers()
+    m.loop()
+
     // time leap in intervals to each animation frame and test
     let i = 0
     while (i < m.frameCount) {
@@ -50,21 +43,32 @@ module.exports = describe('loop', () => {
       clock.tick(m.interval)
       i++
     }
+
+    // unfreeze time
+    clock.restore()
   })
 
   it('Call update method with newline-joined current strings', () => {
     const spy = sinon.spy(m, 'update')
-    clock.tick(m.interval)
+    m.loop()
 
-    const strings = spinners.map(s => {
+    const expected = spinners.map(s => {
       return m.spinners[s].current
     }).join(os.EOL)
 
-    assert(spy.calledWith(strings), 'call update method with strings')
+    assert(spy.calledWith(expected), 'call update method with strings')
     m.update.restore()
   })
 
   describe('build spinners[spinner].current', () => {
+    // have to use beforeEach because its used in upper scope
+    beforeEach(() => {
+      m.loop()
+    })
+
+    // freeze time
+    const clock = sinon.useFakeTimers()
+
     /**
      * Test case boilerplate
      * @param {string} state - state to test
@@ -72,7 +76,10 @@ module.exports = describe('loop', () => {
      * @returns {bool} result of assertion
      */
     function testCase(state, action) {
+      // perform stated action
       if (action) action()
+
+      // time leap to next loop
       clock.tick(m.interval)
 
       const expected = chalk[m.color[state]]([
@@ -101,19 +108,22 @@ module.exports = describe('loop', () => {
       stub.restore()
     })
 
-    it('Call stop method', () => {
-      const spy = sinon.spy(m, 'stop')
-      clock.tick(m.interval)
-      assert(spy.calledOnce, 'call stop method')
-      m.stop.restore()
-    })
-
-    it('Call clear method of update method if clear prop is true', () => {
+    it('call logUpdate.clear if this.clear is true', () => {
       m.clear = true
       const spy = sinon.spy(m.update, 'clear')
-      clock.tick(m.interval * 2)
+      m.loop()
       assert(spy.calledOnce, 'call clear method')
       m.update.clear.restore()
     })
+
+    it('emit "done"')
+    it('emit "success" if allSuccess is true')
+    it('emit "err" if allSuccess is false')
+    it('emit multiple "errs" if anyErrors().length > 1')
+  })
+
+  describe('if allCompleted is false', () => {
+    it('increment this.i')
+    it('loop again')
   })
 })
