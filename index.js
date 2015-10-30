@@ -43,7 +43,9 @@ module.exports = class Multispinner extends Emitter {
       this[prop] = props[prop]
     })
 
-    // FIXME - tests
+    // overwrite frames in case opts.frames.length < default
+    if (opts && opts.frames) this.frames = opts.frames
+
     // compute remaining props
     this.frameCount = this.frames.length
     this.indentStr = ' '.repeat(this.indent)

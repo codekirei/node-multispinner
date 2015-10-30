@@ -70,6 +70,26 @@ module.exports = describe('constructor', () => {
     assert.deepEqual(expected, m.color)
   })
 
+  describe('compute and bind computed props', () => {
+    it('frames and frameCount', () => {
+      const frames = ['x', '+']
+      const m = new Multispinner(spinners, {
+        frames,
+        testing: true
+      })
+      assert.equal(2, m.frameCount)
+      assert.equal(frames, m.frames)
+    })
+
+    it('indentStr', () => {
+      const m = new Multispinner(spinners, {
+        testing: true,
+        indent: 4
+      })
+      assert.equal(' '.repeat(4), m.indentStr)
+    })
+  })
+
   it('Props do not leak between instances', () => {
     const m = new Multispinner(spinners, {testing: true})
     const spinners2 = genSpinners.arr(3)
