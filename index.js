@@ -67,37 +67,37 @@ module.exports = class Multispinner {
    * @desc Bind animation loop to this.state.
    * @returns {undefined}
    */
+  // FIXME - tests
   loop() {
-    this.state = setInterval(() => {
-      // update current frame of spinner animation
-      this.symbol[states.incomplete] = this.frames[
-        this.i = ++this.i % this.frameCount
-      ]
+    // update current frame of spinner animation
+    this.symbol[states.incomplete] = this.frames[
+      this.i = ++this.i % this.frameCount
+    ]
 
-      // iterate over spinners + update current strings based on state
+    // iterate over spinners + update current strings based on state
+    Object.keys(this.spinners).map(spinner => {
+      let state = this.spinners[spinner].state
+      this.spinners[spinner].current = chalk[this.color[state]]([
+        this.indentStr,
+        this.symbol[state],
+        ' ',
+        this.spinners[spinner].text
+      ].join(''))
+    })
+
+    // call update to print newline-joined current strings
+    this.update(
       Object.keys(this.spinners).map(spinner => {
-        let state = this.spinners[spinner].state
-        this.spinners[spinner].current = chalk[this.color[state]]([
-          this.indentStr,
-          this.symbol[state],
-          ' ',
-          this.spinners[spinner].text
-        ].join(''))
-      })
+        return this.spinners[spinner].current
+      }).join(os.EOL)
+    )
 
-      // call update to print newline-joined current strings
-      this.update(
-        Object.keys(this.spinners).map(spinner => {
-          return this.spinners[spinner].current
-        }).join(os.EOL)
-      )
-
-      // stop loop and maybe clear if done
-      if (this.allCompleted()) {
-        this.stop()
-        if (this.clear) setTimeout(() => {this.update.clear()}, this.interval)
-      }
-    }, this.interval)
+    // continue loop if not complete
+    if (this.allCompleted()) {
+      if (this.clear) this.update.clear()
+    } else {
+      setTimeout(() => this.loop(), this.interval)
+    }
   }
 
   /**
@@ -111,9 +111,7 @@ module.exports = class Multispinner {
     // throw if state is invalid
     if (!states.hasOwnProperty(state)) errs.invalidState(state)
 
-    this.stop()
     this.spinners[spinner].state = state
-    this.start()
   }
 
   /**
@@ -125,15 +123,6 @@ module.exports = class Multispinner {
     return Object.keys(this.spinners).every(spinner => {
       return this.spinners[spinner].state !== states.incomplete
     })
-  }
-
-  /**
-   * @method stop
-   * @desc Clear interval bound to this.state by loop method.
-   * @returns {undefined}
-   */
-  stop() {
-    clearInterval(this.state)
   }
 
   //----------------------------------------------------------
