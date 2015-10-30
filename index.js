@@ -4,10 +4,10 @@
 // Modules
 //----------------------------------------------------------
 // NPM
-const chalk = require('chalk')
-const clone = require('lodash.clonedeep')
-const merge = require('lodash.merge')
-const os    = require('os')
+const chalk  = require('chalk')
+const clone  = require('lodash.clonedeep')
+const merge  = require('lodash.merge')
+const os     = require('os')
 
 // Local
 const Spinners     = require('lib/spinners')
@@ -42,6 +42,11 @@ module.exports = class Multispinner {
     Object.keys(props).map(prop => {
       this[prop] = props[prop]
     })
+
+    // FIXME - tests
+    // set frame count and indent str
+    this.frameCount = this.frames.length
+    this.indentStr = ' '.repeat(this.indent)
 
     // instantiate spinners
     this.spinners = new Spinners(
