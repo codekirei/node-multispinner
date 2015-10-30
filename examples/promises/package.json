@@ -1,0 +1,6 @@
+{
+  "name": "promises-example",
+  "dependencies": {
+    "bluebird": "^3.0.2"
+  }
+}

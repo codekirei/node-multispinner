@@ -1,6 +1,9 @@
-- [ ] write more examples
+- [ ] refactor loop logic to instead be a function that calls iteself
+      inside a setTimeout; this gets around the delayed startup bug
+- [ ] add tests for added constructor logic
+- [ ] finish promise example
 - [ ] write readme
-  - [ ] configurable options
+  - [ ] configurable options api
   - [ ] example gif
 - [ ] hook up travis + coveralls
 - [ ] publish to npm
