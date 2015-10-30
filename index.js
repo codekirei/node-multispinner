@@ -4,10 +4,11 @@
 // Modules
 //----------------------------------------------------------
 // NPM
-const chalk  = require('chalk')
-const clone  = require('lodash.clonedeep')
-const merge  = require('lodash.merge')
-const os     = require('os')
+const Emitter = require('events').EventEmitter
+const chalk   = require('chalk')
+const clone   = require('lodash.clonedeep')
+const merge   = require('lodash.merge')
+const os      = require('os')
 
 // Local
 const Spinners     = require('lib/spinners')
@@ -20,11 +21,7 @@ const errs         = require('lib/errs').complete
 //----------------------------------------------------------
 // Logic
 //----------------------------------------------------------
-module.exports = class Multispinner {
-
-  //----------------------------------------------------------
-  // Constructor
-  //----------------------------------------------------------
+module.exports = class Multispinner extends Emitter {
   /**
    * @constructor
    * @desc Construct Spinner class with spinners and options.
@@ -32,19 +29,22 @@ module.exports = class Multispinner {
    * @param {Object} opts - Configurable options
    */
   constructor(spinners, opts) {
+    // call parent constructor to enable 'this'
+    super(spinners, opts)
+
     // clone defaults
     let props = clone(defaultProps)
 
     // merge in opts
     if (validOpts(opts)) merge(props, opts)
 
-    // bind props to this
+    // bind props
     Object.keys(props).map(prop => {
       this[prop] = props[prop]
     })
 
     // FIXME - tests
-    // set frame count and indent str
+    // compute remaining props
     this.frameCount = this.frames.length
     this.indentStr = ' '.repeat(this.indent)
 
@@ -67,7 +67,7 @@ module.exports = class Multispinner {
    * @desc Bind animation loop to this.state.
    * @returns {undefined}
    */
-  // FIXME - tests
+  // FIXME - tests for event emitter
   loop() {
     // update current frame of spinner animation
     this.symbol[states.incomplete] = this.frames[
@@ -85,17 +85,23 @@ module.exports = class Multispinner {
       ].join(''))
     })
 
-    // call update to print newline-joined current strings
+    // call logUpdate
     this.update(
       Object.keys(this.spinners).map(spinner => {
         return this.spinners[spinner].current
       }).join(os.EOL)
     )
 
-    // continue loop if not complete
+    // check if all spinners are complete
     if (this.allCompleted()) {
+      // emit completion events; clear if necessary
       if (this.clear) this.update.clear()
+      this.emit('done')
+      this.allSuccess()
+        ? this.emit('success')
+        : this.emit('error')
     } else {
+      // loop again
       setTimeout(() => this.loop(), this.interval)
     }
   }
@@ -111,17 +117,29 @@ module.exports = class Multispinner {
     // throw if state is invalid
     if (!states.hasOwnProperty(state)) errs.invalidState(state)
 
+    // set state of spinner
     this.spinners[spinner].state = state
   }
 
   /**
    * @method allCompleted
    * @desc Check if all spinners have been completed.
-   * @returns {bool} - true if all spinners are complete, else false
+   * @returns {bool} - true if all spinners are complete
    */
   allCompleted() {
     return Object.keys(this.spinners).every(spinner => {
       return this.spinners[spinner].state !== states.incomplete
+    })
+  }
+
+  /**
+   * @method allSuccess
+   * @desc Check if all spinners are in success state.
+   * @returns {bool} - true if all spinners are in success state
+   */
+  allSuccess() {
+    return Object.keys(this.spinners).every(spinner => {
+      return this.spinners[spinner].state === states.success
     })
   }
 

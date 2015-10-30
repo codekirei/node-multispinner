@@ -1,6 +1,4 @@
-- [ ] refactor loop logic to instead be a function that calls itself
-      inside a setTimeout; this gets around the delayed startup bug
-- [ ] add tests for added constructor logic
+- [ ] fixmes
 - [ ] finish promise example
 - [ ] write readme
   - [ ] configurable options api

@@ -53,12 +53,12 @@ function main() {
         : m.error(spinner)
     }, randTimeout())
   })
+
+  // after this loop finishes, start another!
+  m.on('done', () => {
+    setTimeout(() => main(), 1000)
+  })
 }
 
-// start infinite loop after 5500ms
-setInterval(() => {
-  main()
-}, 5500)
-
-// start first loop
+// start loop
 main()
