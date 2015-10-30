@@ -16,7 +16,7 @@ const defaultProps = require('lib/constants').defaultProps
 const states       = require('lib/constants').states
 const validOpts    = require('lib/validOpts')
 const voidOut      = require('lib/voidOut')
-const errs         = require('lib/errs').complete
+const errs         = require('lib/errs').index
 
 //----------------------------------------------------------
 // Logic
@@ -99,7 +99,7 @@ module.exports = class Multispinner extends Emitter {
       this.emit('done')
       this.allSuccess()
         ? this.emit('success')
-        : this.allError().map(spinner => this.emit('err', `${spinner} failed`))
+        : this.anyErrors().map(s => {this.emit('err', errs.completed(s))})
     } else {
       // loop again
       setTimeout(() => this.loop(), this.interval)
@@ -144,10 +144,10 @@ module.exports = class Multispinner extends Emitter {
   }
 
   /**
-   * @method allError
+   * @method anyErrors
    * @returns {string[]} - an array of all the spinner names that had errors
    */
-  allError() {
+  anyErrors() {
     return Object.keys(this.spinners).reduce((accum, spinner) => {
       if (this.spinners[spinner].state === states.error) {
         accum.push(spinner)
