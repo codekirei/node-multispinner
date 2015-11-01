@@ -1,0 +1,6 @@
+{
+  "name": "meow-example",
+  "dependencies": {
+    "meow": "^3.5.0"
+  }
+}
