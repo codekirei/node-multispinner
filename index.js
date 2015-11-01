@@ -85,6 +85,10 @@ module.exports = class Multispinner extends Emitter {
     })
 
     // call logUpdate
+    // FIXME
+    // do spinner update logic outside of this.update
+    // only call this.update if not in testing
+    // nuke this.update override b/c not necessary anymore
     this.update(
       Object.keys(this.spinners).map(spinner => {
         return this.spinners[spinner].current

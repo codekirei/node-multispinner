@@ -1,3 +1,5 @@
+- [ ] call logUpdate.done when spinners are finished (fixes prevLineCount bug)
+- [ ] simplify loop logic on update (fixme)
 - [ ] finish promise example
 - [ ] write readme
   - [ ] configurable options api
