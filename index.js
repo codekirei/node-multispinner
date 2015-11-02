@@ -97,8 +97,14 @@ module.exports = class Multispinner extends Emitter {
 
     // check if all spinners are complete
     if (this.allCompleted()) {
-      // emit completion events; clear if necessary
+      // clear if necessary
       if (this.clear) this.update.clear()
+
+      // call logUpdate.done to reset its prevLineCount
+      // FIXME test for this
+      this.update.done()
+
+      // emit completion events
       this.emit('done')
       this.allSuccess()
         ? this.emit('success')
