@@ -1,4 +1,3 @@
-- [ ] call logUpdate.done when spinners are finished (fixes prevLineCount bug)
 - [ ] add autostart and opt to disable
 - [ ] simplify loop logic on update (fixme)
 - [ ] finish promise example

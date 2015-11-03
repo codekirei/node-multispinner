@@ -5,9 +5,10 @@
 //----------------------------------------------------------
 // NPM
 const axios = require('axios')
-const h2t   = require('html-to-text')
-const meow  = require('meow')
 const chalk = require('chalk')
+const h2t = require('html-to-text')
+const hangingIndent = require('hanging-indent')
+const meow = require('meow')
 
 // Local
 const Multispinner = require('../../')
@@ -16,10 +17,10 @@ const Multispinner = require('../../')
 // Logic
 //----------------------------------------------------------
 // grab cli args
-const cli = meow(`
-  Call with one or more URLs:
-    $ node index.js <url> <url>
-`)
+const cli = meow(chalk.blue(
+  `Call with one or more URLs:
+      $ node index.js <url> <url>`
+))
 
 // print usage or run main
 cli.input.length === 0
@@ -104,7 +105,7 @@ function printHtml(html) {
         tables: true,
         wordwrap: false
       })
-      // split into array
+      // split into array of lines
       .split('\n')
       // trim whitespace
       .map(line => {
@@ -115,15 +116,27 @@ function printHtml(html) {
         if (line !== accum.slice(-1)[0]) accum.push(line)
         return accum
       }, [])
-      // replace all links
+      // replace all links with [link]
       .map(line => {
         return line.replace(/\[.*?\]/g, `[${chalk.blue('link')}]`)
       })
-      // replace duplicate consecutive spaces with newlines
+      // replace multiple consecutive spaces with newlines
       .map(line => {
         return line.replace(/\s{2,}/g, '\n')
       })
+      // split lines with newly inserted \n into multiple lines
+      .reduce((accum, line) => {
+        if (line.includes('\n')) {
+          line.split('\n').map(part => accum.push(part))
+        } else {
+          accum.push(line)
+        }
+        return accum
+      }, [])
       // format long lines with hanging indent
+      .map(line => {
+        return hangingIndent(line)
+      })
       // reconnect lines into string
       .join('\n')
   )
