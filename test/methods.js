@@ -44,8 +44,8 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   describe('allCompleted', () => {
     it('return false if not all spinners are complete', () => {
-      spinners.map((spinner, i) => {
-        m.success(spinner)
+      spinners.map((s, i) => {
+        m.success(s)
         if (i < spinners.length - 1) {
           assert.isFalse(m.allCompleted())
         }
@@ -53,8 +53,8 @@ describe('Multispinner methods', () => {
     })
 
     it('return true if all spinners are complete', () => {
-      spinners.map(spinner => {
-        m.error(spinner)
+      spinners.map(s => {
+        m.error(s)
       })
       assert.isTrue(m.allCompleted())
     })
@@ -65,14 +65,14 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   describe('allSuccess', () => {
     it('return false if any spinners are not in success state', () => {
-      spinners.map((spinner, i) => {
-        m.success(spinner)
+      spinners.map((s, i) => {
+        m.success(s)
         if (i < spinners.length - 1) assert.isFalse(m.allSuccess())
       })
     })
 
     it('return true if all spinners are in success state', () => {
-      spinners.map((spinner) => m.success(spinner))
+      spinners.map(s => m.success(s))
       assert.isTrue(m.allSuccess())
     })
   })
@@ -100,9 +100,14 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   describe('complete', () => {
     it('update spinner prop with state param', () => {
+      // incomplete
       assert.equal(m.spinners[spinner].state, states.incomplete)
+
+      // success
       m.complete(spinner, states.success)
       assert.equal(m.spinners[spinner].state, states.success)
+
+      // error
       m.complete(spinner, states.error)
       assert.equal(m.spinners[spinner].state, states.error)
     })
@@ -111,19 +116,12 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   // constructor
   //----------------------------------------------------------
-  describe.skip('constructor', () => {
+  describe('constructor', () => {
     it('clone default props', () => {
-      // setup
-      const clock = sinon.useFakeTimers()
-      const m = new Multispinner(spinners)
-
       // test props
       Object.keys(defaultProps).map(prop => {
         assert.deepEqual(defaultProps[prop], m[prop])
       })
-
-      // clean up
-      // logUpdate.clear()
     })
 
     it('merge opts into props', () => {
@@ -145,7 +143,7 @@ describe('Multispinner methods', () => {
           error: 'x'
         }
       }
-      const m = new Multispinner(spinners, opts)
+
       Object.keys(opts).map(prop => {
         assert.deepEqual(opts[prop], m[prop])
       })
@@ -164,52 +162,47 @@ describe('Multispinner methods', () => {
       expected.incomplete = 'yellow'
 
       // instantiate and test
-      const m = new Multispinner(spinners, opts)
-      assert.deepEqual(expected, m.color)
+      const customM = new Multispinner(spinners, opts)
+      assert.deepEqual(expected, customM.color)
     })
 
     describe('compute and bind computed props', () => {
       it('frames and frameCount', () => {
         const frames = ['x', '+']
-        const m = new Multispinner(spinners, {
-          frames,
-          autoStart: false
+        const customM = new Multispinner(spinners, {
+          autoStart: false,
+          frames
         })
-        assert.equal(2, m.frameCount)
-        assert.equal(frames, m.frames)
+        assert.equal(2, customM.frameCount)
+        assert.equal(frames, customM.frames)
       })
 
       it('indentStr', () => {
-        const m = new Multispinner(spinners, {
+        const customM = new Multispinner(spinners, {
           autoStart: false,
           indent: 4
         })
-        assert.equal(' '.repeat(4), m.indentStr)
+        assert.equal(' '.repeat(4), customM.indentStr)
       })
     })
 
     it('props do not leak between instances', () => {
-      const m = new Multispinner(spinners, {autoStart: false})
       const spinners2 = genSpinners.arr(3)
-      const m2 = new Multispinner(spinners2, {autoStart: false})
-      spinners.map(spinner => {
-        assert.isFalse(m2.spinners.hasOwnProperty(spinner))
+      const otherM = new Multispinner(spinners2, {autoStart: false})
+      spinners.map(s => {
+        assert.isFalse(otherM.spinners.hasOwnProperty(s))
       })
     })
 
     it('instantiate spinners', () => {
-      const m = new Multispinner(spinners, {autoStart: false})
       const s = new Spinners(spinners, m.preText, m.postText).spinners()
       assert.deepEqual(m.spinners, s)
     })
 
     it('start loop if testing is false', () => {
-      const clock = sinon.useFakeTimers()
-      const m = new Multispinner(spinners)
       const spy = sinon.spy(m, 'loop')
       clock.tick(m.interval)
       assert(spy.called, 'call loop method')
-      // logUpdate.clear()
       m.loop.restore()
       clock.restore()
     })
@@ -220,13 +213,11 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   describe('error', () => {
     it('call complete method with spinner in error state', () => {
-      const spinners = genSpinners.arr(3)
-      const m = new Multispinner(spinners, {autoStart: false})
       const spy = sinon.spy(m, 'complete')
-      m.error(spinners[0])
+      m.error(spinner)
       assert(spy.called, 'call complete method')
       assert(
-        spy.calledWith(spinners[0], states.error),
+        spy.calledWith(spinner, states.error),
         'call complete method with correct params'
       )
     })
@@ -236,21 +227,6 @@ describe('Multispinner methods', () => {
   // loop
   //----------------------------------------------------------
   describe.skip('loop', () => {
-    const spinners = genSpinners.arr(3)
-    const spinner = spinners[0]
-    let clock
-    let m
-
-    beforeEach(() => {
-      clock = sinon.useFakeTimers()
-      m = new Multispinner(spinners)
-    })
-
-    afterEach(() => {
-      clock.restore()
-      m.update.clear()
-    })
-
     it('step through spinner animation frames and update prop', () => {
       // time leap in intervals to each animation frame and test
       let i = 0
@@ -307,14 +283,15 @@ describe('Multispinner methods', () => {
     })
 
     describe('if allCompleted is true', () => {
+      // make allCompleted return true
+      let stub
       beforeEach(() => {
-        const stub = sinon
+        stub = sinon
           .stub(m, 'allCompleted')
           .returns(true)
       })
-
       afterEach(() => {
-        m.allCompleted.restore()
+        stub.restore()
       })
 
       it('call update.clear if this.clear is true', () => {
