@@ -118,6 +118,9 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   describe('constructor', () => {
     it('clone default props', () => {
+      // reset autoStart prop
+      m.autoStart = true
+
       // test props
       Object.keys(defaultProps).map(prop => {
         assert.deepEqual(defaultProps[prop], m[prop])
@@ -144,8 +147,10 @@ describe('Multispinner methods', () => {
         }
       }
 
+      const customM = new Multispinner(spinners, opts)
+
       Object.keys(opts).map(prop => {
-        assert.deepEqual(opts[prop], m[prop])
+        assert.deepEqual(opts[prop], customM[prop])
       })
     })
 
@@ -188,9 +193,9 @@ describe('Multispinner methods', () => {
 
     it('props do not leak between instances', () => {
       const spinners2 = genSpinners.arr(3)
-      const otherM = new Multispinner(spinners2, {autoStart: false})
+      const customM = new Multispinner(spinners2, {autoStart: false})
       spinners.map(s => {
-        assert.isFalse(otherM.spinners.hasOwnProperty(s))
+        assert.isFalse(customM.spinners.hasOwnProperty(s))
       })
     })
 
@@ -199,12 +204,13 @@ describe('Multispinner methods', () => {
       assert.deepEqual(m.spinners, s)
     })
 
-    it('start loop if testing is false', () => {
-      const spy = sinon.spy(m, 'loop')
-      clock.tick(m.interval)
+    it('start loop if autoStart is true', () => {
+      const stub = sinon.stub()
+      const customM = new Multispinner(spinners, {update: stub})
+      const spy = sinon.spy(customM, 'loop')
+      clock.tick(customM.interval)
       assert(spy.called, 'call loop method')
-      m.loop.restore()
-      clock.restore()
+      spy.restore()
     })
   })
 
