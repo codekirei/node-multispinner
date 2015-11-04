@@ -232,14 +232,24 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   // loop
   //----------------------------------------------------------
-  describe.skip('loop', () => {
+  describe('loop', () => {
+    const stub = sinon.stub()
+    beforeEach(() => {
+      // stub out update to keep console clean
+      m.update = stub
+
+      // start loop
+      m.start()
+    })
+
     it('step through spinner animation frames and update prop', () => {
       // time leap in intervals to each animation frame and test
       let i = 0
       while (i < m.frameCount) {
         assert.equal(
           m.symbol[states.incomplete],
-          m.frames[i]
+          m.frames[i],
+          `frame ${i}`
         )
         clock.tick(m.interval)
         i++
@@ -275,50 +285,50 @@ describe('Multispinner methods', () => {
       it('states.error', () => testCase(states.error, m.error(spinner)))
     })
 
-    // fixme : stub m.update to something that doesn't write to console
-    it.skip('call logUpdate with newline-joined current strings', () => {
-      const spy = sinon.spy(m, 'update')
+    it('call logUpdate with newline-joined current strings', () => {
       clock.tick(m.interval)
 
       const expected = spinners.map(s => {
         return m.spinners[s].current
       }).join(os.EOL)
 
-      assert(spy.calledWith(expected), 'call logUpdate with strings')
-      m.update.restore()
+      assert(stub.calledWith(expected), 'call this.update with strings')
     })
 
     describe('if allCompleted is true', () => {
-      // make allCompleted return true
-      let stub
+      // make necessary stubs
+      let allCompletedStub
+      const clearStub = sinon.stub()
+      const doneStub = sinon.stub()
       beforeEach(() => {
-        stub = sinon
+        allCompletedStub = sinon
           .stub(m, 'allCompleted')
           .returns(true)
+        m.update.clear = clearStub
+        m.update.done = doneStub
       })
       afterEach(() => {
-        stub.restore()
+        allCompletedStub.restore()
       })
 
       it('call update.clear if this.clear is true', () => {
         m.clear = true
-        const spy = sinon.spy(m.update, 'clear')
         clock.tick(m.interval)
-        assert(spy.calledOnce, 'call clear method')
-        m.update.clear.restore()
-        // m.update.clear()
+        assert(clearStub.called, 'call stubbed clear method')
       })
 
-      it('call logUpdate.done')
+      it('call logUpdate.done', () => {
+        assert(doneStub.called, 'call stubbed done method')
+      })
 
-      it.skip('emit "done"', () => {
+      it('emit "done"', () => {
         let eventEmitted = false
         m.on('done', () => eventEmitted = true)
         clock.tick(m.interval)
         assert.isTrue(eventEmitted)
       })
 
-      it.skip('emit "success" if allSuccess is true', () => {
+      it('emit "success" if allSuccess is true', () => {
         const allSuccessStub = sinon
           .stub(m, 'allSuccess')
           .returns(true)
@@ -329,7 +339,7 @@ describe('Multispinner methods', () => {
         allSuccessStub.restore()
       })
 
-      it.skip('emit "err" if allSuccess is false', () => {
+      it('emit "err" if allSuccess is false', () => {
         let eventEmitted = false
         m.on('err', () => eventEmitted = true)
         m.error(spinner)
@@ -337,7 +347,7 @@ describe('Multispinner methods', () => {
         assert.isTrue(eventEmitted)
       })
 
-      it.skip('emit multiple "errs" if anyErrors().length > 1', () => {
+      it('emit multiple "errs" if anyErrors().length > 1', () => {
         let eventCount = 0
         m.on('err', () => eventCount++)
         m.error(spinners[0])

@@ -102,7 +102,7 @@ module.exports = class Multispinner extends Emitter {
       this.emit('done')
       this.allSuccess()
         ? this.emit('success')
-        : this.anyErrors().map(s => {this.emit('err', errs.completed(s))})
+        : this.anyErrors().map(s => this.emit('err', errs.completed(s)))
     } else {
       // loop again
       setTimeout(() => {
