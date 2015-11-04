@@ -8,6 +8,7 @@ const assert    = require('chai').assert
 const clone     = require('lodash.clonedeep')
 const faker     = require('faker')
 const logUpdate = require('log-update')
+const sinon     = require('sinon')
 
 // Local
 const Multispinner = require('../../')
@@ -22,14 +23,22 @@ module.exports = describe('constructor', () => {
   const spinners = genSpinners.arr(3)
 
   it('Clone default props', () => {
+    // setup
+    const clock = sinon.useFakeTimers()
     const m = new Multispinner(spinners)
+
+    // test props
     Object.keys(defaultProps).map(prop => {
       assert.deepEqual(defaultProps[prop], m[prop])
     })
+
+    // clean up
+    m.update.clear()
   })
 
   it('Merge opts into props', () => {
     const opts = {
+      autoStart: false,
       clear: true,
       frames: ['v', '<', '^', '>'],
       indent: 4,
@@ -55,6 +64,7 @@ module.exports = describe('constructor', () => {
 
   it('Handle partially configured property object', () => {
     const opts = {
+      autoStart: false,
       testing: true,
       color: {
         incomplete: 'yellow'
@@ -75,6 +85,7 @@ module.exports = describe('constructor', () => {
       const frames = ['x', '+']
       const m = new Multispinner(spinners, {
         frames,
+        autoStart: false,
         testing: true
       })
       assert.equal(2, m.frameCount)
@@ -83,6 +94,7 @@ module.exports = describe('constructor', () => {
 
     it('indentStr', () => {
       const m = new Multispinner(spinners, {
+        autoStart: false,
         testing: true,
         indent: 4
       })
@@ -91,25 +103,28 @@ module.exports = describe('constructor', () => {
   })
 
   it('Props do not leak between instances', () => {
-    const m = new Multispinner(spinners, {testing: true})
+    const m = new Multispinner(spinners, {testing: true, autoStart: false})
     const spinners2 = genSpinners.arr(3)
-    const m2 = new Multispinner(spinners2, {testing: true})
+    const m2 = new Multispinner(spinners2, {testing: true, autoStart: false})
     spinners.map(spinner => {
       assert.isFalse(m2.spinners.hasOwnProperty(spinner))
     })
   })
 
   it('Instantiate spinners', () => {
-    const m = new Multispinner(spinners, {testing: true})
+    const m = new Multispinner(spinners, {testing: true, autoStart: false})
     const s = new Spinners(spinners, m.preText, m.postText).spinners()
     assert.deepEqual(m.spinners, s)
   })
 
-  it('LogUpdate to stream if testing is true', () => {
-    const m = new Multispinner(spinners, {testing: true})
-    assert.deepEqual(
-      logUpdate.create().toString(),
-      m.update.toString()
-    )
+  it('Start loop if testing is false', () => {
+    const clock = sinon.useFakeTimers()
+    const m = new Multispinner(spinners)
+    const spy = sinon.spy(m, 'loop')
+    clock.tick(m.interval)
+    m.update.clear()
+    assert(spy.called, 'call loop method')
+    m.loop.restore()
+    clock.restore()
   })
 })

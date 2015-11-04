@@ -1,6 +1,7 @@
-- [ ] add autostart and opt to disable
-- [ ] simplify loop logic on update (fixme)
-- [ ] finish promise example
+- [X] add autostart and opt to disable
+- [X] simplify loop logic on update (fixme)
+- [ ] fix loop tests
+- [X] finish promise example
 - [ ] write readme
   - [ ] configurable options api
   - [ ] example gif
@@ -8,3 +9,4 @@
 - [ ] publish to npm
 - [ ] add ci, npm, coverage buttons
 - [ ] submit pr to awesome-nodejs
+- [ ] delete this file

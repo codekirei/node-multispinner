@@ -15,7 +15,6 @@ const Spinners     = require('lib/spinners')
 const defaultProps = require('lib/constants').defaultProps
 const states       = require('lib/constants').states
 const validOpts    = require('lib/validOpts')
-const voidOut      = require('lib/voidOut')
 const errs         = require('lib/errs').index
 
 //----------------------------------------------------------
@@ -57,8 +56,8 @@ module.exports = class Multispinner extends Emitter {
       this.postText
     ).spinners()
 
-    // void output if testing
-    if (this.testing) this.update = voidOut()
+    // start loop
+    if (this.autoStart) this.start()
   }
 
   //----------------------------------------------------------
@@ -85,24 +84,22 @@ module.exports = class Multispinner extends Emitter {
     })
 
     // call logUpdate
-    // FIXME
-    // do spinner update logic outside of this.update
-    // only call this.update if not in testing
-    // nuke this.update override b/c not necessary anymore
-    this.update(
-      Object.keys(this.spinners).map(spinner => {
-        return this.spinners[spinner].current
-      }).join(os.EOL)
-    )
+    if (!this.testing) {
+      this.update(
+        Object.keys(this.spinners).map(spinner => {
+          return this.spinners[spinner].current
+        }).join(os.EOL)
+      )
+    }
 
     // check if all spinners are complete
     if (this.allCompleted()) {
-      // clear if necessary
-      if (this.clear) this.update.clear()
+      if (!this.testing) {
+        if (this.clear) this.update.clear()
 
-      // call logUpdate.done to reset its prevLineCount
-      // FIXME test for this
-      this.update.done()
+        // call logUpdate.done to reset its prevLineCount
+        this.update.done()
+      }
 
       // emit completion events
       this.emit('done')
@@ -111,8 +108,10 @@ module.exports = class Multispinner extends Emitter {
         : this.anyErrors().map(s => {this.emit('err', errs.completed(s))})
     } else {
       // loop again
-      this.i++
-      setTimeout(() => this.loop(), this.interval)
+      setTimeout(() => {
+        this.i++
+        this.loop()
+      }, this.interval)
     }
   }
 
