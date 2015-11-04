@@ -118,13 +118,15 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   describe('constructor', () => {
     it('clone default props', () => {
-      // reset autoStart prop
-      m.autoStart = true
+      const otherM = new Multispinner(spinners)
 
       // test props
       Object.keys(defaultProps).map(prop => {
-        assert.deepEqual(defaultProps[prop], m[prop])
+        assert.deepEqual(defaultProps[prop], otherM[prop])
       })
+
+      // clean up
+      otherM.update.clear()
     })
 
     it('merge opts into props', () => {
