@@ -84,22 +84,19 @@ module.exports = class Multispinner extends Emitter {
     })
 
     // call logUpdate
-    if (!this.testing) {
-      this.update(
-        Object.keys(this.spinners).map(spinner => {
-          return this.spinners[spinner].current
-        }).join(os.EOL)
-      )
-    }
+    this.update(
+      Object.keys(this.spinners).map(spinner => {
+        return this.spinners[spinner].current
+      }).join(os.EOL)
+    )
 
     // check if all spinners are complete
     if (this.allCompleted()) {
-      if (!this.testing) {
-        if (this.clear) this.update.clear()
+      // clear if directed
+      if (this.clear) this.update.clear()
 
-        // call logUpdate.done to reset its prevLineCount
-        this.update.done()
-      }
+      // call logUpdate.done to reset its prevLineCount
+      this.update.done()
 
       // emit completion events
       this.emit('done')

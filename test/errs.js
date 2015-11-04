@@ -80,7 +80,7 @@ describe('errs', () => {
     it('throw when state is not a valid spinner state', () => {
       const spinners = genSpinners.arr(3)
       const spinner = spinners[0]
-      const m = new Multispinner(spinners, {'testing': true})
+      const m = new Multispinner(spinners, {'autoStart': false})
       assert.throws(() => m.complete(spinner))
       assert.throws(() => m.complete(spinner, 'notValidState'))
     })

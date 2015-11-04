@@ -1,7 +1,10 @@
 - [X] add autostart and opt to disable
 - [X] simplify loop logic on update (fixme)
-- [ ] fix loop tests
+- [X] lowercase all the test descriptions
+- [X] get rid of testing param; instead, stub m.update to nothing in tests
 - [X] finish promise example
+- [ ] fix constructor, loop tests
+- [ ] fix examples to account for auto-start
 - [ ] write readme
   - [ ] configurable options api
   - [ ] example gif
