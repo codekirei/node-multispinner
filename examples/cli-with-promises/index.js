@@ -33,11 +33,10 @@ cli.input.length === 0
  * @returns {}
  */
 function main(input) {
-  // instantiate and start spinner
+  // instantiate spinners
   const spinners = new Multispinner(input, {
     preText: 'Downloading'
   })
-  spinners.start()
 
   // consume promises
   Promise.all(

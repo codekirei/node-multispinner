@@ -6,7 +6,6 @@ const spinners = ['foo', 'bar', 'baz', 'qux']
 
 // instantiate and start spinners
 const m = new Multispinner(spinners)
-m.start()
 
 // finish spinners in staggered timeouts
 setTimeout(() => m.success('foo'), 1000)

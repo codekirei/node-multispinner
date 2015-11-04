@@ -1,5 +1,5 @@
 - [X] fix constructor, loop tests (stub m.update where necessary)
-- [ ] fix examples to account for auto-start
+- [X] fix examples to account for auto-start
 - [ ] write readme
   - [ ] configurable options api
   - [ ] example gif

@@ -24,9 +24,8 @@ const opts = {
   }
 }
 
-// initialize and start
+// initialize
 const m = new Multispinner(spinners, opts)
-m.start()
 
 // staggered completion
 let i = 0

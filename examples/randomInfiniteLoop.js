@@ -40,7 +40,10 @@ function loop() {
   const spinners = genSpinners.obj(randCount())
 
   // Instantiate
-  const m = new Multispinner(spinners)
+  const m = new Multispinner(spinners, {autoStart: false})
+
+  // Overwrite logUpdate.done for infinite effect
+  m.update.done = () => {}
 
   // Start spinners
   m.start()
