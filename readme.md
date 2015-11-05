@@ -11,7 +11,7 @@
 ## About
 
 `node-multispinner` is a [Node.js](https://nodejs.org/) module for managing multiple progress indicators (spinners) in CLI apps.
-This module is especially useful for apps with async tasks, as it enables completion of individual spinners, in any order, while other spinners continue spinning.
+This module is especially useful for apps that benefit from simultaneous async task execution (e.g. with `Promise.all[]`), as it enables live updating individual spinners, in any order, while other spinners continue spinning.
 Node.js 4.0 or newer is required.
 
 ![demo-gif](extras/demo.gif)
@@ -35,7 +35,7 @@ Install and require as a standard Node module.
 
 ### new Multispinner(spinners, options)
 
-#### Spinners (required)
+#### spinners (required)
 
 An array or object of spinners to create.
 Once created, spinners are stored in the `multispinner.spinners` object.
@@ -79,7 +79,7 @@ var multispinner = new Multispinner({
 })
 ```
 
-#### Options (optional)
+#### options (optional)
 
 Configurable options object.
 
@@ -89,6 +89,8 @@ var multispinner = new Multispinner(['foo', 'bar', 'baz'], {
   clear: true
 )
 ```
+
+Each option below is shown with its default value.
 
 **autoStart**
 
@@ -206,8 +208,15 @@ If `autoStart` is `true` (the default), this `start` method should *not* be call
 
 ### multispinner.success(spinner)
 
-Complete a successful spinner.
-Changes the spinner's symbol to `symbol.success` and color to `color.success`.
+Complete a spinner and change its state to `success`.
+`spinner` is the (string) ID of the spinner to complete.
+The spinner's symbol and color are updated to indicate the `success` state.
+
+### multispinner.error(spinner)
+
+Complete a spinner and change its state to `error`.
+`spinner` is the (string) ID of the spinner to complete.
+The spinner's symbol and color are updated to indicate the `error` state.
 
 ```js
 /**
@@ -215,7 +224,8 @@ Changes the spinner's symbol to `symbol.success` and color to `color.success`.
  * - This is es6.
  * - Only the 'foo' spinner is completed in this code, so 'bar' would continue
  *   spinning indefinitely. Generally, you want to complete all your spinners.
- * - For a more complete demo, check out the cli-with-promises example.
+ * - For a more complete demo, check out the cli-with-promises example in the
+ *   examples section.
  */
 
 // make a promise
@@ -246,12 +256,6 @@ fooTask
 
 ```
 
-### multispinner.error(spinner)
-
-Complete a spinner that ended in an error.
-Changes the spinner's symbol to `symbol.error` and color to `color.error`.
-See the `success` example above -- `error` is also used.
-
 ### Events
 
 `node-multispinner` emits completion events with `EventEmitter`.
@@ -274,13 +278,16 @@ If any spinners were completed with `multispinner.error(spinner)`, this event wi
 **err**
 
 Emitted after all spinners are complete and any spinner was completed with `multispinner.error(spinner)`.
-If multiple spinners were completed with `error`, this event will fire once for each of them.
+If multiple spinners were completed with `multispinner.error`, this event will fire once for each of them.
 Emits the ID of the spinner with the `err` event.
 
-Note that this event is `err` and not `error`, so it doesn't *have* to be handled.
-This is intentional; ending a spinner with `multispinner.error(spinner)` does not have to mean an `Error` occured in the traditional sense.
-Emitting `error` is similar to a `throw` (which always requires handling), so `err` is used instead.
-In short, this event is meant to supplement, not preclude, traditional `Error` handling.
+Note that this event is `err`, not `error`, so it doesn't have to be handled.
+Emitting `error` is functionally equivalent to `throw`, which should always be handled.
+So, `err` is used here instead.
+This gives flexibility -- ending a spinner with `multispinner.error(spinner)` does not have to mean an `Error` occured (but it might!).
+
+This event is meant to supplement, not preclude, `Error` handling.
+Event handling with `node-multispinner` is optional; `Error` handling should always be a priority.
 
 ```js
 multispinner.on('err', (spinner) => {
@@ -289,6 +296,16 @@ multispinner.on('err', (spinner) => {
 ```
 
 ## Examples
+
+The examples discussed below can be found [here](examples).
+
+### Events
+
+### Custom Spinner
+
+### Random Infinite Loop
+
+### CLI With Promises
 
 ## Attribution
 

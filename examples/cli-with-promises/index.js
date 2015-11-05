@@ -14,23 +14,12 @@ const meow = require('meow')
 const Multispinner = require('../../')
 
 //----------------------------------------------------------
-// Logic
+// Main Logic
 //----------------------------------------------------------
-// grab cli args
-const cli = meow(chalk.blue(
-  `Call with one or more URLs:
-      $ node index.js <url> <url>`
-))
-
-// print usage or run main
-cli.input.length === 0
-  ? console.log(cli.help)
-  : main(cli.input)
-
 /**
  * @function main
  * @param {string[]} input - arr of inputs from cli
- * @returns {}
+ * @returns {undefined}
  */
 function main(input) {
   // instantiate spinners
@@ -45,15 +34,19 @@ function main(input) {
       accum.push(download(url, url, spinners))
       return accum
     }, [])
-  ).then(data => {
+  )
+  .then(data => {
     spinners.on('done', () => print(data))
+  })
+  .catch(err => {
+    throw err
   })
 }
 
 function download(url, spinner, spinners) {
   // prepend http if not provided
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
-    return download('http://' + url, spinner, spinners)
+    return download(`http://${url}`, spinner, spinners)
   }
 
   // GET request
@@ -65,7 +58,7 @@ function download(url, spinner, spinners) {
     })
     .catch((err) => {
       // 30X error; retry with redirected URL
-      if (301 <= err.status && err.status < 400) {
+      if (300 < err.status && err.status < 400) {
         return download(err.headers.location, spinner, spinners)
       }
       // error; complete spinner and return error
@@ -74,6 +67,9 @@ function download(url, spinner, spinners) {
     })
 }
 
+//----------------------------------------------------------
+// Print Functions
+//----------------------------------------------------------
 function print(pages) {
   pages.map(page => {
     if (page.status !== 200) {
@@ -140,3 +136,18 @@ function printHtml(html) {
       .join('\n')
   )
 }
+
+//----------------------------------------------------------
+// CLI integration
+//----------------------------------------------------------
+// bind cli args; define helpstring
+const cli = meow(chalk.blue(
+  `Call with one or more URLs:
+      $ node index.js <url> <url>`
+))
+
+cli.input.length === 0
+  // print helpstring
+  ? console.log(cli.help)
+  // run with cli args
+  : main(cli.input)
