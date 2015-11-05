@@ -120,13 +120,17 @@ describe('Multispinner methods', () => {
     it('clone default props', () => {
       const otherM = new Multispinner(spinners)
 
-      // test props
-      Object.keys(defaultProps).map(prop => {
-        assert.deepEqual(defaultProps[prop], otherM[prop])
-      })
-
-      // clean up
+      // prevent bleed
       otherM.update.clear()
+
+      // prep defaults (symbol.incomplete is assigned immediately)
+      const defaults = clone(defaultProps)
+      defaults.symbol.incomplete = '-'
+
+      // test props
+      Object.keys(defaults).map(prop => {
+        assert.deepEqual(defaults[prop], otherM[prop])
+      })
     })
 
     it('merge opts into props', () => {
@@ -143,7 +147,7 @@ describe('Multispinner methods', () => {
           error: 'magenta'
         },
         symbol: {
-          incomplete: null,
+          incomplete: 'v',
           success: 'o',
           error: 'x'
         }

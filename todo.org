@@ -1,6 +1,7 @@
 - [ ] write readme
   - [ ] configurable options api
   - [ ] example gif
+- [ ] what happens when numbered options are negative?
 - [ ] hook up travis + coveralls
 - [ ] publish to npm
 - [ ] add ci, npm, coverage buttons
