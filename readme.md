@@ -125,7 +125,6 @@ Number of milliseconds between animation frames.
 ```
 
 Text to insert before spinner text (but after spinner animation).
-Example:
 
 ```js
 var multispinner = new Multispinner(['foo', 'bar'], {
@@ -177,7 +176,7 @@ Like colors, individual symbols can be customized without customizing the entire
 
 Start the spinners.
 This is only necessary if the `autoStart` option is manually set to `false`.
-If `autoStart` is `true` (the default), this `start` method should *not* be called -- it would start the spinners twice, giving the appearance of double speed!
+If `autoStart` is `true` (the default), this `start` method should *not* be called -- it would start the spinners twice, giving the appearance of double speed (and dropped frames)!
 
 ### multispinner.success(spinner)
 
@@ -228,6 +227,40 @@ Changes the spinner's symbol to `symbol.error` and color to `color.error`.
 See the `success` example above -- `error` is also used.
 
 ### Events
+
+`node-multispinner` emits completion events in the standard node event emitter style.
+
+**done**
+
+Emitted when all spinners are complete, irrespective of their completion state (success or error).
+
+```js
+multspinner.on('done', () => {
+  // do something now that the spinners are all done
+})
+```
+
+**success**
+
+Emitted when all spinners are complete and in the success state.
+If any spinners were completed with `multispinner.error(spinner)`, this event will not fire.
+
+**err**
+
+Emitted after all spinners are complete and any spinner was completed with `multispinner.error(spinner)`.
+If multiple spinners were completed with `error`, this event will fire once for each of them.
+Emits the ID of the spinner in error along with the `err` event.
+
+Note that this event is `err` and not `error`, so it doesn't *have* to be handled.
+This is intentional; ending a spinner with `multispinner.error(spinner)` does not have to mean an `Error` occured in the traditional sense.
+Emitting `error` would be similar to a `throw` (which would require an error handler), so `err` is used instead.
+In short, this event is meant to supplement, not preclude, traditional `Error` handling.
+
+```js
+multispinner.on('err', (spinner) => {
+  console.log(`spinner ${spinner} had an error`)
+})
+```
 
 ## Examples
 

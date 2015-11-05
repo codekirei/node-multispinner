@@ -1,6 +1,6 @@
-- [ ] write readme
+- [-] write readme
   - [ ] configurable options api
-  - [ ] example gif
+  - [X] example gif
 - [ ] what happens when numbered options are negative?
 - [ ] hook up travis + coveralls
 - [ ] publish to npm
