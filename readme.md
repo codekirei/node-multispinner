@@ -5,6 +5,7 @@
 <b>[Installation](#installation)</b> | 
 <b>[API](#api)</b> | 
 <b>[Examples](#examples)</b> | 
+<b>[Attribution](#attribution)</b> | 
 <b>[License](#license)</b> | 
 
 ## About
@@ -15,7 +16,6 @@ Node.js 4.0 or newer is required.
 
 ![demo-gif](extras/demo.gif)
 
-PS: thanks to [sindresorhus](https://sindresorhus.com/hi/) for his [log-update](https://github.com/sindresorhus/log-update) module, which was a major inspiration for and is used extensively in this module.
 
 ## Installation
 
@@ -178,13 +178,66 @@ Like colors, individual symbols can be customized.
 
 ### multispinner.start()
 
+Start the spinners.
+This is only necessary if the `autoStart` option is manually set to `false`.
+If `autoStart` is `true` (the default), this `start` method should *not* be called -- it would start the spinners twice, giving the appearance of double speed!
+
 ### multispinner.success(spinner)
 
+Complete a successful spinner.
+Changes the spinner's symbol to `symbol.success` and color to `color.success`.
+
+```js
+/**
+ * NOTES:
+ * - This is es6.
+ * - Only the 'foo' spinner is completed in this code, so 'bar' would continue
+ *   spinning indefinitely. Generally, you want to complete all your spinners.
+ * - For a more complete demo, check out the cli-with-promises example.
+ */
+
+// make a promise
+const fooTask = new Promise((resolve, reject) => {
+  // async stuff to do here
+})
+
+// instantiate multispinner
+const multispinner = new Multispinner(
+  ['foo', 'bar'],
+  { preText: 'Downloading' }
+)
+
+// fulfill the promise
+fooTask
+  .then((res) => {
+    // complete spinner successfully
+    multispinner.success('foo')
+
+    // possibly do stuff with res here
+  })
+  .catch((err) => {
+    // complete spinner with error
+    multispinner.error('foo')
+
+    // possibly do stuff with err here
+  })
+
+```
+
 ### multispinner.error(spinner)
+
+Complete a spinner that ended in an error.
+Changes the spinner's symbol to `symbol.error` and color to `color.error`.
+See the `success` example above -- `error` is also used.
 
 ### Events
 
 ## Examples
+
+## Attribution
+
+Thanks to [sindresorhus](https://sindresorhus.com/hi/) for his [log-update](https://github.com/sindresorhus/log-update) module, which was a major inspiration for and is used extensively in this module.
+Log-update is [MIT licensed](https://raw.githubusercontent.com/sindresorhus/log-update/master/license).
 
 ## License
 
