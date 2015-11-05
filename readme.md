@@ -53,7 +53,7 @@ var multispinner = new Multispinner([
 
 **Object**
 
-Given object `{key: val}`, `val` is the spinner text while `key` is the string ID used to complete the spinner.
+Given object `{key: val}`, `val` is the spinner text while `key` is the string ID used to complete the spinner with the `success` or `error` method.
 
 ```js
 var multispinner = new Multispinner({
@@ -68,12 +68,10 @@ var multispinner = new Multispinner({
 Configurable options object. Optional.
 
 ```js
-var spinners = ['foo', 'bar', 'baz']
-var opts = {
+var multispinner = new Multispinner(['foo', 'bar', 'baz'], {
   autoStart: false,
   clear: true
-}
-var multispinner = new Multispinner(spinners, opts)
+)
 ```
 
 **autoStart**
@@ -135,8 +133,7 @@ var multispinner = new Multispinner(['foo', 'bar'], {
 })
 
 /**
- * First frame of spinners
- * would look like this:
+ * First frame of spinners would look like this:
  *
  * - Completing foo
  * - Completing bar
@@ -162,7 +159,7 @@ Text to append after spinner text. See `preText` example.
 ```
 Colors used for spinners in each available state.
 This module uses [chalk](https://github.com/chalk/chalk) for colorization, so any chalk-compatible color values are acceptable.
-Individual colors can be customized without customizing the whole color object (e.g. `var opts = { color.incomplete: 'yellow' }`)
+Individual colors can be customized without customizing the whole color object (e.g. `{ color.incomplete: 'yellow' }`)
 
 **symbol**
 
@@ -174,7 +171,7 @@ Individual colors can be customized without customizing the whole color object (
 ```
 Symbols to use in place of the spinner animation for spinners that have completed.
 [Figures](https://github.com/sindresorhus/figures) is used by default for some nice unicode symbols, but any strings are acceptable.
-Like colors, individual symbols can be customized.
+Like colors, individual symbols can be customized without customizing the entire symbol object.
 
 ### multispinner.start()
 
