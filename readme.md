@@ -35,13 +35,29 @@ Install and require as a standard Node module.
 
 ### new Multispinner(spinners, options)
 
-#### Spinners
+#### Spinners (required)
 
-An array of or object of spinner titles. Required.
+An array or object of spinners to create.
+Once created, spinners are stored in the `multispinner.spinners` object.
+
+```js
+// example spinner in spinners object
+{
+  'foo': {      // unique spinner ID
+    'state':    // incomplete, success, or error
+    'text':     // base spinner text plus preText and postText
+    'current':  // colorized symbol and text (what is drawn on screen)
+  }
+}
+```
 
 **Array**
 
-With an array of spinners, the displayed text and the string IDs for interacting with spinners are the same.
+An array of strings.
+Each string becomes a spinner.
+Each spinner gets its text and ID from the given string.
+Because these strings are used as IDs, they must be unique.
+`multispinner` will `throw` if it finds duplicate strings in its spinner array.
 
 ```js
 var multispinner = new Multispinner([
@@ -53,7 +69,7 @@ var multispinner = new Multispinner([
 
 **Object**
 
-Given object `{key: val}`, `val` is the spinner text while `key` is the string ID used to complete the spinner with the `success` or `error` method.
+Given spinner `key: val`, `val` is the text and `key` is the ID.
 
 ```js
 var multispinner = new Multispinner({
@@ -63,9 +79,9 @@ var multispinner = new Multispinner({
 })
 ```
 
-#### Options
+#### Options (optional)
 
-Configurable options object. Optional.
+Configurable options object.
 
 ```js
 var multispinner = new Multispinner(['foo', 'bar', 'baz'], {
@@ -145,7 +161,7 @@ var multispinner = new Multispinner(['foo', 'bar'], {
 { postText: '' }
 ```
 
-Text to append after spinner text. See `preText` example.
+Text to append after spinner text.
 
 **color**
 
@@ -156,9 +172,18 @@ Text to append after spinner text. See `preText` example.
   error: 'red'
 }
 ```
-Colors used for spinners in each available state.
-This module uses [chalk](https://github.com/chalk/chalk) for colorization, so any chalk-compatible color values are acceptable.
-Individual colors can be customized without customizing the whole color object (e.g. `{ color.incomplete: 'yellow' }`)
+
+Colors used for spinners in each possible state.
+[Chalk](https://github.com/chalk/chalk) is used for colorization, so any chalk-compatible color values are acceptable.
+Individual colors can be customized without customizing the whole color object.
+
+```js
+var multispinner = new Multispinner(['Foo', 'Bar'], {
+  color: {
+    incomplete: 'yellow'
+  }
+})
+```
 
 **symbol**
 
@@ -168,6 +193,7 @@ Individual colors can be customized without customizing the whole color object (
   error: figures.cross
 }
 ```
+
 Symbols to use in place of the spinner animation for spinners that have completed.
 [Figures](https://github.com/sindresorhus/figures) is used by default for some nice unicode symbols, but any strings are acceptable.
 Like colors, individual symbols can be customized without customizing the entire symbol object.
@@ -228,7 +254,7 @@ See the `success` example above -- `error` is also used.
 
 ### Events
 
-`node-multispinner` emits completion events in the standard node event emitter style.
+`node-multispinner` emits completion events with `EventEmitter`.
 
 **done**
 
@@ -249,11 +275,11 @@ If any spinners were completed with `multispinner.error(spinner)`, this event wi
 
 Emitted after all spinners are complete and any spinner was completed with `multispinner.error(spinner)`.
 If multiple spinners were completed with `error`, this event will fire once for each of them.
-Emits the ID of the spinner in error along with the `err` event.
+Emits the ID of the spinner with the `err` event.
 
 Note that this event is `err` and not `error`, so it doesn't *have* to be handled.
 This is intentional; ending a spinner with `multispinner.error(spinner)` does not have to mean an `Error` occured in the traditional sense.
-Emitting `error` would be similar to a `throw` (which would require an error handler), so `err` is used instead.
+Emitting `error` is similar to a `throw` (which always requires handling), so `err` is used instead.
 In short, this event is meant to supplement, not preclude, traditional `Error` handling.
 
 ```js

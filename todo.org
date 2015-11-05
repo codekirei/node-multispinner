@@ -2,6 +2,8 @@
   - [ ] configurable options api
   - [X] example gif
 - [ ] what happens when numbered options are negative?
+- [ ] throw if creating a spinner array and any there are dupes
+- [ ] am i checking spinner objects for string values?
 - [ ] hook up travis + coveralls
 - [ ] publish to npm
 - [ ] add ci, npm, coverage buttons
