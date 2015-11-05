@@ -15,7 +15,7 @@ Node.js 4.0 or newer is required.
 
 ![demo-gif](extras/demo.gif)
 
-PS: thanks to @sindresorhus for his [log-update](https://github.com/sindresorhus/log-update) module, which was a major inspiration for and is used extensively in this module.
+PS: thanks to [sindresorhus](https://sindresorhus.com/hi/) for his [log-update](https://github.com/sindresorhus/log-update) module, which was a major inspiration for and is used extensively in this module.
 
 ## Installation
 
