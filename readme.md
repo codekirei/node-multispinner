@@ -299,7 +299,7 @@ multispinner.on('err', (spinner) => {
 
 ## Examples
 
-The examples discussed below can be found [here](examples).
+The examples discussed below can be found [here](extras/examples).
 Run them in a terminal with node:
 ```
 $ node <example>
