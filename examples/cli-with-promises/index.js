@@ -46,8 +46,16 @@ function main(input) {
     .catch(err => { throw err })
 }
 
+/**
+ * @function download
+ * @desc promise-based GET request
+ * @param {string} url - url to GET from
+ * @param {string} spinnerID - spinner associated with this request
+ * @param {object} spinners - multispinner instance
+ * @returns {array} spinnerID and result of GET
+ */
 function download(url, spinnerID, spinners) {
-  // if url seems invalid, slap an http in front and retry
+  // if url scheme is undetected, slap an http in front and retry
   if (!uri.parse(url).scheme) {
     return download('http://' + url, spinnerID, spinners)
   }
@@ -72,6 +80,12 @@ function download(url, spinnerID, spinners) {
 //----------------------------------------------------------
 // Print Functions
 //----------------------------------------------------------
+/**
+ * @function print
+ * @desc formats and prints results
+ * @param {array} results - 2D array of results
+ * @returns {undefined}
+ */
 function print(results) {
   results.map(page => {
     if (page[1] instanceof Error) {
@@ -86,6 +100,13 @@ function print(results) {
   })
 }
 
+/**
+ * @function printHeader
+ * @desc formats and prints header text
+ * @param {string} color - chalk color to use
+ * @param {string} text - text to print
+ * @returns {undefined}
+ */
 function printHeader(color, text) {
   const fill = '═'.repeat(text.length)
   console.log(chalk[color](
@@ -97,6 +118,12 @@ function printHeader(color, text) {
   ))
 }
 
+/**
+ * @function printHtml
+ * @desc converts HTML to text and prints
+ * @param {string} html - raw HTML to convert
+ * @returns {undefined}
+ */
 function printHtml(html) {
   console.log(
     h2t

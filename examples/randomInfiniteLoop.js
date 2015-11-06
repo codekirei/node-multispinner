@@ -57,11 +57,11 @@ function loop() {
     }, randTimeout())
   })
 
-  // after this loop finishes, start another
+  // After this loop finishes, start another
   m.on('done', () => {
     setTimeout(() => loop(), 1000)
   })
 }
 
-// start loop
+// press start
 loop()

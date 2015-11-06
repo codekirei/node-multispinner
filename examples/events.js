@@ -15,7 +15,7 @@ setTimeout(() => m.error('qux'), 2500)
 
 // do something on success/error events
 m.on('success', () => {
-  // does not fire in this example because there are m.errors
+  // does not fire in this example because m.error is called
   console.log('done without errors!')
 }).on('err', (e) => {
   console.log(e)
