@@ -1,7 +1,7 @@
-- [-] write readme
-  - [ ] configurable options api
-  - [X] example gif
+- [ ] write readme examples
+- [ ] example docstrings
 - [ ] what happens when numbered options are negative?
+- [ ] get rid of the node_modules/lib trickeration
 - [ ] change err emitted to just spinner id instead of text
   - [ ] fix events example
 - [ ] throw if creating a spinner array and any there are dupes

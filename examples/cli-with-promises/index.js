@@ -9,6 +9,7 @@ const chalk = require('chalk')
 const h2t = require('html-to-text')
 const hangingIndent = require('hanging-indent')
 const meow = require('meow')
+const uri = require('uri-js')
 
 // Local
 const Multispinner = require('../../')
@@ -27,74 +28,86 @@ function main(input) {
     preText: 'Downloading'
   })
 
-  // consume promises
-  Promise.all(
-    // array of promises to download urls
-    input.reduce((accum, url) => {
-      accum.push(download(url, url, spinners))
-      return accum
-    }, [])
-  )
-  .then(data => {
-    spinners.on('done', () => print(data))
-  })
-  .catch(err => {
-    throw err
-  })
+  /**
+   * consume promises (simultaneously)
+   * note: then's error cb is unused because download() doesn't rethrow in its
+   *   catch statement; its errs are intentionally returned to be formatted and
+   *   printed later
+   */
+  Promise
+    .all(
+      // generate array of promises to download urls
+      input.reduce((accum, url) => {
+        accum.push(download(url, url, spinners))
+        return accum
+      }, [])
+    )
+    .then(results => spinners.on('done', () => print(results)))
+    .catch(err => { throw err })
 }
 
-function download(url, spinner, spinners) {
-  // prepend http if not provided
-  if (!url.startsWith('http://') && !url.startsWith('https://')) {
-    return download(`http://${url}`, spinner, spinners)
+function download(url, spinnerID, spinners) {
+  // if url seems invalid, slap an http in front and retry
+  if (!uri.parse(url).scheme) {
+    return download('http://' + url, spinnerID, spinners)
   }
 
-  // GET request
-  return axios.get(url)
-    .then((res) => {
-      // success; complete spinner and return result
-      spinners.success(spinner)
-      return res
-    })
-    .catch((err) => {
-      // 30X error; retry with redirected URL
-      if (300 < err.status && err.status < 400) {
-        return download(err.headers.location, spinner, spinners)
+  // GET request promise
+  return axios
+    .get(url)
+    .then(
+      success => {
+        spinners.success(spinnerID)
+        return [spinnerID, success]
+      },
+      err => {
+        // follow redirects
+        if (300 < err.status && err.status < 400) {
+          return download(err.headers.location, spinnerID, spinners)
+        }
+        throw err
       }
-      // error; complete spinner and return error
-      spinners.error(spinner)
-      return err
-    })
+    )
+    .catch(
+      err => {
+        spinners.error(spinnerID)
+        return [spinnerID, err]
+      }
+    )
 }
 
 //----------------------------------------------------------
 // Print Functions
 //----------------------------------------------------------
-function print(pages) {
-  pages.map(page => {
-    if (page.status !== 200) {
-      page instanceof Error
-        ? printHeader('red', page.host)
-        : printHeader('red', page.headers.location)
-      console.log(page)
+function print(results) {
+  results.map(page => {
+    if (page[1] instanceof Error) {
+      printHeader('red', page[0])
+      console.log(page[1].toString())
     } else {
-      printHeader('green', page.config.url)
-      printHtml(page.data)
+      page[1].status > 200
+        ? printHeader('red', page[0])
+        : printHeader('green', page[0])
+      printHtml(page[1].data)
     }
   })
 }
 
 function printHeader(color, text) {
-  console.log(chalk[color](`
-╔${'═'.repeat(text.length + 2)}╗
+  const fill = '═'.repeat(text.length)
+  console.log(chalk[color](
+`
+╔═${fill}═╗
 ║ ${text} ║
-╚${'═'.repeat(text.length + 2)}╝
-  `))
+╚═${fill}═╝
+`
+  ))
 }
 
 function printHtml(html) {
   console.log(
     h2t
+      // html-to-text method
       .fromString(html, {
         ignoreImage: true,
         tables: true,
@@ -119,7 +132,7 @@ function printHtml(html) {
       .map(line => {
         return line.replace(/\s{2,}/g, '\n')
       })
-      // split lines with newly inserted \n into multiple lines
+      // resplit lines with newly inserted \n into multiple array entities
       .reduce((accum, line) => {
         if (line.includes('\n')) {
           line.split('\n').map(part => accum.push(part))
@@ -128,11 +141,11 @@ function printHtml(html) {
         }
         return accum
       }, [])
-      // format long lines with hanging indent
+      // wrap long lines with hanging indent
       .map(line => {
         return hangingIndent(line)
       })
-      // reconnect lines into string
+      // reconnect lines into one string for printing
       .join('\n')
   )
 }
@@ -140,7 +153,7 @@ function printHtml(html) {
 //----------------------------------------------------------
 // CLI integration
 //----------------------------------------------------------
-// bind cli args; define helpstring
+// bind cli args and define helpstring
 const cli = meow(chalk.blue(
   `Call with one or more URLs:
       $ node index.js <url> <url>`
