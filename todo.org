@@ -1,3 +1,0 @@
-- [ ] publish to npm
-- [ ] submit pr to awesome-nodejs
-- [ ] delete this file
