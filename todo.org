@@ -1,7 +1,3 @@
-- [ ] change err emitted to just spinner id instead of text
-  - [ ] fix events example
-- [ ] figure out strange bug with props leaking between instances test failing
-      sometimes
 - [ ] hook up travis + coveralls
 - [ ] publish to npm
 - [ ] add ci, npm, coverage buttons

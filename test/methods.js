@@ -197,12 +197,15 @@ describe('Multispinner methods', () => {
       })
     })
 
-    it('props do not leak between instances', () => {
-      const spinners2 = genSpinners.arr(3)
-      const customM = new Multispinner(spinners2, {autoStart: false})
-      spinners.map(s => {
-        assert.isFalse(customM.spinners.hasOwnProperty(s))
-      })
+    it('spinners do not leak between instances', () => {
+      const s1 = ['foo', 'bar']
+      const s2 = ['baz', 'qux']
+      const m1 = new Multispinner(s1)
+      const m2 = new Multispinner(s2)
+      clock.tick(m1.interval)
+      m1.update.clear()
+      m2.update.clear()
+      s1.map(s => assert.isFalse(m2.spinners.hasOwnProperty(s)))
     })
 
     it('instantiate spinners', () => {
