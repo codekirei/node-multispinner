@@ -11,11 +11,11 @@ const merge   = require('lodash.merge')
 const os      = require('os')
 
 // Local
-const Spinners     = require('lib/spinners')
-const defaultProps = require('lib/constants').defaultProps
-const states       = require('lib/constants').states
-const validOpts    = require('lib/validOpts')
-const errs         = require('lib/errs').index
+const Spinners     = require('./lib/spinners')
+const defaultProps = require('./lib/constants').defaultProps
+const states       = require('./lib/constants').states
+const validOpts    = require('./lib/validOpts')
+const errs         = require('./lib/errs').index
 
 //----------------------------------------------------------
 // Logic

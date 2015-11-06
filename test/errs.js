@@ -11,10 +11,10 @@ const typeIter = require('type-iterator')
 
 // Local
 const Multispinner = require('../')
-const Spinners = require('lib/spinners')
-const defaultProps = require('lib/constants').defaultProps
-const errs = require('lib/errs')
-const validOpts = require('lib/validOpts')
+const Spinners = require('../lib/spinners')
+const defaultProps = require('../lib/constants').defaultProps
+const errs = require('../lib/errs')
+const validOpts = require('../lib/validOpts')
 
 // Test Utils
 const genSpinners = require('./utils/genSpinners')

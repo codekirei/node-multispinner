@@ -12,8 +12,9 @@ const faker = require('faker')
 // Logic
 //----------------------------------------------------------
 /**
- * 
- * @param {} 
+ * @func arrayOfSpinners
+ * @param {number} count - number of spinners to generate
+ * @returns {array} an array of spinners
  */
 function arrayOfSpinners(count) {
   let arr = []
@@ -26,8 +27,9 @@ function arrayOfSpinners(count) {
 }
 
 /**
- * 
- * @param {} 
+ * @func objectOfSpinners
+ * @param {number} count - number of spinners to generate
+ * @returns {object} an object of spinners with lorem text
  */
 function objectOfSpinners(count) {
   let obj = {}

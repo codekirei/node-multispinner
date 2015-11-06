@@ -13,9 +13,9 @@ const sinon  = require('sinon')
 
 // Local
 const Multispinner = require('../')
-const Spinners     = require('lib/spinners')
-const defaultProps = require('lib/constants').defaultProps
-const states       = require('lib/constants').states
+const Spinners     = require('../lib/spinners')
+const defaultProps = require('../lib/constants').defaultProps
+const states       = require('../lib/constants').states
 
 // Test Utils
 const genSpinners = require('./utils/genSpinners')

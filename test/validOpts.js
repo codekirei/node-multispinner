@@ -8,8 +8,8 @@ const assert = require('chai').assert
 const clone = require('lodash.clonedeep')
 
 // Local
-const validOpts = require('lib/validOpts')
-const defaultProps = require('lib/constants').defaultProps
+const validOpts = require('../lib/validOpts')
+const defaultProps = require('../lib/constants').defaultProps
 
 //----------------------------------------------------------
 // Tests

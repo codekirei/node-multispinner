@@ -9,8 +9,8 @@ const sinon = require('sinon')
 const faker = require('faker')
 
 // Local
-const Spinners = require('lib/spinners')
-const states = require('lib/constants').states
+const Spinners = require('../lib/spinners')
+const states = require('../lib/constants').states
 
 // Test Utils
 const genSpinners = require('./utils/genSpinners')
