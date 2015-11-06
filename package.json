@@ -1,5 +1,5 @@
 {
-  "name": "node-multispinner",
+  "name": "multispinner",
   "version": "0.1.0",
   "description": "Multiple simultaneous async CLI spinners",
   "main": "index.js",
