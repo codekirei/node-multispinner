@@ -53,6 +53,11 @@ describe('errs', () => {
         assert.throws(() => validOpts(val))
       })
     })
+
+    it('throw when number opts are negative', () => {
+      assert.throws(() => validOpts({ interval: -1 }))
+      assert.throws(() => validOpts({ indent: -1 }))
+    })
   })
 
   //----------------------------------------------------------
