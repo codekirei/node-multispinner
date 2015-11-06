@@ -8,7 +8,7 @@
 <b>[API](#api)</b> | 
 <b>[Examples](#examples)</b> | 
 <b>[Attribution](#attribution)</b> | 
-<b>[License](#license)</b> | 
+<b>[License](#license)</b>
 
 ## About
 
