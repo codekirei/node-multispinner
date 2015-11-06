@@ -361,6 +361,14 @@ describe('Multispinner methods', () => {
         clock.tick(m.interval)
         assert.equal(2, eventCount)
       })
+
+      it('emit spinner with "err"', () => {
+        let spinnerEmitted = null
+        m.on('err', s => spinnerEmitted = s)
+        m.error(spinners[0])
+        clock.tick(m.interval)
+        assert.equal(spinners[0], spinnerEmitted)
+      })
     })
 
     describe('if allCompleted is false', () => {

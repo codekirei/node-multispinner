@@ -93,13 +93,5 @@ describe('errs', () => {
       assert.throws(() => m.complete(spinner))
       assert.throws(() => m.complete(spinner, 'notValidState'))
     })
-
-    it('build error string for spinner in error state', () => {
-      const name = 'node-multispinner'
-      const spinner = genSpinners.arr(1)[0]
-      const suffix = 'spinner was completed by an error'
-      const expected = `${name}: ${spinner} ${suffix}`
-      assert.equal(expected, errs.index.completed(spinner))
-    })
   })
 })

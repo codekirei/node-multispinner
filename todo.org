@@ -2,7 +2,6 @@
   - [ ] fix events example
 - [ ] figure out strange bug with props leaking between instances test failing
       sometimes
-- [X] throw if creating a spinner array and any there are dupes
 - [ ] hook up travis + coveralls
 - [ ] publish to npm
 - [ ] add ci, npm, coverage buttons

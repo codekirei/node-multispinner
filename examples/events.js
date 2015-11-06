@@ -18,5 +18,5 @@ m.on('success', () => {
   // does not fire in this example because m.error is called
   console.log('done without errors!')
 }).on('err', (e) => {
-  console.log(e)
+  console.log(`${e} spinner finished with an error`)
 })
