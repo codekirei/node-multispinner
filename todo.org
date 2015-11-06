@@ -1,4 +1,4 @@
-- [ ] write readme examples
+- [X] write readme examples
 - [ ] example docstrings
 - [ ] what happens when numbered options are negative?
 - [ ] get rid of the node_modules/lib trickeration

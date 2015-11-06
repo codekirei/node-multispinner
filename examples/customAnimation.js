@@ -28,8 +28,8 @@ const opts = {
 const m = new Multispinner(spinners, opts)
 
 // staggered completion
+const t = 1500
 let i = 0
-let t = 1500
 function loop() {
   setTimeout(() => {
     m.success(spinners[i])
