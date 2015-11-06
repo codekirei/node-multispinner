@@ -1,4 +1,4 @@
-![node-multispinner](extras/multispinner.gif)
+![node-multispinner](./extras/multispinner.gif)
 ---
 [![Build Status](https://travis-ci.org/codekirei/node-multispinner.svg)](https://travis-ci.org/codekirei/node-multispinner)
 [![Coverage Status](https://coveralls.io/repos/codekirei/node-multispinner/badge.svg?branch=master&service=github)](https://coveralls.io/github/codekirei/node-multispinner?branch=master)
@@ -16,31 +16,33 @@
 This module is especially useful for apps that benefit from simultaneous async task execution (e.g. with `Promise.all[]`), as it enables live updating individual spinners, in any order, while other spinners continue spinning.
 Node.js 4.0 or newer is required.
 
-![demo-gif](extras/demo.gif)
-
+![demo-gif](./extras/demo.gif)
 
 ## Installation
 
 Install and require as a standard Node module.
 
 **Install**
+
 ```
   $ npm install --save multispinner
 ```
 
 **Require**
+
 ```js
   var Multispinner = require('multispinner')
 ```
 
 ## API
 
-Full documentation available [here](extras/api.md).
+Full documentation available [here](./extras/api.md).
 
 ## Examples
 
-The examples discussed below can be found [here](extras/examples).
+The examples discussed below can be found [here](./extras/examples).
 Run them in a terminal with node:
+
 ```
 $ node <example>
 ```
@@ -80,4 +82,4 @@ Log-update is [MIT licensed](https://raw.githubusercontent.com/sindresorhus/log-
 
 ## License
 
-[MIT](license)
+[MIT](./license)
