@@ -315,18 +315,18 @@ Creates a custom spinner animation with the `frames` option.
 ### Random Infinite Loop
 
 Creates three to seven spinners with random lorem text and completes them randomly in less than five seconds in an infinite loop.
-Stubs out the `logUpdate.done()` function to overwrite the previous output every loop.
+Stubs out the `logUpdate.done()` function to overwrite the previous output with every loop.
 
 It's kind of mesmerising.
 
 ### CLI With Promises
 
-A simple CLI application that reads URLs and parses the HTML it gets back into text to display in a terminal.
+A CLI application that reads URLs and parses HTML into text to display in a terminal.
 Uses [meow](https://github.com/sindresorhus/meow) for CLI support, [html-to-text](https://github.com/werk85/node-html-to-text) for parsing, and [axios](https://github.com/mzabriskie/axios) for Promise-based HTTP requests.
 Creates spinners for each URL, and uses `Promise.all()` to execute the GET requests in parallel.
 
 There are certainly edge cases that this example doesn't account for; it is not meant to be a "real" application.
-Despite that, the code should be illustrative of how `node-multispinner` could be used in a real application.
+Despite that, the code should be illustrative of how `node-multispinner` could potentially be used in a real application.
 
 This example is unique in that it requires modules not used in `node-multispinner`.
 Before running it, `cd` into its directory and install the additional requirements from its `package.json` with `npm install`.
