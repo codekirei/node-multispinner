@@ -55,25 +55,18 @@ function download(url, spinnerID, spinners) {
   // GET request promise
   return axios
     .get(url)
-    .then(
-      success => {
-        spinners.success(spinnerID)
-        return [spinnerID, success]
-      },
-      err => {
-        // follow redirects
-        if (300 < err.status && err.status < 400) {
-          return download(err.headers.location, spinnerID, spinners)
-        }
-        throw err
+    .then(success => {
+      spinners.success(spinnerID)
+      return [spinnerID, success]
+    })
+    .catch(err => {
+      // follow redirects
+      if (300 < err.status && err.status < 400) {
+        return download(err.headers.location, spinnerID, spinners)
       }
-    )
-    .catch(
-      err => {
-        spinners.error(spinnerID)
-        return [spinnerID, err]
-      }
-    )
+      spinners.error(spinnerID)
+      return [spinnerID, err]
+    })
 }
 
 //----------------------------------------------------------
