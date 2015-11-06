@@ -1,5 +1,7 @@
 ![node-multispinner](extras/multispinner.gif)
 ---
+[![Build Status](https://travis-ci.org/codekirei/node-multispinner.svg)](https://travis-ci.org/codekirei/node-multispinner)
+[![Coverage Status](https://coveralls.io/repos/codekirei/node-multispinner/badge.svg?branch=master&service=github)](https://coveralls.io/github/codekirei/node-multispinner?branch=master)
 
 <b>[About](#about)</b> | 
 <b>[Installation](#installation)</b> | 

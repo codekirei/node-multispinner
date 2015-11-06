@@ -1,5 +1,3 @@
-- [ ] hook up travis + coveralls
 - [ ] publish to npm
-- [ ] add ci, npm, coverage buttons
 - [ ] submit pr to awesome-nodejs
 - [ ] delete this file
