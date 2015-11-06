@@ -76,6 +76,10 @@ describe('errs', () => {
         assert.throws(() => new Spinners(err, '', '').spinners())
       })
     })
+
+    it('throw when there are duplicate spinners', () => {
+      assert.throws(() => new Spinners(['foo', 'foo'], '', '').spinners())
+    })
   })
 
   //----------------------------------------------------------

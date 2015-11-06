@@ -1,9 +1,8 @@
-- [X] get rid of the node_modules/lib trickeration
 - [ ] change err emitted to just spinner id instead of text
   - [ ] fix events example
 - [ ] figure out strange bug with props leaking between instances test failing
       sometimes
-- [ ] throw if creating a spinner array and any there are dupes
+- [X] throw if creating a spinner array and any there are dupes
 - [ ] hook up travis + coveralls
 - [ ] publish to npm
 - [ ] add ci, npm, coverage buttons
