@@ -1,6 +1,6 @@
 {
   "name": "multispinner",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Multiple simultaneous async CLI spinners",
   "main": "index.js",
   "scripts": {
