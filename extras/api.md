@@ -230,7 +230,7 @@ fooTask
 Emitted when all spinners are complete, irrespective of their completion state (success or error).
 
 ```js
-multspinner.on('done', () => {
+multispinner.on('done', () => {
   // do something now that the spinners are all done
 })
 ```
