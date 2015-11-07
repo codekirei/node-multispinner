@@ -47,23 +47,23 @@ Run them in a terminal with node:
 $ node <example>
 ```
 
-### Events
+**Events**
 
 Creates four spinners from an array, then completes them in succession with staggered `setTimeout` functions.
 Responds to the `success` and `err` completion events.
 
-### Custom Animation
+**Custom Animation**
 
 Creates a custom spinner animation with the `frames` option.
 
-### Random Infinite Loop
+**Random Infinite Loop**
 
 Creates three to seven spinners with random lorem text and completes them randomly in less than five seconds in an infinite loop.
 Stubs out the `logUpdate.done()` function to overwrite the previous output with every loop.
 
 It's kind of mesmerising.
 
-### CLI With Promises
+**CLI With Promises**
 
 A CLI application that reads URLs and parses HTML into text to display in a terminal.
 Uses [meow](https://github.com/sindresorhus/meow) for CLI support, [html-to-text](https://github.com/werk85/node-html-to-text) for parsing, and [axios](https://github.com/mzabriskie/axios) for Promise-based HTTP requests.
