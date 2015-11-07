@@ -118,14 +118,13 @@ describe('Multispinner methods', () => {
   //----------------------------------------------------------
   describe('constructor', () => {
     it('clone default props', () => {
-      const otherM = new Multispinner(spinners)
-
-      // prevent bleed
-      otherM.update.clear()
+      const otherM = new Multispinner(spinners, {autoStart: false})
 
       // prep defaults (symbol.incomplete is assigned immediately)
       const defaults = clone(defaultProps)
-      defaults.symbol.incomplete = '-'
+
+      // prevent bleed
+      defaults.autoStart = false
 
       // test props
       Object.keys(defaults).map(prop => {
@@ -199,13 +198,18 @@ describe('Multispinner methods', () => {
 
     it('spinners do not leak between instances', () => {
       const s1 = ['foo', 'bar']
+      const m1 = new Multispinner(s1, {autoStart: false})
       const s2 = ['baz', 'qux']
-      const m1 = new Multispinner(s1)
-      const m2 = new Multispinner(s2)
+      const m2 = new Multispinner(s2, {autoStart: false})
+      const multis = [m1, m2]
+      multis.map(m => {
+        // stub out update to keep output clean
+        m.update = () => {}
+        m.start()
+      })
       clock.tick(m1.interval)
-      m1.update.clear()
-      m2.update.clear()
       s1.map(s => assert.isFalse(m2.spinners.hasOwnProperty(s)))
+      s2.map(s => assert.isFalse(m1.spinners.hasOwnProperty(s)))
     })
 
     it('instantiate spinners', () => {
