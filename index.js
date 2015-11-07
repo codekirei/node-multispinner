@@ -34,8 +34,9 @@ module.exports = class Multispinner extends Emitter {
     // clone defaults
     let props = clone(defaultProps)
 
-    // merge in opts
-    if (validOpts(opts)) merge(props, opts)
+    // validate and merge opts
+    validOpts(opts)
+    merge(props, opts)
 
     // bind props
     Object.keys(props).map(prop => {
