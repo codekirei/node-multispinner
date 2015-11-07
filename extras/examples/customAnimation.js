@@ -1,7 +1,7 @@
 'use strict'
 
 // modules
-const Multispinner = require('../')
+const Multispinner = require('../../')
 const figures = require('figures')
 
 // constants

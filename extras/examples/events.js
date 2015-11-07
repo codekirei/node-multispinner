@@ -1,7 +1,7 @@
 'use strict'
 
 // setup
-const Multispinner = require('../')
+const Multispinner = require('../../')
 const spinners = ['foo', 'bar', 'baz', 'qux']
 
 // instantiate and start spinners

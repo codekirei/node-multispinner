@@ -12,7 +12,7 @@ const meow = require('meow')
 const uri = require('uri-js')
 
 // Local
-const Multispinner = require('../../')
+const Multispinner = require('../../../')
 
 //----------------------------------------------------------
 // Main Logic

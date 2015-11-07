@@ -4,8 +4,8 @@
 // Modules
 //----------------------------------------------------------
 // Local
-const Multispinner = require('../')
-const genSpinners = require('../test/utils/genSpinners')
+const Multispinner = require('../../')
+const genSpinners = require('../../test/utils/genSpinners')
 
 //----------------------------------------------------------
 // Logic
