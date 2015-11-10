@@ -1,6 +1,6 @@
 {
   "name": "multispinner",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Multiple simultaneous async CLI spinners",
   "main": "index.js",
   "repository": "codekirei/node-multispinner",
