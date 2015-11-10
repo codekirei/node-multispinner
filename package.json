@@ -3,6 +3,7 @@
   "version": "0.1.7",
   "description": "Multiple simultaneous async CLI spinners",
   "main": "index.js",
+  "repository": "codekirei/node-multispinner",
   "scripts": {
     "test": "mocha",
     "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly",
