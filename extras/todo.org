@@ -1,0 +1,7 @@
+- [ ] add success events for each individual spinner
+  - [ ] switch 'success' event to 'allSuccess' or something similar
+  - [ ] add new success event in `complete` method
+  - [ ] add example for updating text after a success event (timers?)
+  - [ ] update api/readme
+  - [ ] update tests
+  - [ ] publish 0.2.0
