@@ -1,7 +1,7 @@
 ![node-multispinner](https://raw.githubusercontent.com/codekirei/node-multispinner/master/extras/multispinner.gif)
 ---
-[![Build Status](https://travis-ci.org/codekirei/node-multispinner.svg)](https://travis-ci.org/codekirei/node-multispinner)
-[![Coverage Status](https://coveralls.io/repos/codekirei/node-multispinner/badge.svg?branch=master&service=github)](https://coveralls.io/github/codekirei/node-multispinner?branch=master)
+[![Build Status][b-img]][b-url]
+[![Coverage Status][c-img]][c-url]
 
 <b>[About](#about)</b> | 
 <b>[Installation](#installation)</b> | 
@@ -83,3 +83,15 @@ Log-update is [MIT licensed](https://raw.githubusercontent.com/sindresorhus/log-
 ## License
 
 [MIT](https://github.com/codekirei/node-multispinner/blob/master/license)
+
+<!-- links
+  build status
+  [b-url]: https://travis-ci.org/codekirei/node-multispinner
+  [b-img]: https://img.shields.io/travis/codekirei/node-multispinner.svg?style=flat-square
+  [b-img-old]: https://travis-ci.org/codekirei/node-multispinner.svg
+
+  test coverage
+  [c-url]: https://coveralls.io/github/codekirei/node-multispinner?branch=master
+  [c-img]: http://img.shields.io/coveralls/codekirei/node-multispinner.svg?style=flat-square
+  [c-img-old]: https://coveralls.io/repos/codekirei/node-multispinner/badge.svg?branch=master&service=github
+-->
