@@ -194,4 +194,15 @@ module.exports = class Multispinner extends Emitter {
   error(spinner) {
     this.complete(spinner, states.error)
   }
+
+  /**
+   * @method update
+   * @desc Update property of the spinner
+   * @param {string} spinner - spinner to update
+   * @param {object} opts - properties to update
+   */
+  updateText(spinner, opts) {
+    this.spinners[spinner].text = Spinners.prototype.spinnerText(spinner, opts);
+  }
+
 }
