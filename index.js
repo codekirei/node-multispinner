@@ -51,11 +51,12 @@ module.exports = class Multispinner extends Emitter {
     this.indentStr = ' '.repeat(this.indent)
 
     // instantiate spinners
-    this.spinners = new Spinners(
+    this.instance = new Spinners(
       spinners,
       this.preText,
       this.postText
-    ).spinners()
+    );
+    this.spinners = this.instance.spinners();
 
     // start loop
     if (this.autoStart) this.start()
@@ -202,7 +203,7 @@ module.exports = class Multispinner extends Emitter {
    * @param {object} opts - properties to update
    */
   updateText(spinner, opts) {
-    this.spinners[spinner].text = Spinners.prototype.spinnerText(spinner, opts);
+    this.spinners[spinner].text = this.instance.spinnerText(spinner, opts);
   }
 
 }
