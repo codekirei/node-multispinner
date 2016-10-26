@@ -54,7 +54,9 @@ module.exports = class Multispinner extends Emitter {
     this.instance = new Spinners(
       spinners,
       this.preText,
-      this.postText
+      this.postText,
+      this.preSpace,
+      this.postSpace
     );
     this.spinners = this.instance.spinners();
 
