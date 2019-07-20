@@ -26,14 +26,14 @@
     "figures": "^1.4.0",
     "kind-of": "^2.0.1",
     "lodash.clonedeep": "^3.0.2",
-    "lodash.merge": "^3.3.2",
+    "lodash.merge": "^4.6.2",
     "log-update": "^1.0.2"
   },
   "devDependencies": {
     "chai": "^3.3.0",
     "faker": "^3.0.1",
-    "istanbul": "^0.3.22",
-    "mocha": "^2.3.3",
+    "istanbul": "^0.4.5",
+    "mocha": "^6.2.0",
     "sinon": "^1.17.1",
     "type-iterator": "^0.1.1"
   }
