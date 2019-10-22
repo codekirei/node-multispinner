@@ -26,7 +26,7 @@
     "figures": "^1.4.0",
     "kind-of": "^2.0.1",
     "lodash.clonedeep": "^3.0.2",
-    "lodash.merge": "^3.3.2",
+    "lodash.merge": "^4.6.2",
     "log-update": "^1.0.2"
   },
   "devDependencies": {
